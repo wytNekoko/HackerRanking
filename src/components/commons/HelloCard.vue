@@ -6,6 +6,15 @@
       <p class="intro">{{intro}}</p>
       <pink-silk :y="y" :isShow="showPinkSilk"></pink-silk>
       <blue-silk :y="y" :isShow="showBlueSilk"></blue-silk>
+      <div class="mask" :style="{'opacity': onHover || show ? 0 : 1}">
+        <div class="mask-top"></div>
+        <div class="mask-bottom">
+          <div class="lines" v-for="item in maskInfo" :key="maskInfo.indexOf(item)">
+            <div v-for="n in item.line" :key="n"></div>
+            <div :style="{'width': `${item.left}%`}"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +31,7 @@ const intro = `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目�
 
 export default {
   name: 'HelloCard',
+  props: ['dx', 'dy', 'show'],
   data () {
     return {
       toY: 0,
@@ -33,7 +43,9 @@ export default {
       showPinkSilk: false,
       scale: 1,
       title,
-      intro
+      intro,
+      onHover: false,
+      maskInfo: []
     }
   },
   computed: {
@@ -48,8 +60,27 @@ export default {
         .to(this, 0.2, { scale: 1, ease: window.Quad.easeIn })
     }
   },
+  created () {
+    let totalLinesNum = 9
+    while (totalLinesNum > 0) {
+      const hasNewPara = Math.random() < totalLinesNum / 9
+      if (!hasNewPara) {
+        break
+      }
+      const lineNum = Math.ceil(Math.random() * totalLinesNum)
+      const leftLineWidth = Math.round(Math.random() * 60) + 20
+      this.maskInfo.push({
+        line: lineNum,
+        left: leftLineWidth
+      })
+      totalLinesNum -= lineNum + 1
+    }
+  },
   mounted () {
     requestAnimationFrame(this.render)
+    window.addEventListener('resize', () => {
+      this.boundingInfo = this.$el.getBoundingClientRect()
+    })
     this.boundingInfo = this.$el.getBoundingClientRect()
     this.$el.addEventListener('mousemove', (e) => {
       const x = e.pageX - this.boundingInfo.left
@@ -72,19 +103,23 @@ export default {
       dy = dy < 0 ? 0 : dy
       dy = dy > 330 ? 330 : dy
       this.toY = dy
-      this.toRotate = (x / 20) - 7.5
+      this.toRotate = (x / 10) - 15
+      this.onHover = true
     })
     this.$el.addEventListener('mouseleave', () => {
       this.showPinkSilk = false
       this.showBlueSilk = false
       this.toRotate = 0
+      this.onHover = false
     })
   },
   methods: {
     isIn (pos, b) {
+      const trueX = pos[0] - this.dx
+      const trueY = pos[1] - this.dy
       let judge = true
-      judge = judge && pos[0] >= b[0] && pos[0] < b[0] + b[2]
-      judge = judge && pos[1] >= b[1] && pos[1] < b[1] + b[3]
+      judge = judge && trueX >= b[0] && trueX < b[0] + b[2]
+      judge = judge && trueY >= b[1] && trueY < b[1] + b[3]
       return judge
     },
     render () {
@@ -94,7 +129,7 @@ export default {
       }
       const dRotate = this.toRotate - this.rotate
       if (Math.abs(dRotate) > 0.1) {
-        this.rotate += dRotate * 0.05
+        this.rotate += dRotate * 0.08
       } else if (Math.abs(this.rotate) < 0.1) {
         this.rotate = 0
       }
@@ -143,4 +178,29 @@ export default {
     line-height 22px
     text-align justify
     color #666
+.mask
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  border-radius 6px
+  transition opacity .4s
+  .mask-top
+    width 100%
+    height 100px
+    border-radius 6px 6px 0 0
+    background-color #fffd
+  .mask-bottom
+    width 100%
+    height 300px
+    background-color #fff
+    padding 20px 24px
+    box-sizing border-box
+    border-radius 0 0 6px 6px
+    .lines div
+      background-color #ddd
+      margin-top 18px
+      width 100%
+      height 4px
 </style>
