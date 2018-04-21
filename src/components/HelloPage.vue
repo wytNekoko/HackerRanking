@@ -1,43 +1,67 @@
 <template>
   <div class="hello">
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
-      <hello-card class="center" :dx="pos.x" :dy="pos.y"></hello-card>
-      <hello-card class="left-1" :dx="pos.x" :dy="pos.y"></hello-card>
-      <hello-card class="left-2" :dx="pos.x" :dy="pos.y"></hello-card>
+      <hello-card class="center" :dx="pos.x" :dy="pos.y" :orgData="building[0]"></hello-card>
+      <hello-card class="left-1" :dx="pos.x" :dy="pos.y" :orgData="building[1]"></hello-card>
+      <hello-card class="left-2" :dx="pos.x" :dy="pos.y" :orgData="building[2]"></hello-card>
+      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"></hello-card>
+      <div class="box center-1"></div>
+      <div class="box center-2"></div>
+      <hello-card class="ll" :dx="pos.x" :dy="pos.y" :orgData="building[6]"></hello-card>
+      <div class="box ll-1"></div>
+      <div class="box ll-2"></div>
+      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[6]"></hello-card>
+      <div class="box rr-1"></div>
+      <div class="box rr-2"></div>
       <div class="logo">
-        <img :style="{'transform': `translate3d(${-pos.x / 2}px, ${-pos.y / 2}px ,0)`}" width="300" :src="require('@/assets/logo.svg')" alt="logo">
+        <img :style="{
+          'transform': `translate3d(${-pos.x / 2}px, ${-pos.y / 2}px ,0)`
+        }" width="300" :src="require('@/assets/logo.svg')" alt="logo">
       </div>
     </div>
-    <div class="user">
-      <p class="name">{{user.name}}</p>
-      <p class="posi">{{user.postion}}</p>
-      <p class="id">No.{{user.id}}</p>
-    </div>
-    <div class="ranking">排行榜</div>
+    <div class="build-button build-num">{{buildNum}} Planets remained to build today</div>
+    <div class="build-button build-new">Set up a new planet</div>
   </div>
 </template>
 
 <script>
 import HelloCard from './commons/HelloCard'
 
-const user = {
-  name: '张喽喽',
-  postion: '建造者',
-  id: '0192'
-}
-const building = {
-
-}
+const building = [
+  {
+    title: 'DoraDust',
+    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
+每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
+信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+    rank: 1
+  },
+  {
+    title: 'DoraDust',
+    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
+每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
+信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+    rank: 2
+  },
+  {
+    title: 'DoraDust',
+    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
+每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
+信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+    rank: 3
+  }
+]
+const buildNum = 3
 
 export default {
   name: 'HelloPage',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      user,
       toPos: { x: 0, y: 0 },
       pos: { x: 0, y: 0 },
-      boundingInfo: null
+      boundingInfo: null,
+      buildNum,
+      building
     }
   },
   mounted () {
@@ -47,8 +71,8 @@ export default {
     })
     this.boundingInfo = this.$el.getBoundingClientRect()
     this.$el.addEventListener('mousemove', (e) => {
-      const x = e.pageX - this.boundingInfo.width / 2
-      const y = e.pageY - this.boundingInfo.height / 2
+      const x = e.pageX - (this.boundingInfo.width / 2)
+      const y = e.pageY - (this.boundingInfo.height / 2)
       this.toPos = {
         x: -x / 20,
         y: -y / 20
@@ -81,67 +105,65 @@ export default {
   height 100%
   background-color #441D66
   position relative
+.box
+  width 300px
+  height 400px
+  background-color #FFF
+  border-radius 8px
 .center
-  position absolute
-  top 50%
-  left 50%
-  transform translate3d(-50%, -50%, 0)
+  transform translate3d(-150px, -200px, 0)
 .left-1
-  position absolute
-  top 50%
-  left 50%
-  transform translate3d(-160%, -105%, 0)
+  transform translate3d(-490px, -440px, 0)
 .left-2
-  position absolute
-  top 50%
-  left 50%
-  transform translate3d(-160%, 5%, 0)
+  transform translate3d(-490px, 40px, 0)
+.right-1
+  transform translate3d(190px, -440px, 0)
+.center-1
+  transform translate3d(-150px, -680px, 0)
+.center-2
+  transform translate3d(-150px, 280px, 0)
+.ll
+  transform translate3d(-830px, -200px, 0)
+.ll-1
+  transform translate3d(-830px, -680px, 0)
+.ll-2
+  transform translate3d(-830px, 280px, 0)
+.rr
+  transform translate3d(530px, -200px, 0)
+.rr-1
+  transform translate3d(530px, -680px, 0)
+.rr-2
+  transform translate3d(530px, 280px, 0)
 .move-bg
   width 100%
   height 100%
+  &>div
+    position absolute
+    top 50%
+    left 50%
 .logo
   width 300px
   position absolute
   top 50%
   left 50%
-  transform translate3d(60%, 72px, 0)
-.user
-  position fixed
-  top 50%
-  left 0
-  width 120px
-  height 120px
-  transform translate3d(0, -50%, 0)
-  background-color #1B0033
-  box-shadow 0 2px 16px #0008
-  color #FFF
-  text-align center
-  box-sizing border-box
-  padding 24px
-  z-index 99
+  transform translate3d(190px, 200px, 0)
+.build-num
+  top 40px
+  background-color #FF0082
+  cursor default
+.build-new
+  top 106px
+  background-color #62B100
   cursor pointer
-  .name
-    line-height 22px
-    font-size 16px
-    margin 0 0 14px
-  .posi, .id
-    line-height 18px
-    font-size 12px
-    margin 0
-.ranking
-  position fixed
-  top 50%
-  right 0
-  width 120px
-  height 120px
-  transform translate3d(0, -50%, 0)
-  background-color #1B0033
-  box-shadow 0 2px 16px #0008
+.build-button
+  position absolute
+  left 40px
+  height 50px
+  line-height 22px
+  border-radius 25px
+  padding 14px 30px
   color #FFF
-  text-align center
+  font-size 16px
   box-sizing border-box
-  padding 24px
-  z-index 99
-  line-height 72px
-  cursor pointer
+  box-shadow 0 1px 4px #0008
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="hello-card">
     <div class="board" :style="{'transform': `scale(${scale}) rotateY(${rotate}deg)`}">
-      <p class="rank">Rank #1</p>
-      <h1 class="title">{{title}}</h1>
-      <p class="intro">{{intro}}</p>
+      <p class="rank">Rank #{{data.rank}}</p>
+      <h1 class="title">{{data.title}}</h1>
+      <p class="intro">{{data.intro}}</p>
       <pink-silk :y="y" :isShow="showPinkSilk"></pink-silk>
       <blue-silk :y="y" :isShow="showBlueSilk"></blue-silk>
       <div class="mask" :style="{'opacity': onHover || show ? 0 : 1}">
@@ -24,14 +24,9 @@ import gsap from 'gsap'
 import PinkSilk from './PinkSilk'
 import BlueSilk from './BlueSilk'
 
-const title = 'DoraDust'
-const intro = `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。 `
-
 export default {
   name: 'HelloCard',
-  props: ['dx', 'dy', 'show'],
+  props: ['dx', 'dy', 'orgData', 'show'],
   data () {
     return {
       toY: 0,
@@ -42,8 +37,6 @@ export default {
       showBlueSilk: false,
       showPinkSilk: false,
       scale: 1,
-      title,
-      intro,
       onHover: false,
       maskInfo: []
     }
@@ -51,6 +44,9 @@ export default {
   computed: {
     needUpdate () {
       return (this.showBlueSilk ? 1 : 0) + (this.showPinkSilk ? 2 : 0)
+    },
+    data () {
+      return this.orgData ? this.orgData : {}
     }
   },
   watch: {
@@ -159,22 +155,22 @@ export default {
     left 0
     box-shadow 0 2px 8px #0001
   .rank
-    height 20px
+    height 50px
     margin 0
     background-color #FF4A4A
     color #FFF
     text-align center
-    font-size 12px
-    line-height 20px
+    font-size 20px
+    line-height 50px
     border-radius 8px 8px 0 0
   .title
     font-size 30px
-    margin 36px 24px 28px
+    margin 16px 24px 18px
     line-height 36px
     color #333
   .intro
     font-size 16px
-    margin 24px
+    margin 18px 24px
     line-height 22px
     text-align justify
     color #666
@@ -199,7 +195,7 @@ export default {
     box-sizing border-box
     border-radius 0 0 6px 6px
     .lines div
-      background-color #ddd
+      background-color #eee
       margin-top 18px
       width 100%
       height 4px
