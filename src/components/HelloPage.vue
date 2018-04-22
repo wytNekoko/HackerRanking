@@ -16,7 +16,7 @@
       <div class="logo">
         <img :style="{
           'transform': `translate3d(${-pos.x / 2}px, ${-pos.y / 2}px ,0)`
-        }" width="300" :src="require('@/assets/logo.svg')" alt="logo">
+        }" width="300" :src="require('@/assets/symbols-logo.png')" alt="logo">
       </div>
     </div>
     <div class="build-button build-num">{{buildNum}} Planets remained to build today</div>
@@ -104,7 +104,9 @@ export default {
   width 100%
   height 100%
   background-color #441D66
-  position relative
+  position absolute
+  z-index 2
+  overflow hidden
 .box
   width 300px
   height 400px
