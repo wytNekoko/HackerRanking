@@ -5,7 +5,7 @@
     </transition>
     <div class="user" @click="openProfile" :class="{
       'user-open': this.$route.name === 'Profile',
-      'user-hide': this.$route.name === 'Ranking'
+      'user-hide': this.$route.name === 'Ranking' || this.$route.name === 'Register'
     }">
       <p class="name">{{user.name}}</p>
       <p class="posi">{{user.postion}}</p>
@@ -13,7 +13,7 @@
     </div>
     <div class="ranking" @click="toggleRanking"  :class="{
       'ranking-open': this.$route.name === 'Ranking',
-      'ranking-hide': this.$route.name === 'Profile'
+      'ranking-hide': this.$route.name === 'Profile' || this.$route.name === 'Register'
     }">{{this.$route.name === 'Ranking' ? '&lt; Back' : 'Ranking'}}</div>
     <div class="back" @click="closeProfile" :class="{
       'hide': this.$route.name !== 'Profile'

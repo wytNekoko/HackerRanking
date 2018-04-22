@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloPage from '@/components/HelloPage'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'HelloPage',
       component: HelloPage
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/profile',

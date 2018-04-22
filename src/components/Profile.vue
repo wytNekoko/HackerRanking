@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     viewSetUp (item) {
-      console.log(item)
+      return item
     }
   }
 }
