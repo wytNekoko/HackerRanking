@@ -10,7 +10,7 @@
       }">
       <div class="content" :style="{
         'transform': `translate3d(${k < 30 ? 100 : ((k - 90) * (k - 90) - 100) / 35}%, 0, 0)`
-      }">
+      }" @click="onClick">
         <span>Build it!</span>
       </div>
     </div>
@@ -47,6 +47,11 @@ export default {
       paused: true,
       ease: window.Power2.easeInOutt
     })
+  },
+  methods: {
+    onClick () {
+      this.$emit('build')
+    }
   }
 }
 </script>

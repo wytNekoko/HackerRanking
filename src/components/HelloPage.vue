@@ -1,16 +1,28 @@
 <template>
   <div class="hello">
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
-      <hello-card class="center" :dx="pos.x" :dy="pos.y" :orgData="building[0]"></hello-card>
-      <hello-card class="left-1" :dx="pos.x" :dy="pos.y" :orgData="building[1]"></hello-card>
-      <hello-card class="left-2" :dx="pos.x" :dy="pos.y" :orgData="building[2]"></hello-card>
-      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"></hello-card>
+      <hello-card class="center" :dx="pos.x" :dy="pos.y" :orgData="building[0]"
+        v-on:childView="view(building[0])" v-on="$listeners"
+      ></hello-card>
+      <hello-card class="left-1" :dx="pos.x" :dy="pos.y" :orgData="building[1]"
+        v-on:childView="view(building[1])" v-on="$listeners"
+      ></hello-card>
+      <hello-card class="left-2" :dx="pos.x" :dy="pos.y" :orgData="building[2]"
+        v-on:childView="view(building[2])" v-on="$listeners"
+      ></hello-card>
+      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"
+        v-on:childView="view(building[3])" v-on="$listeners"
+      ></hello-card>
       <div class="box center-1"></div>
       <div class="box center-2"></div>
-      <hello-card class="ll" :dx="pos.x" :dy="pos.y" :orgData="building[6]"></hello-card>
+      <hello-card class="ll" :dx="pos.x" :dy="pos.y" :orgData="building[4]"
+        v-on:childView="view(building[4])" v-on="$listeners"
+      ></hello-card>
       <div class="box ll-1"></div>
       <div class="box ll-2"></div>
-      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[6]"></hello-card>
+      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[5]"
+        v-on:childView="view(building[5])" v-on="$listeners"
+      ></hello-card>
       <div class="box rr-1"></div>
       <div class="box rr-2"></div>
       <div class="logo">
@@ -20,7 +32,7 @@
       </div>
     </div>
     <div class="build-button build-num">{{buildNum}} Planets remained to build today</div>
-    <div class="build-button build-new">Set up a new planet</div>
+    <div class="build-button build-new" @click="setUp">Set up a new planet</div>
   </div>
 </template>
 
@@ -48,6 +60,20 @@ const building = [
 每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
 信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
     rank: 3
+  },
+  {
+    title: 'DoraDust',
+    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
+每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
+信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+    rank: 4
+  },
+  {
+    title: 'DoraDust',
+    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
+每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
+信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+    rank: 5
   }
 ]
 const buildNum = 3
@@ -74,8 +100,8 @@ export default {
       const x = e.pageX - (this.boundingInfo.width / 2)
       const y = e.pageY - (this.boundingInfo.height / 2)
       this.toPos = {
-        x: -x / 20,
-        y: -y / 20
+        x: -x / 30,
+        y: -y / 30
       }
     })
   },
@@ -90,6 +116,12 @@ export default {
         this.pos.y += dy * 0.05
       }
       requestAnimationFrame(this.render)
+    },
+    view (item) {
+      this.$emit('view', item)
+    },
+    setUp () {
+      this.$emit('setUp')
     }
   },
   components: {
@@ -105,7 +137,6 @@ export default {
   height 100%
   background-color #441D66
   position absolute
-  z-index 2
   overflow hidden
 .box
   width 300px

@@ -4,8 +4,8 @@
       <p class="rank">Rank #{{data.rank}}</p>
       <h1 class="title">{{data.title}}</h1>
       <p class="intro">{{data.intro}}</p>
-      <pink-silk :y="y" :isShow="showPinkSilk"></pink-silk>
-      <blue-silk :y="y" :isShow="showBlueSilk"></blue-silk>
+      <pink-silk :y="y" :isShow="showPinkSilk" v-on="$listeners"></pink-silk>
+      <blue-silk :y="y" :isShow="showBlueSilk" v-on="$listeners"></blue-silk>
       <div class="mask" :style="{'opacity': onHover || show ? 0 : 1}">
         <div class="mask-top"></div>
         <div class="mask-bottom">
@@ -139,7 +139,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .hello-card
   width 300px
   height 400px
