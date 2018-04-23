@@ -1,6 +1,18 @@
 <template>
   <div class="hello">
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
+      <div class="box center-1"></div>
+      <div class="box center-2"></div>
+      <div class="box ll-1"></div>
+      <div class="box ll-2"></div>
+      <div class="box rr-1"></div>
+      <div class="box rr-2"></div>
+      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[5]"
+        v-on:childView="view(building[5])" v-on="$listeners"
+      ></hello-card>
+      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"
+        v-on:childView="view(building[3])" v-on="$listeners"
+      ></hello-card>
       <hello-card class="center" :dx="pos.x" :dy="pos.y" :orgData="building[0]"
         v-on:childView="view(building[0])" v-on="$listeners"
       ></hello-card>
@@ -10,21 +22,9 @@
       <hello-card class="left-2" :dx="pos.x" :dy="pos.y" :orgData="building[2]"
         v-on:childView="view(building[2])" v-on="$listeners"
       ></hello-card>
-      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"
-        v-on:childView="view(building[3])" v-on="$listeners"
-      ></hello-card>
-      <div class="box center-1"></div>
-      <div class="box center-2"></div>
       <hello-card class="ll" :dx="pos.x" :dy="pos.y" :orgData="building[4]"
         v-on:childView="view(building[4])" v-on="$listeners"
       ></hello-card>
-      <div class="box ll-1"></div>
-      <div class="box ll-2"></div>
-      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[5]"
-        v-on:childView="view(building[5])" v-on="$listeners"
-      ></hello-card>
-      <div class="box rr-1"></div>
-      <div class="box rr-2"></div>
       <div class="logo">
         <img :style="{
           'transform': `translate3d(${-pos.x / 2}px, ${-pos.y / 2}px ,0)`

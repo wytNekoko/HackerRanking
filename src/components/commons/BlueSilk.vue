@@ -81,7 +81,7 @@ export default {
     box-sizing border-box
     cursor pointer
   span
-    padding-right 20px
+    padding-right 30px
     float right
 .back-part
   position absolute
