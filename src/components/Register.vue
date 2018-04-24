@@ -4,26 +4,32 @@
       <img class="logo"
         :class="{'move-up': openBox}" width="300"
         :src="require('@/assets/symbols-logo.png')" alt="logo">
-      <div class="button" @click="registeOnClick">Register Here</div>
+      <div class="button" @click="registeOnClick">Register / Login Here</div>
       <p class="jump" @click="jump">Directly go to the Universe ></p>
     </div>
     <div class="register-box" :class="{'open': openBox}">
-      <h2>Register</h2>
+      <h2>
+        <span @click="login" :class="{'focus': !needRegister}">Login</span>
+        <span @click="register" :class="{'focus': needRegister}">Register</span>
+      </h2>
       <ul class="form">
         <li>
           <span>Username</span>
           <input type="text" v-model="username" @change="checkUsername">
-          <p :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
+          <p v-if="needRegister"
+            :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
         </li>
         <li>
           <span>Password</span>
           <input type="password" v-model="password" @change="checkPassword">
-          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+          <p v-if="needRegister"
+            :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
         </li>
         <li>
           <span>Password Confirm</span>
           <input type="password" v-model="confirm" @change="checkConfirm">
           <p :style="{'color': status[2] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[2]}}</p>
+          <div v-if="!needRegister" class="mask"></div>
         </li>
       </ul>
       <div class="submit">Submit</div>
@@ -41,6 +47,7 @@ export default {
   name: 'Register',
   data () {
     return {
+      needRegister: false,
       openBox: false,
       username: '',
       password: '',
@@ -71,6 +78,14 @@ export default {
       } else if (this.confirm !== '') {
         this.status.splice(2, 1, 'Enter the password twice inconsistently')
       }
+    },
+    login () {
+      this.confirm = ''
+      this.status.splice(2, 1, '')
+      this.needRegister = false
+    },
+    register () {
+      this.needRegister = true
     }
   }
 }
@@ -126,9 +141,17 @@ export default {
   transition 0.8s
   font-family 'Ubuntu'
   h2
-    font-size 24px
     margin 50px 0 60px
     text-align center
+    span
+      font-size 14px
+      opacity 0.4
+      cursor pointer
+      transition 0.6s
+    .focus
+      font-size 24px
+      opacity 1
+      cursor default
   .register-bg
     position absolute
     z-index -1
@@ -148,6 +171,7 @@ export default {
   li
     height 50px
     margin 30px 0
+    position relative
     span
       font-size 20px
       width 90px
@@ -171,6 +195,13 @@ export default {
       clear both
       text-align right
       padding 2px 25px
+  .mask
+    position absolute
+    width 100%
+    height 100%
+    top 0
+    left 0
+    background-color #FFFd
 .submit
   font-size 20px
   color #4C1978

@@ -6,7 +6,7 @@
         <li>
           <h2>Planet</h2>
           <ul class="list">
-            <li v-for="item in planet" :key="planet.indexOf(item)">
+            <li v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
               <span :class="{'name': planet.indexOf(item) < 3}">
                 {{planet.indexOf(item)}} {{item.name}}
               </span>
@@ -17,7 +17,7 @@
         <li>
           <h2>Planet Owner</h2>
           <ul class="list">
-            <li v-for="item in owner" :key="owner.indexOf(item)">
+            <li v-for="item in owner" :key="owner.indexOf(item)" @click="focus(item)">
               <span :class="{'name': owner.indexOf(item) < 3}">
                 {{owner.indexOf(item)}} {{item.name}}
               </span>
@@ -28,7 +28,7 @@
         <li>
           <h2>Builder</h2>
           <ul class="list">
-            <li v-for="item in builder" :key="builder.indexOf(item)">
+            <li v-for="item in builder" :key="builder.indexOf(item)" @click="focus(item)">
               <span :class="{'name': builder.indexOf(item) < 3}">
                 {{builder.indexOf(item)}} {{item.name}}
               </span>
@@ -87,6 +87,11 @@ export default {
       owner,
       builder
     }
+  },
+  methods: {
+    focus (item) {
+      this.$emit('view', item)
+    }
   }
 }
 </script>
@@ -125,6 +130,7 @@ export default {
 .list
   margin 48px 40px
   li
+    cursor pointer
     line-height 40px
   .name
     font-size 24px

@@ -183,7 +183,7 @@ export default {
 .build-num
   top 40px
   background-color #FF0082
-  cursor default
+  cursor pointer
 .build-new
   top 106px
   background-color #62B100

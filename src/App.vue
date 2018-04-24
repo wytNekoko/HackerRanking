@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <router-view v-on:view="view" v-on:setUp="setUp"/>
+      <router-view @view="view" @setUp="setUp" @update="update"/>
     </transition>
     <div class="user" @click="openProfile" :class="{
       'user-open': this.$route.name === 'Profile',
       'user-hide': this.$route.name === 'Ranking' || this.$route.name === 'Register'
     }">
-      <p class="name">{{user.name}}</p>
-      <p class="posi">{{user.postion}}</p>
-      <p class="id">No. {{user.id}}</p>
+      <div v-if="user">
+        <p class="name">{{user.name}}</p>
+        <p class="posi">{{user.postion}}</p>
+        <p class="id">No. {{user.id}}</p>
+      </div>
+      <p v-else class="login">Login</p>
     </div>
     <div class="ranking" @click="toggleRanking"  :class="{
       'ranking-open': this.$route.name === 'Ranking',
@@ -67,17 +70,16 @@
 </template>
 
 <script>
-const user = {
-  name: 'Loslo',
-  postion: 'Builder',
-  id: '0192'
-}
-
+// const user = {
+//   name: 'Loslo',
+//   postion: 'Builder',
+//   id: '0192123'
+// }
 export default {
   name: 'App',
   data () {
     return {
-      user,
+      user: null,
       viewPro: {
         title: 'DoraDust',
         intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
@@ -100,9 +102,18 @@ export default {
       }
     }
   },
+  created () {
+    if (!window.cookieStorage.getItem('token')) {
+      this.$router.push('/register')
+    }
+  },
   methods: {
     openProfile () {
-      this.$router.push('/profile')
+      if (!window.cookieStorage.getItem('token')) {
+        this.$router.push('/register')
+      } else {
+        this.$router.push('/profile')
+      }
     },
     closeProfile () {
       this.$router.push('/')
@@ -134,6 +145,15 @@ export default {
     },
     closeSet () {
       this.setIsOpen = false
+    },
+    update (data) {
+      const d = new Date()
+      if (data) {
+        d.setMinutes(d.getMinutes + 30)
+        window.cookieStorage.setItem('token', data.token, { expires: d })
+      } else {
+        window.cookieStorage.setItem('token', 'anyValue', { expires: d })
+      }
     }
   }
 }
@@ -169,6 +189,10 @@ export default {
   .posi, .id
     line-height 18px
     font-size 12px
+    margin 0
+  .login
+    line-height 72px
+    font-size 16px
     margin 0
 .user-open
   left 80%

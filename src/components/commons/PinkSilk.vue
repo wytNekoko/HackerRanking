@@ -23,6 +23,7 @@
     <img class="hammer"
       :class="{'hammer-animation': onbuilding}"
       :src="require('@/assets/symbols-hammer.png')" alt="">
+    <div class="time" :class="{'time-show': isShow}">3d 24:30:3</div>
   </div>
 </template>
 
@@ -159,6 +160,23 @@ export default {
 .hammer-animation
   opacity 1
   animation boom 2s
+.time
+  width 100px
+  height 16px
+  line-height 16px
+  font-size 12px
+  color #FFF
+  text-align center
+  background-color #FF0082
+  position absolute
+  top 56px
+  left -92px
+  transition 0.5s
+  opacity 0
+  transform translate3d(0, 10px, 0)
+.time-show
+  opacity 1
+  transform translate3d(0, 0, 0)
 @keyframes boom
   0%
     transform matrix(1, 0, 0, 1, 0, 0)
