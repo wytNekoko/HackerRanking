@@ -6,6 +6,7 @@
         <li>
           <h2>Planet</h2>
           <ul class="list">
+            <li class="no-data" v-if="planet.length === 0">no data</li>
             <li v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
               <span :class="{'name': planet.indexOf(item) < 3}">
                 {{planet.indexOf(item)}} {{item.name}}
@@ -17,6 +18,7 @@
         <li>
           <h2>Planet Owner</h2>
           <ul class="list">
+            <li class="no-data" v-if="planet.length === 0">no data</li>
             <li v-for="item in owner" :key="owner.indexOf(item)" @click="focus(item)">
               <span :class="{'name': owner.indexOf(item) < 3}">
                 {{owner.indexOf(item)}} {{item.name}}
@@ -28,6 +30,7 @@
         <li>
           <h2>Builder</h2>
           <ul class="list">
+            <li class="no-data" v-if="planet.length === 0">no data</li>
             <li v-for="item in builder" :key="builder.indexOf(item)" @click="focus(item)">
               <span :class="{'name': builder.indexOf(item) < 3}">
                 {{builder.indexOf(item)}} {{item.name}}
@@ -42,51 +45,79 @@
 </template>
 
 <script>
-const planet = [
-  { name: 'a bus', dust: 341 },
-  { name: 'a bus', dust: 300 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 }
-]
-const owner = [
-  { name: 'a bus', dust: 341 },
-  { name: 'a bus', dust: 300 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 }
-]
-const builder = [
-  { name: 'a bus', dust: 341 },
-  { name: 'a bus', dust: 300 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 200 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 },
-  { name: 'a bus', dust: 189 }
-]
+import api from '@/api'
+
+// const planet = [
+//   { name: 'a bus', dust: 341 },
+//   { name: 'a bus', dust: 300 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 }
+// ]
+// const owner = [
+//   { name: 'a bus', dust: 341 },
+//   { name: 'a bus', dust: 300 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 }
+// ]
+// const builder = [
+//   { name: 'a bus', dust: 341 },
+//   { name: 'a bus', dust: 300 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 200 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 },
+//   { name: 'a bus', dust: 189 }
+// ]
 
 export default {
   name: 'Ranking',
   data () {
     return {
-      planet,
-      owner,
-      builder
+      planet: [],
+      owner: [],
+      builder: []
     }
+  },
+  created () {
+    api.rank_planets().then((res) => {
+      const d = res.data
+      if (d.errcode) {
+        alert(d.errmsg)
+      } else {
+        this.planet = d
+      }
+    })
+    api.rank_builders().then((res) => {
+      const d = res.data
+      if (d.errcode) {
+        alert(d.errmsg)
+      } else {
+        this.builder = d
+      }
+    })
+    api.rank_owners().then((res) => {
+      const d = res.data
+      if (d.errcode) {
+        alert(d.errmsg)
+      } else {
+        this.owner = d
+      }
+    })
   },
   methods: {
     focus (item) {
@@ -121,6 +152,10 @@ export default {
     float left
     background-color #FFF
     border-radius 8px
+    height 571px
+  .no-data
+    opacity 0.5
+    text-align center
 .center
   position absolute
   top 50%

@@ -29,16 +29,18 @@
 
 <script>
 import { TweenLite } from 'gsap'
+import api from '@/api'
 
 export default {
   name: 'PinkSilk',
-  props: ['y', 'isShow'],
+  props: ['y', 'isShow', 'name'],
   data () {
     return {
       k: 0,
       mouseon: false,
       animation: null,
-      onbuilding: false
+      onbuilding: false,
+      timer: 0
     }
   },
   watch: {
@@ -68,9 +70,21 @@ export default {
     },
     onMousedown () {
       this.onbuilding = true
+      this.timer = setTimeout(this.build, 2000)
     },
     onMouseleave () {
+      clearTimeout(this.timer)
       this.onbuilding = false
+    },
+    build () {
+      api.build(this.name, 22).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          alert('success')
+        }
+      })
     }
   }
 }

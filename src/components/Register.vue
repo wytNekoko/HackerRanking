@@ -32,8 +32,8 @@
           <div v-if="!needRegister" class="mask"></div>
         </li>
       </ul>
-      <div class="submit">Submit</div>
-      <p class="notice">You have to blablabla!</p>
+      <div class="submit" @click="submit">Submit</div>
+      <p class="notice">{{notice}}</p>
       <img class="register-bg" width="400"
         :src="require('@/assets/symbols-buildplanet.png')"
       alt="buildplanet">
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 export default {
   name: 'Register',
   data () {
@@ -52,7 +54,8 @@ export default {
       username: '',
       password: '',
       confirm: '',
-      status: ['', '', '']
+      status: ['', '', ''],
+      notice: ' '
     }
   },
   methods: {
@@ -86,6 +89,37 @@ export default {
     },
     register () {
       this.needRegister = true
+    },
+    setNotice (text) {
+      this.notice = text
+      setTimeout(() => {
+        this.notice = ' '
+      }, 3000)
+    },
+    submit () {
+      if (this.needRegister) {
+        if (this.status[2] !== 'OK') {
+          return
+        }
+        api.register(this.username, this.password).then((res) => {
+          const d = res.data
+          if (d.errcode) {
+            this.setNotice(d.errmsg)
+          } else {
+            this.setNotice('Register success')
+            this.login()
+          }
+        })
+      } else {
+        api.login(this.username, this.password).then((res) => {
+          const d = res.data
+          if (d.errcode) {
+            this.setNotice(d.errmsg)
+          } else {
+            this.$emit('update', Object.assign(d, { name: this.username }))
+          }
+        })
+      }
     }
   }
 }
@@ -219,6 +253,7 @@ export default {
   width 80%
   margin 30px auto 40px
   text-align center
+  height 24px
 .open
   top 50%
   transform translate3d(-50%, -50%, 0)

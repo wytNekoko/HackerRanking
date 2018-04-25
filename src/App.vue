@@ -32,7 +32,7 @@
         <p v-if="viewPro.git">git地址：<a :href="viewPro.git">{{viewPro.git}}</a></p>
         <p>团队：{{viewPro.team}}</p>
         <div class="build">
-          <div class="button">Build it!</div>
+          <div class="button" @click="buildIt">Build it!</div>
           <p>{{viewPro.builder}}Builders</p>
           <p>{{viewPro.dust}}Dusts</p>
           <p>Rank #{{viewPro.rank}}</p>
@@ -42,18 +42,18 @@
     <div class="set-up" :class="{'view-show': setIsOpen}">
       <div class="card">
         <span class="close" @click="closeSet">X 关闭</span>
-        <div class="number">Planet No.3224</div>
-        <textarea rows="4" v-model="setUpInfo.intro"></textarea>
+        <input type="text" class="number" v-model="setUpInfo.name">
+        <textarea rows="4" v-model="setUpInfo.description"></textarea>
         <p class="title">Email</p>
-        <input type="text">
+        <input type="text" v-model="setUpInfo.email">
         <p class="title">Demo URL</p>
-        <input type="text">
+        <input type="text" v-model="setUpInfo.demo">
         <p class="title">Github URL</p>
-        <input type="text">
+        <input type="text" v-model="setUpInfo.git">
         <p class="title">Team Introduction</p>
         <textarea rows="4" v-model="setUpInfo.team"></textarea>
         <div class="build">
-          <div class="button set">Set it up</div>
+          <div class="button set" @click="setupPlanet">Set it up</div>
         </div>
       </div>
     </div>
@@ -63,18 +63,15 @@
         <img height="80" :src="require('@/assets/symbols-spy.png')" alt="">
         <h3>Spy the Team</h3>
         <p>拿到{{leader}}队长联系方式</p>
-        <div class="button">{{pay}} Gift</div>
+        <div class="button" @click="spy">{{leaderEmail ? leaderEmail : `${pay} Gift`}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// const user = {
-//   name: 'Loslo',
-//   postion: 'Builder',
-//   id: '0192123'
-// }
+import api from '@/api'
+
 export default {
   name: 'App',
   data () {
@@ -95,16 +92,26 @@ export default {
       setIsOpen: false,
       leader: 'Alabama',
       pay: 32,
+      leaderEmail: '',
       setUpInfo: {
-        intro: 'Description',
-        team: '',
-        email: ''
+        name: 'Name',
+        description: 'Description',
+        email: '',
+        demo: '',
+        git: '',
+        team: ''
       }
     }
   },
   created () {
     if (!window.cookieStorage.getItem('token')) {
       this.$router.push('/register')
+    } else {
+      this.user = {
+        name: window.cookieStorage.getItem('name'),
+        postion: 'Builder',
+        id: '0192123'
+      }
     }
   },
   methods: {
@@ -134,6 +141,7 @@ export default {
     },
     openSpy () {
       this.leader = 'Alabama'
+      this.leaderEmail = ''
       this.pay = 32
       this.spyIsOpen = true
     },
@@ -149,11 +157,63 @@ export default {
     update (data) {
       const d = new Date()
       if (data) {
-        d.setMinutes(d.getMinutes + 30)
-        window.cookieStorage.setItem('token', data.token, { expires: d })
+        this.$router.push('/')
+        d.setSeconds(d.getSeconds + data.expires_in)
+        this.user = {
+          name: data.name,
+          postion: 'Builder',
+          id: '0192123'
+        }
+        window.cookieStorage.setItem('token', data.auth_token, { expires: d })
+        window.cookieStorage.setItem('name', data.name, { expires: d })
       } else {
+        this.$router.push('/')
+        this.user = null
         window.cookieStorage.setItem('token', 'anyValue', { expires: d })
+        window.cookieStorage.setItem('name', 'anyValue', { expires: d })
       }
+    },
+    setupPlanet () {
+      api.setup_planet(this.setUpInfo).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          this.setIsOpen = false
+          for (const i in this.setUpInfo) {
+            if (i === 'name') {
+              this.setUpInfo[i] = 'Name'
+            } else if (i === 'description') {
+              this.setUpInfo[i] = 'Description'
+            } else {
+              this.setUpInfo[i] = ''
+            }
+          }
+        }
+      })
+    },
+    buildIt () {
+      api.build(this.viewPro.title, 22).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          alert('success')
+        }
+      })
+    },
+    spy () {
+      if (this.leaderEmail) {
+        return
+      }
+      api.spy(this.viewPro.title).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          this.leaderEmail = d
+        }
+      })
     }
   }
 }
@@ -281,7 +341,6 @@ export default {
     font-size 24px
     line-height 40px
     padding-left 16px
-    color #B7B7B7
     background-color #F5F5F5
     margin-bottom 30px
   textarea
@@ -384,10 +443,11 @@ export default {
     color #FFF
     background-color #FF2929
     border-radius 8px
-    width 170px
     height 50px
     line-height 50px
     font-size 24px
     margin auto
     cursor pointer
+    display table
+    padding 0 50px
 </style>

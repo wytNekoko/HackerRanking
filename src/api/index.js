@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'http://localhost'
+const url = 'https://dust.giftchain.org/api'
 
 export default {
   login (username, password) {
@@ -19,14 +19,14 @@ export default {
       headers: { 'content-type': 'application/json' }
     })
   },
-  setup_planet (name, description, demo, git, team, email) {
+  setup_planet (option) {
     return axios.post(`${url}/user/planet`, {
-      name,
-      description,
-      demo_url: demo,
-      github_url: git,
-      team_intro: team,
-      email
+      name: option.name,
+      description: option.description,
+      demo_url: option.demo,
+      github_url: option.git,
+      team_intro: option.team,
+      email: option.email
     }, {
       headers: {
         'content-type': 'application/json',
@@ -46,7 +46,7 @@ export default {
     })
   },
   get_dust () {
-    return axios.post(`${url}/user/get-dust`, {
+    return axios.post(`${url}/user/get-dust`, null, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
@@ -75,6 +75,20 @@ export default {
   },
   rank_owners () {
     return axios.get(`${url}/rank/owners`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  owned_planets () {
+    return axios.get(`${url}/profile/owned-planets`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  builded_planets () {
+    return axios.get(`${url}/profile/builded-planets`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }

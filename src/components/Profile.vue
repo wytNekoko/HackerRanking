@@ -6,7 +6,7 @@
           <div class="center">
             <h2>Your Total Dusts</h2>
             <div class="totla-dust">{{totalDust}}</div>
-            <div class="button">withdraw</div>
+            <div class="button" @click="withdraw">withdraw</div>
           </div>
         </div>
         <div class="right">
@@ -26,7 +26,7 @@
           <ul class="lists">
             <li v-for="item in setUp" :key="setUp.indexOf(item)">
               <span class="name">{{item.name}}</span>
-              <span class="dust">got {{item.dust}} Dusts</span>
+              <span class="dust">got {{item.dust_num}} Dusts</span>
               <span class="button" @click="viewSetUp(item)">view</span>
             </li>
           </ul>
@@ -38,7 +38,7 @@
           <ul class="lists">
             <li v-for="item in contributed" :key="contributed.indexOf(item)">
               <span class="name">{{item.name}}</span>
-              <span class="dust">got {{item.dust}} Dusts</span>
+              <span class="dust">got {{item.reward_dust}} Dusts</span>
               <span class="button" @click="viewSetUp(item)">view</span>
             </li>
           </ul>
@@ -49,18 +49,20 @@
 </template>
 
 <script>
-const setUp = [
-  { name: 'asdfg', dust: 232 },
-  { name: 'asd', dust: 21 },
-  { name: 'asdfga asd', dust: 22 },
-  { name: 'asdfg a', dust: 232 }
-]
-const contributed = [
-  { name: 'sdkjf ljflai ', dust: 32 },
-  { name: 'sdkjf ljflai ', dust: 32 },
-  { name: 'sdkjf ljflai ', dust: 32 },
-  { name: 'sdkjf ljflai ', dust: 32 }
-]
+import api from '@/api'
+
+// const setUp = [
+//   { name: 'asdfg', dust: 232 },
+//   { name: 'asd', dust: 21 },
+//   { name: 'asdfga asd', dust: 22 },
+//   { name: 'asdfg a', dust: 232 }
+// ]
+// const contributed = [
+//   { name: 'sdkjf ljflai ', dust: 32 },
+//   { name: 'sdkjf ljflai ', dust: 32 },
+//   { name: 'sdkjf ljflai ', dust: 32 },
+//   { name: 'sdkjf ljflai ', dust: 32 }
+// ]
 const totalDust = 3523
 const info = [
   { time: '2018-10-23 12:22:33', name: 'asdf', fame: 3 },
@@ -73,15 +75,39 @@ export default {
   name: 'Profile',
   data () {
     return {
-      setUp,
-      contributed,
+      setUp: [],
+      contributed: [],
       totalDust,
       info
     }
   },
+  created () {
+    // api.get_dust().then((res) => {
+    //   console.log(res)
+    // })
+    api.owned_planets().then((res) => {
+      const d = res.data
+      if (d.errcode) {
+        alert(d.errmsg)
+      } else {
+        this.setUp = d
+      }
+    })
+    api.builded_planets().then((res) => {
+      const d = res.data
+      if (d.errcode) {
+        alert(d.errmsg)
+      } else {
+        this.contributed = d
+      }
+    })
+  },
   methods: {
     viewSetUp (item) {
       return item
+    },
+    withdraw () {
+      this.$emit('update')
     }
   }
 }
@@ -156,6 +182,8 @@ export default {
     opacity 0.4
     margin-right 1em
 .lists
+  height 234px
+  overflow hidden
   li
     font-size 16px
     line-height 24px
