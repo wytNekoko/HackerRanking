@@ -108,8 +108,15 @@ export default {
           if (d.errcode) {
             this.setNotice(d.errmsg)
           } else {
-            this.setNotice('Register success')
-            this.login()
+            api.login(this.username, this.password).then((res) => {
+              const d = res.data
+              if (d.errcode) {
+                this.setNotice(d.errmsg)
+              } else {
+                this.$emit('update', Object.assign(d, { name: this.username }))
+                this.$router.push('/rules')
+              }
+            })
           }
         })
       } else {

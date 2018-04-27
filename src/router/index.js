@@ -4,6 +4,7 @@ import HelloPage from '@/components/HelloPage'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
 import Register from '@/components/Register'
+import Rules from '@/components/Rules'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/ranking',
       name: 'Ranking',
       component: Ranking
+    },
+    {
+      path: '/rules',
+      name: 'Rules',
+      component: Rules
     }
   ]
 })

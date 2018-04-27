@@ -411,6 +411,7 @@ export default {
   background-color #ffdc00
   cursor pointer
 .set-up
+  z-index 100
   position absolute
   top 0
   left 0
