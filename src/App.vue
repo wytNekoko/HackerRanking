@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="mask" v-if="spyIsOpen">
+    <div class="mask spy-mask" v-if="spyIsOpen">
       <div class="spy-card">
         <span class="close" @click="closeSpy">X 关闭</span>
         <img height="80" :src="require('@/assets/symbols-spy.png')" alt="">
@@ -110,7 +110,7 @@ export default {
       this.user = {
         name: window.cookieStorage.getItem('name'),
         postion: 'Builder',
-        id: '0192123'
+        id: '0000000'
       }
     }
   },
@@ -158,11 +158,11 @@ export default {
       const d = new Date()
       if (data) {
         this.$router.push('/')
-        d.setSeconds(d.getSeconds + data.expires_in)
+        d.setSeconds(d.getSeconds() + data.expires_in)
         this.user = {
           name: data.name,
           postion: 'Builder',
-          id: '0192123'
+          id: data.id
         }
         window.cookieStorage.setItem('token', data.auth_token, { expires: d })
         window.cookieStorage.setItem('name', data.name, { expires: d })
@@ -238,7 +238,7 @@ export default {
   color #FFF
   text-align center
   box-sizing border-box
-  padding 24px
+  padding 24px 14px
   z-index 99
   cursor pointer
   transition 1s
@@ -273,7 +273,7 @@ export default {
   text-align center
   box-sizing border-box
   padding 24px
-  z-index 99
+  z-index 70
   line-height 72px
   cursor pointer
   transition 1s
@@ -306,6 +306,7 @@ export default {
   width 100%
   height 100%
   background-color #000A
+  z-index 80
 .view
   position absolute
   top 0
@@ -314,6 +315,7 @@ export default {
   height 100%
   transform translate3d(0, 100%, 0)
   transition transform 0.8s
+  z-index 100
 .card
   width 800px
   height 100%
@@ -393,6 +395,8 @@ export default {
       line-height 18px
       font-family 'Ubuntu'
       text-align center
+.spy-mask
+  z-index 120
 .spy
   position absolute
   left 50%

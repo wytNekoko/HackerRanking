@@ -31,12 +31,16 @@
         }" width="300" :src="require('@/assets/symbols-logo.png')" alt="logo">
       </div>
     </div>
-    <div class="build-button build-num">{{buildNum}} Planets remained to build today</div>
+    <div class="build-button build-num" @click.self="getDust">
+      Get Dust
+      <div class="build-num-plus" :class="{'build-num-plus-active': numActive}">+88</div>
+    </div>
     <div class="build-button build-new" @click="setUp">Set up a new planet</div>
   </div>
 </template>
 
 <script>
+import api from '@/api'
 import HelloCard from './commons/HelloCard'
 
 const building = [
@@ -46,37 +50,8 @@ const building = [
 每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
 信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
     rank: 1
-  },
-  {
-    title: 'DoraDust',
-    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
-    rank: 2
-  },
-  {
-    title: 'DoraDust',
-    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
-    rank: 3
-  },
-  {
-    title: 'DoraDust',
-    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
-    rank: 4
-  },
-  {
-    title: 'DoraDust',
-    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
-    rank: 5
   }
 ]
-const buildNum = 3
 
 export default {
   name: 'HelloPage',
@@ -86,9 +61,29 @@ export default {
       toPos: { x: 0, y: 0 },
       pos: { x: 0, y: 0 },
       boundingInfo: null,
-      buildNum,
-      building
+      building,
+      numActive: false
     }
+  },
+  created () {
+    api.planets_show().then((res) => {
+      const list = res.data
+      let planet
+      for (let i = 0; i < 6; i++) {
+        if (planet = list[i]) {
+          building.splice(i, 1, {
+            title: list[i].name,
+            intro: list[i].description,
+            rank: 0,
+            git: list[i].git,
+            demo: list[i].demo,
+            team: list[i].team
+          })
+        } else {
+          building.splice(i, 1, null)
+        }
+      }
+    })
   },
   mounted () {
     requestAnimationFrame(this.render)
@@ -116,6 +111,19 @@ export default {
         this.pos.y += dy * 0.05
       }
       requestAnimationFrame(this.render)
+    },
+    getDust () {
+      api.get_dust().then((res) => {
+        const d = res.data
+        if (d.errcode) {
+        alert(d.errmsg)
+        } else {
+          this.numActive = true
+          setTimeout(() => {
+            this.numActive = false
+          }, 1000)
+        }
+      })
     },
     view (item) {
       this.$emit('view', item)
@@ -188,6 +196,19 @@ export default {
   top 106px
   background-color #62B100
   cursor pointer
+.build-num-plus
+  position absolute
+  line-height 50px
+  top 0
+  right -60px
+  color #FF0082
+  font-size 30px
+  opacity 0
+  transform translate3d(0, 10px, 0)
+.build-num-plus-active
+  opacity 1
+  transform translate3d(0, 0, 0)
+  transition .6s
 .build-button
   position absolute
   left 40px

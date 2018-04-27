@@ -57,6 +57,7 @@ export default {
   mounted () {
     document.addEventListener('mouseup', () => {
       this.onbuilding = false
+      clearTimeout(this.timer)
     })
     this.animation = TweenLite.to(this, 0.6, {
       k: 100,

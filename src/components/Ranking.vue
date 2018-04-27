@@ -19,9 +19,9 @@
           <h2>Planet Owner</h2>
           <ul class="list">
             <li class="no-data" v-if="planet.length === 0">no data</li>
-            <li v-for="item in owner" :key="owner.indexOf(item)" @click="focus(item)">
+            <li v-for="item in owner" :key="owner.indexOf(item)">
               <span :class="{'name': owner.indexOf(item) < 3}">
-                {{owner.indexOf(item)}} {{item.name}}
+                {{owner.indexOf(item)}} {{item.username}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
@@ -31,9 +31,9 @@
           <h2>Builder</h2>
           <ul class="list">
             <li class="no-data" v-if="planet.length === 0">no data</li>
-            <li v-for="item in builder" :key="builder.indexOf(item)" @click="focus(item)">
+            <li v-for="item in builder" :key="builder.indexOf(item)">
               <span :class="{'name': builder.indexOf(item) < 3}">
-                {{builder.indexOf(item)}} {{item.name}}
+                {{builder.indexOf(item)}} {{item.username}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
@@ -94,28 +94,14 @@ export default {
     }
   },
   created () {
-    api.rank_planets().then((res) => {
+    api.rank_dashboards().then((res) => {
       const d = res.data
       if (d.errcode) {
         alert(d.errmsg)
       } else {
-        this.planet = d
-      }
-    })
-    api.rank_builders().then((res) => {
-      const d = res.data
-      if (d.errcode) {
-        alert(d.errmsg)
-      } else {
-        this.builder = d
-      }
-    })
-    api.rank_owners().then((res) => {
-      const d = res.data
-      if (d.errcode) {
-        alert(d.errmsg)
-      } else {
-        this.owner = d
+        this.planet = d.planets
+        this.owner = d.owners
+        this.builder = d.builders
       }
     })
   },

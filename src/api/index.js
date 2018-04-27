@@ -59,26 +59,11 @@ export default {
       }
     })
   },
-  rank_planets () {
-    return axios.get(`${url}/rank/planets`, {
-      headers: {
-        'X-Auth-Token': window.cookieStorage.getItem('token')
-      }
-    })
+  rank_winners () {
+    return axios.get(`${url}/rank/winners`)
   },
-  rank_builders () {
-    return axios.get(`${url}/rank/builders`, {
-      headers: {
-        'X-Auth-Token': window.cookieStorage.getItem('token')
-      }
-    })
-  },
-  rank_owners () {
-    return axios.get(`${url}/rank/owners`, {
-      headers: {
-        'X-Auth-Token': window.cookieStorage.getItem('token')
-      }
-    })
+  rank_dashboards () {
+    return axios.get(`${url}/rank/dashboard`)
   },
   owned_planets () {
     return axios.get(`${url}/profile/owned-planets`, {
@@ -89,6 +74,23 @@ export default {
   },
   builded_planets () {
     return axios.get(`${url}/profile/builded-planets`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  planets_show () {
+    return axios.get(`${url}/planets/show`)
+  },
+  profile_main () {
+    return axios.get(`${url}/profile/main`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  planets_one (name) {
+    return axios.get(`${url}/planets/one/${name}`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }

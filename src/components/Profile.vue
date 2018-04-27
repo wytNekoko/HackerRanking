@@ -13,8 +13,8 @@
           <div class="center">
             <ul class="infos">
               <li v-for="item in info" :key="info.indexOf(item)">
-                <span class="time">{{item.time}}</span>
-                <span>发起{{item.name}}星球建设获得{{item.fame}}声誉值</span>
+                <span class="time">{{item.created_at}}</span>
+                <span>发起{{item.name}}星球建设获得{{item.reward}}dust</span>
               </li>
             </ul>
           </div>
@@ -63,12 +63,8 @@ import api from '@/api'
 //   { name: 'sdkjf ljflai ', dust: 32 },
 //   { name: 'sdkjf ljflai ', dust: 32 }
 // ]
-const totalDust = 3523
 const info = [
-  { time: '2018-10-23 12:22:33', name: 'asdf', fame: 3 },
-  { time: '2018-10-23 12:22:33', name: 'asdf', fame: 5 },
-  { time: '2018-10-23 12:22:33', name: 'asdf', fame: 5 },
-  { time: '2018-10-23 12:22:33', name: 'asdf', fame: 5 }
+  { created_at: '2018-10-23 12:22:33', name: 'asdf', reward: 3 }
 ]
 
 export default {
@@ -77,14 +73,16 @@ export default {
     return {
       setUp: [],
       contributed: [],
-      totalDust,
+      totalDust: 0,
       info
     }
   },
   created () {
-    // api.get_dust().then((res) => {
-    //   console.log(res)
-    // })
+    api.profile_main().then((res) => {
+      const d = res.data
+      this.totalDust = d.total_dust
+      this.info = d.planets
+    })
     api.owned_planets().then((res) => {
       const d = res.data
       if (d.errcode) {
@@ -104,7 +102,22 @@ export default {
   },
   methods: {
     viewSetUp (item) {
-      return item
+      api.planets_one(item.name).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          const data = {
+            title: d.name,
+            intro: d.description,
+            demo: d.demo_url,
+            git: d.github_url,
+            team: d.team_intro,
+            rank: 0
+          }
+          this.$emit('view', data)
+        }
+      })
     },
     withdraw () {
       this.$emit('update')

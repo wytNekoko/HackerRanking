@@ -33,7 +33,7 @@
         </li>
       </ul>
       <div class="submit" @click="submit">Submit</div>
-      <p class="notice">{{notice}}</p>
+      <p class="notice" v-html="notice"></p>
       <img class="register-bg" width="400"
         :src="require('@/assets/symbols-buildplanet.png')"
       alt="buildplanet">
@@ -86,15 +86,17 @@ export default {
       this.confirm = ''
       this.status.splice(2, 1, '')
       this.needRegister = false
+      this.setNotice('')
     },
     register () {
       this.needRegister = true
+      this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
     },
     setNotice (text) {
       this.notice = text
-      setTimeout(() => {
-        this.notice = ' '
-      }, 3000)
+      // setTimeout(() => {
+      //   this.notice = ' '
+      // }, 3000)
     },
     submit () {
       if (this.needRegister) {
