@@ -14,7 +14,7 @@
             <ul class="infos">
               <li v-for="item in info" :key="info.indexOf(item)">
                 <span class="time">{{item.created_at}}</span>
-                <span>发起{{item.name}}星球建设获得{{item.reward}}dust</span>
+                <span>Build the planet {{item.name}} to get {{item.reward}} dust</span>
               </li>
             </ul>
           </div>

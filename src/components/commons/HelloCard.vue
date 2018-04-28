@@ -4,7 +4,13 @@
       <p class="rank">Rank #{{data.rank}}</p>
       <h1 class="title">{{data.title}}</h1>
       <p class="intro">{{data.intro}}</p>
-      <pink-silk :y="y" :isShow="showPinkSilk" :name="data.title" v-on="$listeners"></pink-silk>
+      <pink-silk
+        :y="y"
+        :isShow="showPinkSilk"
+        :name="data.title"
+        :time="data.time"
+        v-on="$listeners">
+      </pink-silk>
       <blue-silk :y="y" :isShow="showBlueSilk" v-on="$listeners"></blue-silk>
       <div class="mask" :style="{'opacity': onHover || show ? 0 : 1}">
         <div class="mask-top"></div>

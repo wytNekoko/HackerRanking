@@ -14,7 +14,7 @@
       </h2>
       <ul class="form">
         <li>
-          <span>Username</span>
+          <span>Cryptoname</span>
           <input type="text" v-model="username" @change="checkUsername">
           <p v-if="needRegister"
             :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
@@ -125,7 +125,7 @@ export default {
           if (d.errcode) {
             this.setNotice(d.errmsg)
           } else {
-            this.$emit('update', Object.assign(d, { name: this.username }))
+            this.$emit('update', d)
           }
         })
       }
@@ -225,7 +225,7 @@ export default {
       text-align center
     input
       border none
-      width 430px
+      width 420px
       height 50px
       background-color #F6F6F6
       border-radius 25px

@@ -110,7 +110,7 @@ export default {
       this.user = {
         name: window.cookieStorage.getItem('name'),
         postion: 'Builder',
-        id: '0000000'
+        id: window.cookieStorage.getItem('id')
       }
     }
   },
@@ -160,17 +160,19 @@ export default {
         this.$router.push('/')
         d.setSeconds(d.getSeconds() + data.expires_in)
         this.user = {
-          name: data.name,
+          name: data.user_info.username,
           postion: 'Builder',
-          id: data.id
+          id: data.user_info.id
         }
         window.cookieStorage.setItem('token', data.auth_token, { expires: d })
-        window.cookieStorage.setItem('name', data.name, { expires: d })
+        window.cookieStorage.setItem('name', data.user_info.username, { expires: d })
+        window.cookieStorage.setItem('id', data.user_info.id, { expires: d })
       } else {
         this.$router.push('/')
         this.user = null
         window.cookieStorage.setItem('token', 'anyValue', { expires: d })
         window.cookieStorage.setItem('name', 'anyValue', { expires: d })
+        window.cookieStorage.setItem('id', 'anyValue', { expires: d })
       }
     },
     setupPlanet () {

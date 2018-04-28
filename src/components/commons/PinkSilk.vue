@@ -23,7 +23,7 @@
     <img class="hammer"
       :class="{'hammer-animation': onbuilding}"
       :src="require('@/assets/symbols-hammer.png')" alt="">
-    <div class="time" :class="{'time-show': isShow}">3d 24:30:3</div>
+    <div class="time" :class="{'time-show': isShow}">{{time}}</div>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ import api from '@/api'
 
 export default {
   name: 'PinkSilk',
-  props: ['y', 'isShow', 'name'],
+  props: ['y', 'isShow', 'name', 'time'],
   data () {
     return {
       k: 0,
@@ -177,7 +177,7 @@ export default {
   animation boom 2s
 .time
   width 100px
-  height 16px
+  height 32px
   line-height 16px
   font-size 12px
   color #FFF

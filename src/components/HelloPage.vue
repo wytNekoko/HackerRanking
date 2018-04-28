@@ -77,7 +77,8 @@ export default {
             rank: 0,
             git: list[i].git,
             demo: list[i].demo,
-            team: list[i].team
+            team: list[i].team,
+            time: list[i].created_at
           })
         } else {
           building.splice(i, 1, null)
@@ -118,10 +119,14 @@ export default {
         if (d.errcode) {
         alert(d.errmsg)
         } else {
-          this.numActive = true
-          setTimeout(() => {
-            this.numActive = false
-          }, 1000)
+          if (parseInt(d)) {
+            this.numActive = true
+            setTimeout(() => {
+              this.numActive = false
+            }, 1000)
+          } else {
+            alert(d)
+          }
         }
       })
     },
