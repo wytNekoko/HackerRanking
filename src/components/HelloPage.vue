@@ -1,33 +1,16 @@
 <template>
   <div class="hello">
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
-      <div class="box center-1"></div>
-      <div class="box center-2"></div>
-      <div class="box ll-1"></div>
-      <div class="box ll-2"></div>
-      <div class="box rr-1"></div>
-      <div class="box rr-2"></div>
-      <hello-card class="rr" :dx="pos.x" :dy="pos.y" :orgData="building[5]"
-        v-on:childView="view(building[5])" v-on="$listeners"
-      ></hello-card>
-      <hello-card class="right-1" :dx="pos.x" :dy="pos.y" :orgData="building[3]"
-        v-on:childView="view(building[3])" v-on="$listeners"
-      ></hello-card>
-      <hello-card class="center" :dx="pos.x" :dy="pos.y" :orgData="building[0]"
-        v-on:childView="view(building[0])" v-on="$listeners"
-      ></hello-card>
-      <hello-card class="left-1" :dx="pos.x" :dy="pos.y" :orgData="building[1]"
-        v-on:childView="view(building[1])" v-on="$listeners"
-      ></hello-card>
-      <hello-card class="left-2" :dx="pos.x" :dy="pos.y" :orgData="building[2]"
-        v-on:childView="view(building[2])" v-on="$listeners"
-      ></hello-card>
-      <hello-card class="ll" :dx="pos.x" :dy="pos.y" :orgData="building[4]"
-        v-on:childView="view(building[4])" v-on="$listeners"
+      <hello-card v-for="item in building" :key="item.index"
+        :window="windowInfo"
+        :dx="pos.x"
+        :dy="pos.y"
+        :orgData="item"
+        v-on:childView="view(item)" v-on="$listeners"
       ></hello-card>
       <div class="logo">
         <img :style="{
-          'transform': `translate3d(${-pos.x / 2}px, ${-pos.y / 2}px ,0)`
+          'transform': `translate3d(${-pos.x * 0.1}px, ${-pos.y * 0.1}px ,0)`
         }" width="300" :src="require('@/assets/symbols-logo.png')" alt="logo">
       </div>
     </div>
@@ -43,73 +26,150 @@
 import api from '@/api'
 import HelloCard from './commons/HelloCard'
 
-const building = [
-  {
-    title: 'DoraDust',
-    intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
-    rank: 1
-  }
-]
-
 export default {
   name: 'HelloPage',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
+      lastPos: { x: 0, y: 0 },
       toPos: { x: 0, y: 0 },
       pos: { x: 0, y: 0 },
       boundingInfo: null,
-      building,
-      numActive: false
+      building: [],
+      planets: [],
+      numActive: false,
+      planetsPos: 0,
+      countIndex: 0,
+      windowInfo: { w: 0, h: 0 },
+      timer: 0,
+      checkPlanetsTimer: 0
     }
   },
   created () {
     api.planets_show().then((res) => {
-      const list = res.data
-      let planet
-      for (let i = 0; i < 6; i++) {
-        if (planet = list[i]) {
-          building.splice(i, 1, {
-            title: list[i].name,
-            intro: list[i].description,
-            rank: 0,
-            git: list[i].git,
-            demo: list[i].demo,
-            team: list[i].team,
-            time: list[i].created_at
-          })
-        } else {
-          building.splice(i, 1, null)
-        }
-      }
+      this.planets = res.data
     })
   },
   mounted () {
     requestAnimationFrame(this.render)
-    window.addEventListener('resize', () => {
-      this.boundingInfo = this.$el.getBoundingClientRect()
+    window.addEventListener('resize', this.onwindowresize)
+    this.onwindowresize()
+    this.$el.addEventListener('mousedown', (e) => {
+      this.lastPos.x = e.pageX
+      this.lastPos.y = e.pageY
+      this.$el.addEventListener('mousemove', this.onmousemove)
     })
-    this.boundingInfo = this.$el.getBoundingClientRect()
-    this.$el.addEventListener('mousemove', (e) => {
-      const x = e.pageX - (this.boundingInfo.width / 2)
-      const y = e.pageY - (this.boundingInfo.height / 2)
-      this.toPos = {
-        x: -x / 30,
-        y: -y / 30
-      }
+    this.$el.addEventListener('mouseup', () => {
+      this.$el.removeEventListener('mousemove', this.onmousemove)
     })
+    this.$el.addEventListener('mouseleave', () => {
+      this.$el.removeEventListener('mousemove', this.onmousemove)
+    })
+    this.checkPlanetsList()
   },
   methods: {
-    render () {
+    onwindowresize () {
+      this.windowInfo = {
+        w: window.innerWidth,
+        h: window.innerHeight
+      }
+      this.boundingInfo = this.$el.getBoundingClientRect()
+      this.checkPlanetsList()
+    },
+    onmousemove (e) {
+      e.preventDefault()
+      const x = e.pageX - this.lastPos.x
+      const y = e.pageY - this.lastPos.y
+      this.lastPos = {
+        x: e.pageX,
+        y: e.pageY
+      }
+      this.toPos.x += x
+      this.toPos.y += y
+    },
+    checkPlanetsList () {
+      console.log(1)
+      const hw = this.boundingInfo.width / 2
+      const hh = this.boundingInfo.height / 2
+      const minX = Math.floor((150 - this.pos.x - hw) / 340)
+      const maxX = Math.ceil((hw - this.pos.x - 150) / 340)
+      const minY = Math.floor((-this.pos.y - hh) / 480)
+      const maxY = Math.ceil((-this.pos.y + hh) / 480)
+      const temp = {}
+      for (let x = minX; x <= maxX; x += 1) {
+        temp[x] = {}
+        for (let y = minY; y <= maxY; y += 1) {
+          if (!(x === 1 && y === 1) && !((x % 2) && y === 0)) {
+            temp[x][y] = false
+          }
+        }
+      }
+      for (let i = 0; i < this.building.length; i += 1) {
+        const item = this.building[i]
+        const x = item.x
+        const y = item.y
+        if (temp[x] === undefined || temp[x][y] === undefined) {
+          this.building.splice(i, 1)
+          i -= 1
+        } else {
+          temp[x][y] = true
+        }
+      }
+      for (let x = minX; x <= maxX; x += 1) {
+        for (let y = minY; y <= maxY; y += 1) {
+          if (temp[x][y] === false) {
+            const newPlanet = this.planets[this.planetsPos]
+            this.planetsPos += 1
+            this.countIndex += 1
+            if (this.planetsPos >= this.planets.length) {
+              this.planetsPos = 0
+            }
+            if (newPlanet) {
+              const data = {
+                index: this.countIndex,
+                x,
+                y,
+                title: newPlanet.name,
+                intro: newPlanet.description,
+                rank: 0,
+                git: newPlanet.git,
+                demo: newPlanet.demo,
+                team: newPlanet.team,
+                time: newPlanet.created_at
+              }
+              this.building.push(data)
+            } else {
+              this.building.push({
+                index: this.countIndex,
+                x,
+                y,
+                title: `x:${x} y:${y}`
+              })
+            }
+          }
+        }
+      }
+    },
+    render (timer) {
+      let isMove = false
       const dx = this.toPos.x - this.pos.x
       if (Math.abs(dx) > 0.1) {
         this.pos.x += dx * 0.05
+        isMove = true
       }
       const dy = this.toPos.y - this.pos.y
       if (Math.abs(dy) > 0.1) {
         this.pos.y += dy * 0.05
+        isMove = true
+      }
+      if (isMove) {
+        const dt = Math.min(timer - this.timer, 100)
+        this.checkPlanetsTimer += dt
+        if (this.checkPlanetsTimer > 200) {
+          this.checkPlanetsTimer -= 200
+          this.checkPlanetsList()
+        }
+        this.timer = timer
       }
       requestAnimationFrame(this.render)
     },
@@ -117,16 +177,14 @@ export default {
       api.get_dust().then((res) => {
         const d = res.data
         if (d.errcode) {
-        alert(d.errmsg)
+          alert(d.errmsg)
+        } else if (parseInt(d, 10)) {
+          this.numActive = true
+          setTimeout(() => {
+            this.numActive = false
+          }, 1000)
         } else {
-          if (parseInt(d)) {
-            this.numActive = true
-            setTimeout(() => {
-              this.numActive = false
-            }, 1000)
-          } else {
-            alert(d)
-          }
+          alert(d)
         }
       })
     },
@@ -143,7 +201,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 .hello
   width 100%

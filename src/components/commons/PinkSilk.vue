@@ -11,7 +11,7 @@
       <div class="content" :style="{
         'transform': `translate3d(${k < 30 ? 100 : ((k - 90) * (k - 90) - 100) / 35}%, 0, 0)`
       }" @mousedown="onMousedown" @mouseleave="onMouseleave">
-        <span :class="{'hide': onbuilding}">Hold to build</span>
+        <span :class="{'hide': onbuilding}">Build 22 dust</span>
         <div class="progress" :class="{'show': onbuilding}">
           <div :class="{'move': onbuilding}"></div>
         </div>

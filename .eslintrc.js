@@ -49,6 +49,9 @@ module.exports = {
     // custom rules
     'semi': ['error', 'never'],
     "comma-dangle": ['error', "never"],
-    "space-before-function-paren": ['error', "always"]
+    "space-before-function-paren": ['error', "always"],
+    "no-restricted-syntax": "off",
+    "no-alert": "off",
+    "no-console": "off"
   }
 }

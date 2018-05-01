@@ -94,9 +94,6 @@ export default {
     },
     setNotice (text) {
       this.notice = text
-      // setTimeout(() => {
-      //   this.notice = ' '
-      // }, 3000)
     },
     submit () {
       if (this.needRegister) {
@@ -108,27 +105,22 @@ export default {
           if (d.errcode) {
             this.setNotice(d.errmsg)
           } else {
-            api.login(this.username, this.password).then((res) => {
-              const d = res.data
-              if (d.errcode) {
-                this.setNotice(d.errmsg)
-              } else {
-                this.$emit('update', Object.assign(d, { name: this.username }))
-                this.$router.push('/rules')
-              }
-            })
+            this.sendLogin()
           }
         })
       } else {
-        api.login(this.username, this.password).then((res) => {
-          const d = res.data
-          if (d.errcode) {
-            this.setNotice(d.errmsg)
-          } else {
-            this.$emit('update', d)
-          }
-        })
+        this.sendLogin()
       }
+    },
+    sendLogin () {
+      api.login(this.username, this.password).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          this.setNotice(d.errmsg)
+        } else {
+          this.$emit('update', d)
+        }
+      })
     }
   }
 }

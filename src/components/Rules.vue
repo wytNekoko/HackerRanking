@@ -13,7 +13,8 @@
             <p>NO.6 - NO.10：+1000</p>
           </li>
           <li>
-            <p>your dust amount and the order of you participating in building other planets determine your building return</p>
+            <p>your dust amount and the order of you participating in building other
+               planets determine your building return</p>
             <img :src="require('@/assets/favicon_1.png')" alt="">
             <img :src="require('@/assets/favicon_2.png')" alt="">
             <img :src="require('@/assets/favicon_3.png')" alt="">
@@ -34,7 +35,8 @@
             <p>To get in contact with the planet ownerwill cost 1000 dust per time</p>
           </li>
           <li>
-            <p>The system will provide 88dust three times per day for investment, which will become invalid if not taken</p>
+            <p>The system will provide 88dust three times per day for investment,
+               which will become invalid if not taken</p>
           </li>
           <p>You can convert your dust to real digital currency. In other words, dust is money</p>
         </ol>
@@ -48,8 +50,6 @@
 </template>
 
 <script>
-import api from '@/api'
-
 export default {
   name: 'Register',
   data () {
@@ -59,14 +59,11 @@ export default {
     }
   },
   mounted () {
-    const cont = this.$el.querySelector('.rules-cont')
     const box = this.$el.querySelector('.rules-box')
-    const rect = cont.getBoundingClientRect()
-    const offsetLimit = 200 - rect.height
     box.addEventListener('mousewheel', (e) => {
       if (e.deltaY > 0) {
         const temp = this.offsetY - 30
-        this.offsetY = Math.max(offsetLimit, temp)
+        this.offsetY = Math.max(-800, temp)
       } else {
         const temp = this.offsetY + 30
         this.offsetY = Math.min(0, temp)

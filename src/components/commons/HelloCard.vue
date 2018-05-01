@@ -1,14 +1,16 @@
 <template>
-  <div class="hello-card">
+  <div class="hello-card" :style="{
+    'transform': `translate3d(${transX}px, ${transY}px, 0)`
+  }">
     <div class="board" :style="{'transform': `scale(${scale}) rotateY(${rotate}deg)`}">
-      <p class="rank">Rank #{{data.rank}}</p>
-      <h1 class="title">{{data.title}}</h1>
-      <p class="intro">{{data.intro}}</p>
+      <p class="rank">Rank #{{orgData.rank}}</p>
+      <h1 class="title">{{orgData.title}}</h1>
+      <p class="intro">{{orgData.intro}}</p>
       <pink-silk
         :y="y"
         :isShow="showPinkSilk"
-        :name="data.title"
-        :time="data.time"
+        :name="orgData.title"
+        :time="orgData.time"
         v-on="$listeners">
       </pink-silk>
       <blue-silk :y="y" :isShow="showBlueSilk" v-on="$listeners"></blue-silk>
@@ -32,14 +34,13 @@ import BlueSilk from './BlueSilk'
 
 export default {
   name: 'HelloCard',
-  props: ['dx', 'dy', 'orgData', 'show'],
+  props: ['dx', 'dy', 'orgData', 'show', 'window'],
   data () {
     return {
       toY: 0,
       y: 0,
       toRotate: 0,
       rotate: 0,
-      boundingInfo: null,
       showBlueSilk: false,
       showPinkSilk: false,
       scale: 1,
@@ -51,8 +52,15 @@ export default {
     needUpdate () {
       return (this.showBlueSilk ? 1 : 0) + (this.showPinkSilk ? 2 : 0)
     },
-    data () {
-      return this.orgData ? this.orgData : {}
+    transX () {
+      return (this.orgData.x * 340) - 150
+    },
+    transY () {
+      let dy = 0
+      if (this.orgData.x % 2) {
+        dy = Math.sign(this.orgData.y) * 240
+      }
+      return (this.orgData.y * 480) - 200 - dy
     }
   },
   watch: {
@@ -80,13 +88,13 @@ export default {
   },
   mounted () {
     requestAnimationFrame(this.render)
-    window.addEventListener('resize', () => {
-      this.boundingInfo = this.$el.getBoundingClientRect()
-    })
-    this.boundingInfo = this.$el.getBoundingClientRect()
     this.$el.addEventListener('mousemove', (e) => {
-      const x = e.pageX - this.boundingInfo.left
-      const y = e.pageY - this.boundingInfo.top
+      const hw = this.window.w / 2
+      const hh = this.window.h / 2
+      const left = hw + this.transX + this.dx
+      const top = hh + this.transY + this.dy
+      const x = e.pageX - left
+      const y = e.pageY - top
       if (this.isIn([x, y], [208, 0, 92, 400])) {
         if (!this.showPinkSilk) {
           this.showPinkSilk = true
@@ -105,7 +113,7 @@ export default {
       dy = dy < 0 ? 0 : dy
       dy = dy > 330 ? 330 : dy
       this.toY = dy
-      this.toRotate = (x / 10) - 15
+      this.toRotate = (x - 150) / 10
       this.onHover = true
     })
     this.$el.addEventListener('mouseleave', () => {
@@ -117,8 +125,8 @@ export default {
   },
   methods: {
     isIn (pos, b) {
-      const trueX = pos[0] - this.dx
-      const trueY = pos[1] - this.dy
+      const trueX = pos[0]
+      const trueY = pos[1]
       let judge = true
       judge = judge && trueX >= b[0] && trueX < b[0] + b[2]
       judge = judge && trueY >= b[1] && trueY < b[1] + b[3]

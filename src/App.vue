@@ -25,12 +25,12 @@
     <div class="view" :class="{'view-show': viewIsOpen}">
       <div class="spy" @click="openSpy">Spy the Team</div>
       <div class="card">
-        <span class="close" @click="closeView">X 关闭</span>
+        <span class="close" @click="closeView">Close X</span>
         <h2>{{viewPro.title}}</h2>
         <p class="intro">{{viewPro.intro}}</p>
-        <p v-if="viewPro.demo">demo地址：<a :href="viewPro.demo">{{viewPro.demo}}</a></p>
-        <p v-if="viewPro.git">git地址：<a :href="viewPro.git">{{viewPro.git}}</a></p>
-        <p>团队：{{viewPro.team}}</p>
+        <p v-if="viewPro.demo">Demo URL：<a :href="viewPro.demo">{{viewPro.demo}}</a></p>
+        <p v-if="viewPro.git">Git URL：<a :href="viewPro.git">{{viewPro.git}}</a></p>
+        <p>Team: {{viewPro.team}}</p>
         <div class="build">
           <div class="button" @click="buildIt">Build it!</div>
           <p>{{viewPro.builder}}Builders</p>
@@ -41,7 +41,7 @@
     </div>
     <div class="set-up" :class="{'view-show': setIsOpen}">
       <div class="card">
-        <span class="close" @click="closeSet">X 关闭</span>
+        <span class="close" @click="closeSet">Close X</span>
         <input type="text" class="number" v-model="setUpInfo.name">
         <textarea rows="4" v-model="setUpInfo.description"></textarea>
         <p class="title">Email</p>
@@ -59,11 +59,19 @@
     </div>
     <div class="mask spy-mask" v-if="spyIsOpen">
       <div class="spy-card">
-        <span class="close" @click="closeSpy">X 关闭</span>
+        <span class="close" @click="closeSpy">Close X</span>
         <img height="80" :src="require('@/assets/symbols-spy.png')" alt="">
         <h3>Spy the Team</h3>
-        <p>拿到{{leader}}队长联系方式</p>
+        <p>Get the way to contact the captain</p>
         <div class="button" @click="spy">{{leaderEmail ? leaderEmail : `${pay} Gift`}}</div>
+      </div>
+    </div>
+    <div class="mask build-mask" v-if="buildIsOpen">
+      <div class="build-card">
+        <span class="close" @click="closeBuild">Close X</span>
+        <h3>Amount of investment</h3>
+        <input type="text" v-model="buildNum"><span class="dust">Dust</span>
+        <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
   </div>
@@ -90,8 +98,10 @@ export default {
       viewIsOpen: false,
       spyIsOpen: false,
       setIsOpen: false,
+      buildIsOpen: false,
+      buildNum: 10,
       leader: 'Alabama',
-      pay: 32,
+      pay: 1000,
       leaderEmail: '',
       setUpInfo: {
         name: 'Name',
@@ -142,7 +152,7 @@ export default {
     openSpy () {
       this.leader = 'Alabama'
       this.leaderEmail = ''
-      this.pay = 32
+      this.pay = 1000
       this.spyIsOpen = true
     },
     closeSpy () {
@@ -195,14 +205,33 @@ export default {
       })
     },
     buildIt () {
-      api.build(this.viewPro.title, 22).then((res) => {
+      this.buildIsOpen = true
+    },
+    confirmBuild () {
+      const num = parseInt(this.buildNum, 10)
+      if (!num) {
+        alert('Invalid number')
+        this.buildNum = 10
+        return
+      }
+      if (num < 1) {
+        alert('At least 1dust')
+        this.buildNum = 1
+        return
+      }
+      this.buildNum = num
+      api.build(this.viewPro.title, num).then((res) => {
         const d = res.data
         if (d.errcode) {
           alert(d.errmsg)
         } else {
           alert('success')
+          this.buildIsOpen = false
         }
       })
+    },
+    closeBuild () {
+      this.buildIsOpen = false
     },
     spy () {
       if (this.leaderEmail) {
@@ -228,6 +257,7 @@ export default {
   overflow hidden
   background-color #1B0033
   position relative
+  font-family 'Ubuntu'
 .user
   position fixed
   top 50%
@@ -457,4 +487,49 @@ export default {
     cursor pointer
     display table
     padding 0 50px
+.build-mask
+  z-index 120
+.build-card
+  width 400px
+  background-color #fff
+  border-radius 8px
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 0)
+  text-align center
+  padding 40px
+  box-sizing border-box
+  font-size 16px
+  input
+    border none
+    text-align center
+    margin-right 10px
+    width 140px
+    height 50px
+    background-color #f6f6f6
+    border-radius 25px
+    outline none
+    box-sizing border-box
+    padding 0 30px
+    font-size 18px
+  h3
+    font-size 24px
+    margin 24px 0
+  .close
+    position absolute
+    top 24px
+    right 24px
+    cursor pointer
+  .button
+    width 184px
+    height 50px
+    background-color #FF0082
+    border-radius 25px
+    line-height 50px
+    text-align center
+    font-family 'Ubuntu'
+    color #FFF
+    cursor pointer
+    margin 30px auto 0
 </style>
