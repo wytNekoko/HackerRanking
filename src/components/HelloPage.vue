@@ -46,8 +46,8 @@ export default {
     }
   },
   created () {
-    api.planets_show().then((res) => {
-      this.planets = res.data
+    api.planet_all().then((res) => {
+      this.planets = res.data.records
       this.checkPlanetsList(true)
     })
   },

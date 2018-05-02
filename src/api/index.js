@@ -95,5 +95,8 @@ export default {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
     })
+  },
+  planet_all () {
+    return axios.get(`${url}/planets/all`)
   }
 }
