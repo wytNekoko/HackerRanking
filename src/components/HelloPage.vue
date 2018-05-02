@@ -48,6 +48,7 @@ export default {
   created () {
     api.planets_show().then((res) => {
       this.planets = res.data
+      this.checkPlanetsList(true)
     })
   },
   mounted () {
@@ -87,8 +88,10 @@ export default {
       this.toPos.x += x
       this.toPos.y += y
     },
-    checkPlanetsList () {
-      console.log(1)
+    checkPlanetsList (clearAll) {
+      if (clearAll) {
+        this.building = []
+      }
       const hw = this.boundingInfo.width / 2
       const hh = this.boundingInfo.height / 2
       const minX = Math.floor((150 - this.pos.x - hw) / 340)
@@ -143,7 +146,8 @@ export default {
                 index: this.countIndex,
                 x,
                 y,
-                title: `x:${x} y:${y}`
+                // title: `x:${x} y:${y}`
+                title: '...'
               })
             }
           }
