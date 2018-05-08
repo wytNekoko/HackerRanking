@@ -11,18 +11,18 @@
       <div class="content" :style="{
         'transform': `translate3d(${k < 30 ? 100 : ((k - 90) * (k - 90) - 100) / 35}%, 0, 0)`
       }" @mousedown="onMousedown" @mouseleave="onMouseleave">
-        <span :class="{'hide': onbuilding}">Build 22 dust</span>
+        <span :class="{'hide': onbuilding}">Build it!</span>
         <div class="progress" :class="{'show': onbuilding}">
           <div :class="{'move': onbuilding}"></div>
         </div>
       </div>
     </div>
-    <img class="block"
-      :class="{'block-animation': onbuilding}"
-      :src="require('@/assets/symbols-blocks.png')" alt="">
-    <img class="hammer"
-      :class="{'hammer-animation': onbuilding}"
-      :src="require('@/assets/symbols-hammer.png')" alt="">
+    <!--<img class="block"-->
+      <!--:class="{'block-animation': onbuilding}"-->
+      <!--:src="require('@/assets/symbols-blocks.png')" alt="">-->
+    <!--<img class="hammer"-->
+      <!--:class="{'hammer-animation': onbuilding}"-->
+      <!--:src="require('@/assets/symbols-build2.png')" alt="">-->
     <div class="time" :class="{'time-show': isShow}">{{time}}</div>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
     },
     onMousedown () {
       this.onbuilding = true
-      this.timer = setTimeout(this.build, 2000)
+      this.timer = setTimeout(this.build, 1500)
     },
     onMouseleave () {
       clearTimeout(this.timer)
@@ -110,8 +110,9 @@ export default {
     position absolute
     right -40px
     top 0
-    background-color #FF0082
+    background-color #4D9003
     color #fff
+    opacity 1
     line-height 44px
     box-sizing border-box
     cursor pointer
@@ -135,7 +136,7 @@ export default {
   .content
     width 100%
     height 100%
-    background-color #C32F8E
+    background-color black
 .progress
   width 80px
   height 4px
@@ -174,15 +175,15 @@ export default {
   opacity 0
 .hammer-animation
   opacity 1
-  animation boom 2s
+  animation boom 1.5s
 .time
   width 100px
-  height 32px
+  height 20px
   line-height 16px
   font-size 12px
   color #FFF
   text-align center
-  background-color #FF0082
+  background-color #4D9003
   position absolute
   top 56px
   left -92px

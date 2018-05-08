@@ -14,15 +14,6 @@
         v-on="$listeners">
       </pink-silk>
       <blue-silk :y="y" :isShow="showBlueSilk" v-on="$listeners"></blue-silk>
-      <div class="mask" :style="{'opacity': onHover || show ? 0 : 1}">
-        <div class="mask-top"></div>
-        <div class="mask-bottom">
-          <div class="lines" v-for="item in maskInfo" :key="maskInfo.indexOf(item)">
-            <div v-for="n in item.line" :key="n"></div>
-            <div :style="{'width': `${item.left}%`}"></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -95,14 +86,14 @@ export default {
       const top = hh + this.transY + this.dy
       const x = e.pageX - left
       const y = e.pageY - top
-      if (this.isIn([x, y], [208, 0, 92, 400])) {
+      if (this.isIn([x, y], [0, 0, 300, 400])) {
         if (!this.showPinkSilk) {
           this.showPinkSilk = true
         }
       } else if (this.showPinkSilk) {
         this.showPinkSilk = false
       }
-      if (this.isIn([x, y], [0, 0, 92, 400])) {
+      if (this.isIn([x, y], [0, 0, 300, 400])) {
         if (!this.showBlueSilk) {
           this.showBlueSilk = true
         }
@@ -162,32 +153,32 @@ export default {
   .board
     width 300px
     height 400px
-    border-radius 8px
-    background-color #FFF
+    border-radius 4.93px
+    background-color rgba(19,29,64,0.6)
     position absolute
     top 0
     left 0
-    box-shadow 0 2px 8px #0001
+    box-shadow 0 2px 10px 0
   .rank
     height 50px
     margin 0
-    background-color #FF4A4A
+    background-color rgba(43,45,81,0.8)
     color #FFF
     text-align center
     font-size 20px
     line-height 50px
-    border-radius 8px 8px 0 0
+    border-radius 4.93px 4.93px 0 0
   .title
     font-size 30px
     margin 16px 24px 18px
     line-height 36px
-    color #333
+    color #FFF
   .intro
     font-size 16px
     margin 18px 24px
     line-height 22px
     text-align justify
-    color #666
+    color #FFF
 .mask
   position absolute
   top 0

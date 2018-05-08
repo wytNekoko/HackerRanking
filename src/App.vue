@@ -3,6 +3,7 @@
     <transition name="fade">
       <router-view @view="view" @setUp="setUp" @update="update"/>
     </transition>
+    <fringe></fringe>
     <div class="user" @click="openProfile" :class="{
       'user-open': this.$route.name === 'Profile',
       'user-hide': this.$route.name === 'Ranking' || this.$route.name === 'Register'
@@ -74,13 +75,24 @@
         <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
+    <settle-bar></settle-bar>
+    <tool-bar :is-explore="true" :is-list="false"></tool-bar>
+    <receiving-station></receiving-station>
+    <hunter-bar></hunter-bar>
+
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import Fringe from './components/commons/Fringe'
+import SettleBar from './components/commons/SettleBar'
+import ToolBar from './components/commons/ToolBar'
+import HunterBar from './components/commons/HunterBar'
+import ReceivingStation from './components/commons/ReceivingStation'
 
 export default {
+  components: { Fringe, SettleBar, ToolBar, HunterBar, ReceivingStation },
   name: 'App',
   data () {
     return {

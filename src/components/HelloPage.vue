@@ -8,17 +8,21 @@
         :orgData="item"
         v-on:childView="view(item)" v-on="$listeners"
       ></hello-card>
+      <!--
       <div class="logo">
         <img :style="{
           'transform': `translate3d(${-pos.x * 0.1}px, ${-pos.y * 0.1}px ,0)`
         }" width="300" :src="require('@/assets/symbols-logo.png')" alt="logo">
       </div>
+      -->
     </div>
+    <!--
     <div class="build-button build-num" @click.self="getDust">
       Get Dust
       <div class="build-num-plus" :class="{'build-num-plus-active': numActive}">+88</div>
     </div>
     <div class="build-button build-new" @click="setUp">Set up a new planet</div>
+    -->
   </div>
 </template>
 
@@ -102,7 +106,7 @@ export default {
       for (let x = minX; x <= maxX; x += 1) {
         temp[x] = {}
         for (let y = minY; y <= maxY; y += 1) {
-          if (!(x === 1 && y === 1) && !((x % 2) && y === 0)) {
+          if (!((x % 2) && y === 0)) {
             temp[x][y] = false
           }
         }
@@ -209,7 +213,8 @@ export default {
 .hello
   width 100%
   height 100%
-  background-color #441D66
+  background-color rgba(114,91,72,0.83)
+  /*background url(../assets/bg-home.JPG)*/
   position absolute
   overflow hidden
 .box

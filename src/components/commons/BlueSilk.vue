@@ -21,7 +21,7 @@
 import { TweenLite } from 'gsap'
 
 export default {
-  name: 'PinkSilk',
+  name: 'BlueSilk',
   props: ['y', 'isShow'],
   data () {
     return {
@@ -75,7 +75,7 @@ export default {
     position absolute
     left -40px
     top 0
-    background-color #00ADFF
+    background-color #CB5830
     color #fff
     line-height 44px
     box-sizing border-box
@@ -94,5 +94,5 @@ export default {
   .content
     width 100%
     height 100%
-    background-color #2F4FC3
+    background-color black
 </style>
