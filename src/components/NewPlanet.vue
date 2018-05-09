@@ -150,6 +150,8 @@ export default {
     top 17.5%
     width 55.6%
     height 80%
+    padding 0 80px
+    box-sizing border-box
     box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20);
     border-radius: 4px
     background rgba(19,29,64,0.65)
@@ -171,12 +173,10 @@ export default {
       font-size 14px
       color rgba(255,255,255,0.30)
     .bigtitle
-      padding-left 79px
       font-family Ubuntu-Medium
       font-size 20px
       color white
     .title
-      padding-left 79px
       font-family: PingFangSC-Regular;
       font-size: 12px;
       color: #9B9B9B
@@ -186,5 +186,4 @@ export default {
     .name
       font-size 14px
       color rgba(255,255,255,0.30)
-
 </style>
