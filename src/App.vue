@@ -4,6 +4,7 @@
       <router-view @view="view" @setUp="setUp" @update="update"/>
     </transition>
     <fringe></fringe>
+    <!--
     <div class="user" @click="openProfile" :class="{
       'user-open': this.$route.name === 'Profile',
       'user-hide': this.$route.name === 'Ranking' || this.$route.name === 'Register'
@@ -22,6 +23,8 @@
     <div class="back" @click="closeProfile" :class="{
       'hide': this.$route.name !== 'Profile'
     }">Back ></div>
+              -->
+
     <div class="mask" v-if="viewIsOpen || setIsOpen"></div>
     <div class="view" :class="{'view-show': viewIsOpen}">
       <div class="spy" @click="openSpy">Spy the Team</div>
@@ -75,10 +78,11 @@
         <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
-    <settle-bar></settle-bar>
-    <tool-bar :is-explore="true" :is-list="false"></tool-bar>
+    <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
+    <settle-bar v-else></settle-bar>
+    <tool-bar v-if="this.$route.name!=='Hunter'" :is-explore="true" :is-list="false"></tool-bar>
     <receiving-station></receiving-station>
-    <hunter-bar></hunter-bar>
+    <hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>
 
   </div>
 </template>
@@ -87,12 +91,19 @@
 import api from '@/api'
 import Fringe from './components/commons/Fringe'
 import SettleBar from './components/commons/SettleBar'
+import UserBar from './components/commons/UserBar'
 import ToolBar from './components/commons/ToolBar'
 import HunterBar from './components/commons/HunterBar'
 import ReceivingStation from './components/commons/ReceivingStation'
 
 export default {
-  components: { Fringe, SettleBar, ToolBar, HunterBar, ReceivingStation },
+  components: {
+    UserBar,
+    Fringe,
+    SettleBar,
+    ToolBar,
+    HunterBar,
+    ReceivingStation },
   name: 'App',
   data () {
     return {
@@ -131,7 +142,6 @@ export default {
     } else {
       this.user = {
         name: window.cookieStorage.getItem('name'),
-        postion: 'Builder',
         id: window.cookieStorage.getItem('id')
       }
     }
@@ -267,7 +277,7 @@ export default {
   width 100vw
   height 100vh
   overflow hidden
-  background-color #1B0033
+  background-color rgba(0,0,0,0.95)
   position relative
   font-family 'Ubuntu'
 .user

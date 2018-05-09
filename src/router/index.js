@@ -6,6 +6,7 @@ import Ranking from '@/components/Ranking'
 import Register from '@/components/Register'
 import Rules from '@/components/Rules'
 import NewPlanet from '@/components/NewPlanet'
+import Hunter from '@/components/Hunter'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/setup-planet',
       name: 'NewPlanet',
       component: NewPlanet
+    },
+    {
+      path: '/hunter',
+      name: 'Hunter',
+      component: Hunter
     }
   ]
 })

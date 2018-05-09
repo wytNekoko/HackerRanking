@@ -20,7 +20,7 @@ export default {
 .box
   position fixed
   right -27.8px
-  top 87.5%
+  top 90%
   z-index 1
   width 289.3px
   height 60px

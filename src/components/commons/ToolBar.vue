@@ -26,7 +26,7 @@
       <img class="icon" width="40%" height="40%" :src="require('@/assets/symbols-feedback.png')">
       <p class="text">Feedback</p>
     </div>
-    <div class="help" @click="help()">
+    <div class="help" @click="help">
       <img class="icon" width="40%" height="40%" :src="require('@/assets/symbols-help.png')">
       <p class="text">Help</p>
     </div>
@@ -41,6 +41,9 @@ export default {
   props: ['isExplore', 'isList'],
   methods: {
     togglePlanet () {
+      if (!window.cookieStorage.getItem('token')) {
+        this.$router.push('/register')
+      }
       this.$router.push('/setup-planet')
     },
     getDust () {

@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <img class="bg" :src="require('@/assets/bg-hunter.jpg')">
     <div class="mask"></div>
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
       <hello-card v-for="item in building" :key="item.index"
@@ -217,15 +218,18 @@ export default {
   left 0
   width 100%
   height 100%
-  background-color rgba(114,114,114,0.3)
+  background-color rgba(176,114,80,0.3)//rgba(2555,255,255,0.8)//rgba(176,103,62,0.8)
   z-index 0.5
-  //mix-blend-mode: soft-light;      //柔光
+  /*mix-blend-mode: soft-light;*/
 .hello
+  position absolute
   width 100%
   height 100%
   background  url(../assets/bg-home.jpg) no-repeat
-  position absolute
   overflow hidden
+  .bg
+    width 100%
+    height 100%
 .box
   width 300px
   height 400px
