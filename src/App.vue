@@ -137,14 +137,14 @@ export default {
     }
   },
   created () {
-    if (!window.cookieStorage.getItem('token')) {
-      this.$router.push('/register')
-    } else {
-      this.user = {
-        name: window.cookieStorage.getItem('name'),
-        id: window.cookieStorage.getItem('id')
-      }
-    }
+    // if (!window.cookieStorage.getItem('token')) {
+    //   this.$router.push('/register')
+    // } else {
+    //   this.user = {
+    //     name: window.cookieStorage.getItem('name'),
+    //     id: window.cookieStorage.getItem('id')
+    //   }
+    // }
   },
   methods: {
     openProfile () {

@@ -62,14 +62,17 @@ export default {
     window.addEventListener('resize', this.onwindowresize)
     this.onwindowresize()
     this.$el.addEventListener('mousedown', (e) => {
+      this.$el.style.cursor = 'pointer'
       this.lastPos.x = e.pageX
       this.lastPos.y = e.pageY
       this.$el.addEventListener('mousemove', this.onmousemove)
     })
     this.$el.addEventListener('mouseup', () => {
+      this.$el.style.cursor = 'default'
       this.$el.removeEventListener('mousemove', this.onmousemove)
     })
     this.$el.addEventListener('mouseleave', () => {
+      this.$el.style.cursor = 'default'
       this.$el.removeEventListener('mousemove', this.onmousemove)
     })
     this.checkPlanetsList()
@@ -102,15 +105,13 @@ export default {
       const hh = this.boundingInfo.height / 2
       const minX = Math.floor((150 - this.pos.x - hw) / 340)
       const maxX = Math.ceil((hw - this.pos.x - 150) / 340)
-      const minY = Math.floor((-this.pos.y - hh) / 480)
-      const maxY = Math.ceil((-this.pos.y + hh) / 480)
+      const minY = Math.floor((-this.pos.y - hh + minX * 80) / 440)
+      const maxY = Math.ceil((-this.pos.y + hh + maxX * 80) / 440)
       const temp = {}
       for (let x = minX; x <= maxX; x += 1) {
         temp[x] = {}
         for (let y = minY; y <= maxY; y += 1) {
-          if (!((x % 2) && y === 0)) {
-            temp[x][y] = false
-          }
+          temp[x][y] = false
         }
       }
       for (let i = 0; i < this.building.length; i += 1) {
@@ -262,6 +263,9 @@ export default {
 .move-bg
   width 100%
   height 100%
+  position absolute
+  top 0
+  left 0
   &>div
     position absolute
     top 50%
