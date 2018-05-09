@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HelloPage from '@/components/HelloPage'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
-import Register from '@/components/Register'
+// import Register from '@/components/Register'
 import Rules from '@/components/Rules'
 import NewPlanet from '@/components/NewPlanet'
 import Hunter from '@/components/Hunter'
@@ -17,11 +17,11 @@ export default new Router({
       name: 'HelloPage',
       component: HelloPage
     },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
+    // {
+    //   path: '/register',
+    //   name: 'Register',
+    //   component: Register
+    // },
     {
       path: '/profile',
       name: 'Profile',

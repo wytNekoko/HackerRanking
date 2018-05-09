@@ -14,9 +14,7 @@ export default {
   name: 'SettleBar',
   methods: {
     toggleRegister () {
-      if (!window.cookieStorage.getItem('token')) {
-        this.$router.push('/register')
-      }
+      this.$emit('register')
     }
   }
 }
@@ -28,6 +26,7 @@ export default {
   left -27.8px
   top 87.425%
   z-index 1
+  cursor pointer
   .settle
     width 192.5px
     height 79.1px

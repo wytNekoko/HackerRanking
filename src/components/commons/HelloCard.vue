@@ -47,11 +47,7 @@ export default {
       return (this.orgData.x * 340) - 150
     },
     transY () {
-      let dy = 0
-      if (this.orgData.x % 2) {
-        dy = Math.sign(this.orgData.y) * 240
-      }
-      return (this.orgData.y * 480) - 200 - dy
+      return (this.orgData.y * 440) - 200 - this.orgData.x * 80
     }
   },
   watch: {
