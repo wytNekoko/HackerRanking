@@ -78,8 +78,27 @@
         <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
+    <div class="mask build-mask" v-if="registerIsOpen">
+      <div class="register-card">
+        <span class="close" @click="closeRegister">
+          <span></span><span></span>
+        </span>
+        <ul>
+          <li>
+            <h2>Signed Resident:</h2>
+            <div class="button">Login with Github</div>
+            <div class="button">Login with Facebook</div>
+          </li>
+          <li>
+            <h2>New Resident:</h2>
+            <div class="button">Sign up with Github</div>
+            <div class="button">Sign up with Facebook</div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
-    <settle-bar v-else></settle-bar>
+    <settle-bar v-else @register="openRegister"></settle-bar>
     <tool-bar v-if="this.$route.name!=='Hunter'" :is-explore="true" :is-list="false"></tool-bar>
     <receiving-station></receiving-station>
     <hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>
@@ -122,6 +141,7 @@ export default {
       spyIsOpen: false,
       setIsOpen: false,
       buildIsOpen: false,
+      registerIsOpen: false,
       buildNum: 10,
       leader: 'Alabama',
       pay: 1000,
@@ -185,6 +205,12 @@ export default {
     },
     closeSet () {
       this.setIsOpen = false
+    },
+    openRegister () {
+      this.registerIsOpen = true
+    },
+    closeRegister () {
+      this.registerIsOpen = false
     },
     update (data) {
       const d = new Date()
@@ -554,4 +580,58 @@ export default {
     color #FFF
     cursor pointer
     margin 30px auto 0
+.register-card
+  color #fff
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 0)
+  h2
+    font-size 20px
+    font-weight 400
+    display block
+    width 420px
+    margin auto
+  li
+    width 540px
+    height 240px
+    border solid 1px #fff4
+    border-radius 6px
+    margin 10px auto
+    padding 25px
+    box-sizing border-box
+    &:first-child
+      background-image linear-gradient(left, #2E2828, #000000)
+    &:last-child
+      background-image linear-gradient(left, #301B0F, #1E0618)
+  .button
+    width 420px
+    height 60px
+    line-height 60px
+    text-align center
+    border solid 1px #fff
+    border-radius 6px
+    margin 20px auto
+  .close
+    position absolute
+    right -50px
+    top 10px
+    width 40px
+    height 40px
+    border solid 1px #fff4
+    border-radius 6px
+    background-image linear-gradient(left, #2E2828, #000000)
+    cursor pointer
+    span
+      width 20px
+      height 1px
+      background-color #fff
+      display block
+      position absolute
+      top 50%
+      left 50%
+      &:first-child
+        transform translate3d(-50%, -50%, 0) rotate(-45deg)
+      &:last-child
+        transform translate3d(-50%, -50%, 0) rotate(45deg)
 </style>

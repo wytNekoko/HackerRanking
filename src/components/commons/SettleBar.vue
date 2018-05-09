@@ -14,9 +14,7 @@ export default {
   name: 'SettleBar',
   methods: {
     toggleRegister () {
-      if (!window.cookieStorage.getItem('token')) {
-        this.$router.push('/register')
-      }
+      this.$emit('register')
     }
   }
 }
