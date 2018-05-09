@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <img class="bg" :src="require('@/assets/bg-hunter.jpg')">
+    <img class="bg" :src="require('@/assets/bg-home.jpg')">
     <div class="mask"></div>
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
       <hello-card v-for="item in building" :key="item.index"

@@ -1,25 +1,31 @@
 <template>
   <div id="profile">
+    <p id="title">Control Center</p>
     <div class="container">
-      <div class="dust">
-        <div class="left">
-          <div class="center">
-            <h2>Your Total Dusts</h2>
-            <div class="totla-dust">{{totalDust}}</div>
+          <div class="left">
+            <img width="100" height="100" :src="require('@/assets/symbols-profile.png')">
+            <div class="total-dust">{{totalDust}}</div>
+            <div class="line">
+              <h2 style="height:20px width:93px">Total Dusts</h2>
+              <img width="10" height="10" :src="require('@/assets/symbols-dusts.png')"></div>
             <div class="button" @click="withdraw">withdraw</div>
+            <div class="line" @click="getDust">
+              <img width="16" height="24" :src="require('@/assets/symbols-getdusts.png')">
+              <h3>Get dusts</h3>
+            </div>
           </div>
-        </div>
-        <div class="right">
-          <div class="center">
+          <div class="right">
+            <!--
             <ul class="infos">
               <li v-for="item in info" :key="info.indexOf(item)">
                 <span class="time">{{item.created_at}}</span>
                 <span>Build the planet {{item.name}} to get {{item.reward}} dust</span>
               </li>
             </ul>
+            -->
           </div>
-        </div>
       </div>
+      <!--
       <div class="set-up">
         <div class="center">
           <h2>Planets You Set up</h2>
@@ -44,7 +50,7 @@
           </ul>
         </div>
       </div>
-    </div>
+      -->
   </div>
 </template>
 
@@ -120,7 +126,23 @@ export default {
       })
     },
     withdraw () {
-      this.$emit('update')
+      // this.$emit('update')
+      alert('Under construction...')
+    },
+    getDust () {
+      api.get_dust().then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else if (parseInt(d, 10)) {
+          this.numActive = true
+          setTimeout(() => {
+            this.numActive = false
+          }, 1000)
+        } else {
+          alert(d)
+        }
+      })
     }
   }
 }
@@ -131,41 +153,62 @@ export default {
   width 100%
   height 100%
   position absolute
+  display table
+  background  url(../assets/bg-home.jpg) no-repeat
+  overflow hidden
+  #title
+    top 7%
+    left 43.5%
+    position absolute
+    font-family Allerta-Stencil
+    font-size 30px
+    letter-spacing 0
+    color white
 .container
   position absolute
+  top 17.5%
   height 90%
-  width 65%
-  top 5%
-  left 10%
+  width 67.1%
+  left 16.4%
   z-index 100
   color #FFF
-  >div
-    background-color #FFF1
-    border-radius 16px
+  background: rgba(31,19,18,0.23);
+  border: 0.5px solid rgba(255,255,255,0.35);
+  box-shadow: 0 1px 23px 0 rgba(0,0,0,0.36);
+  border-radius: 8px;
+  .left
     position absolute
-    box-sizing border-box
-    overflow hidden
-  .dust
-    width 100%
-    height 48%
-    top 0
+    top 7.5%
     left 0
-    >div
-      width 48%
-      height 100%
-      position relative
-    >.left
-      float left
-    >.right
-      float right
+    width 32.2%
+    flex-direction column
+    >img
+      margin-left 30%
+      margin-bottom 5%
+    .total-dust
+      font-size 30px
+      text-align center
+    .line
+      margin-left 30%
+      display flex
+      align-items center
+      >img
+        margin-left 2%
     .button
       margin auto
       display table
-      border-radius 20px
+      width 17%
+      border-radius 8px
       line-height 36px
       padding 0 30px
-      border solid 2px #FFF
+      border solid 1px #FFF
       cursor pointer
+  .right
+    position absolute
+    left 32.21%
+    width 67.8%
+    flex-direction column
+
   .set-up
     width 48%
     height 48%
@@ -177,16 +220,14 @@ export default {
     bottom 0
     right 0
   h2
-    font-size 16px
+    font-size 18px
     color #FFF
     text-align center
-    margin 0 0 50px
-.center
-  position absolute
-  top 50%
-  left 10%
-  width 80%
-  transform translate3d(0, -50%, 0)
+  h3
+    font-size 16px
+    color white
+    text-align center
+    margin-left 5%
 .infos
   font-size 12px
   li
@@ -209,8 +250,5 @@ export default {
     color #FF573E
     float right
     cursor pointer
-.totla-dust
-  font-size 30px
-  margin 30px
-  text-align center
+
 </style>

@@ -11,6 +11,9 @@ export default {
       headers: { 'content-type': 'application/json' }
     })
   },
+  logout () {
+    return axios.post(`${url}/logout`)
+  },
   register (username, password) {
     return axios.post(`${url}/register`, {
       username,
