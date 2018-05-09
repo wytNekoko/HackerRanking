@@ -9,8 +9,8 @@
       <p class="text">Get Dusts</p>
     </div>
     <div class="exploreview" @click="exploreView">
-      <img class="icon"  v-if="isExplore" width="40%" height="40%" :src="require('@/assets/symbols-exploreview.png')">
-      <img class="icon"  v-else width="40%" height="40%" :src="require('@/assets/symbols-exploreview-uncheck.png')">
+      <img class="icon"  v-if="isExplore" width="40%" height="40%" :src="require('@/assets/exploreview.png')">
+      <img class="icon"  v-else width="40%" height="40%" :src="require('@/assets/exploreview uncheck.png')">
       <p class="text">Explore view</p>
     </div>
     <div class="listview" @click="listView">
@@ -59,7 +59,7 @@ export default {
       })
     },
     exploreView () {
-
+      this.$router.push('/')
     },
     listView () {
 

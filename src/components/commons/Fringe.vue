@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="logo">
-      <img width="141" height="29" :src="require('@/assets/symbols-logo.png')" alt="logo">
+      <img width="141" height="29" :src="require('@/assets/logoWhite.png')" alt="logo">
     </div>
     <div class="head"></div>
 
@@ -27,7 +27,6 @@ export default {
     background-image linear-gradient(136deg, rgba(46,40,40,0.95) 0%, rgba(0,0,0,0.94) 100%)
     transform perspective(10px) rotateX(178.5deg)
     -webkit-transform perspective(10px) rotateX(178.5deg); /* Safari 3-8  */
-    border 0.5px solid rgba(255,255,255,0.35)
     box-shadow 0 2px 16px 0 rgba(0,0,0,0.50)
     border-top-left-radius 23.38px
     border-top-right-radius 23.38px

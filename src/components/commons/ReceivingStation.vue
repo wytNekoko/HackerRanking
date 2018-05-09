@@ -32,12 +32,12 @@ export default {
     width 0
     left 0
     right 29.4px
-    height 42px
+    height 38px
     perspective 200px
     position relative
     .bg
       position absolute
-      height 42px
+      height 38px
       width 232.6px
       background-image: linear-gradient(-136deg, rgba(46,40,40,0.95) 0%, rgba(0,0,0,0.94) 100%)
       border: 0.3px solid rgba(255,255,255,0.2)

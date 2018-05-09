@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div class="mask"></div>
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
       <hello-card v-for="item in building" :key="item.index"
         :window="windowInfo"
@@ -210,11 +211,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.mask
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background-color rgba(114,114,114,0.3)
+  z-index 0.5
+  //mix-blend-mode: soft-light;      //柔光
 .hello
   width 100%
   height 100%
-  background-color rgba(114,91,72,0.83)
-  /*background url(../assets/bg-home.JPG)*/
+  background  url(../assets/bg-home.jpg) no-repeat
   position absolute
   overflow hidden
 .box

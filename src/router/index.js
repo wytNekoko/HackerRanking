@@ -5,6 +5,7 @@ import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
 import Register from '@/components/Register'
 import Rules from '@/components/Rules'
+import NewPlanet from '@/components/NewPlanet'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/rules',
       name: 'Rules',
       component: Rules
+    },
+    {
+      path: '/setup-planet',
+      name: 'NewPlanet',
+      component: NewPlanet
     }
   ]
 })
