@@ -10,6 +10,8 @@ import Hunter from '@/components/Hunter'
 import PostedRewards from '@/components/PostedRewards'
 import OwnedPlanets from '@/components/OwnedPlanets'
 import BuiltPlanets from '@/components/BuiltPlanets'
+import PlanetView from '@/components/PlanetView'
+
 Vue.use(Router)
 
 export default new Router({
@@ -64,5 +66,10 @@ export default new Router({
       name: 'BuiltPlanets',
       component: BuiltPlanets
     },
+    {
+      path: '/planet-view',
+      name: 'PlanetView',
+      component: PlanetView
+    }
   ]
 })

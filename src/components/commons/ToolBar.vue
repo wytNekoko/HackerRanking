@@ -76,11 +76,10 @@ export default {
       this.$router.push('/ranking')
     },
     feedBack () {
-      console.log('openFeedback')
-      this.$emit('openFeedback')
+      this.$emit('feedback')
     },
     help () {
-
+      this.$emit('help')
     }
   }
 }

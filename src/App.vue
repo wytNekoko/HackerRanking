@@ -62,6 +62,7 @@
         </div>
       </div>
     </div>
+    -->
     <div class="mask spy-mask" v-if="spyIsOpen">
       <div class="spy-card">
         <span class="close" @click="closeSpy">Close X</span>
@@ -70,7 +71,7 @@
         <p>Get the way to contact the captain</p>
         <div class="button" @click="spy">{{leaderEmail ? leaderEmail : `${pay} Gift`}}</div>
       </div>
-    </div> -->
+    </div>
     <div class="mask build-mask" v-if="buildIsOpen">
       <div class="build-card">
         <span class="close" @click="closeBuild">Close X</span>
@@ -189,8 +190,9 @@ Welcome to contact us to better serve the resident.`,
       }
     },
     view (item) {
-      this.viewIsOpen = true
-      this.viewPro = item
+      // this.viewIsOpen = true
+      // this.viewPro = item
+      this.$router.push({ name: 'PlanetView', query: { name: item } })
     },
     closeView () {
       this.viewIsOpen = false
