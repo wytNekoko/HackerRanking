@@ -100,11 +100,11 @@ export default {
         id: window.cookieStorage.getItem('id')
       }
     }
-    // api.profile_main().then((res) => {
-    //   const d = res.data
-    //   this.totalDust = d.total_dust
-    //   this.info = d.planets
-    // })
+    api.profile_main().then((res) => {
+      const d = res.data
+      this.totalDust = d.total_dust
+      this.info = d.planets
+    })
     // api.owned_planets().then((res) => {
     //   const d = res.data
     //   if (d.errcode) {
@@ -125,6 +125,7 @@ export default {
   methods: {
     logout () {
       api.logout()
+      this.$emit('update')
     },
     toPostedRewards () {
       this.$router.push('/profile/posted-rewards')

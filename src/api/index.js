@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const url = 'https://dust.giftchain.org/api'
+// const url = 'http://localdust.dev'
 
 export default {
   login (username, password) {

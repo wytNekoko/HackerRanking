@@ -20,6 +20,7 @@ export default {
       if (!window.cookieStorage.getItem('token')) {
         this.$router.push('/register')
       }
+      this.$emit('update')
       this.$router.push('/profile')
     }
   }

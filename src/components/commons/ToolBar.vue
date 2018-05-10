@@ -55,10 +55,12 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else if (parseInt(d, 10)) {
-          this.numActive = true
-          setTimeout(() => {
-            this.numActive = false
-          }, 1000)
+          console.log(d)
+          alert('88 dusts got.')
+          // this.numActive = true
+          // setTimeout(() => {
+          //   this.numActive = false
+          // }, 1000)
         } else {
           alert(d)
         }

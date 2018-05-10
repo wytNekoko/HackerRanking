@@ -10,40 +10,54 @@
         :orgData="item"
         v-on:childView="view(item)" v-on="$listeners"
       ></hello-card>
-      <!--
-      <div class="logo">
-        <img :style="{
-          'transform': `translate3d(${-pos.x * 0.1}px, ${-pos.y * 0.1}px ,0)`
-        }" width="300" :src="require('@/assets/symbols-logo.png')" alt="logo">
+    </div>
+    <div v-if="feedbackIsOpen">
+      <div class="feedback-card">
+        <h3>Feedback</h3>
+        <input type="text" v-model="feedbackInfo.email">
+        <input type="text" v-model="feedbackInfo.title">
+        <div class="choice">
+          <input type="radio" id="feedbackChoice1"
+                 v-model="feedbackInfo.type" value="advice">
+          <label for="feedbackChoice1">Advice</label>
+          <input type="radio" id="feedbackChoice2"
+                 v-model="feedbackInfo.type" value="cooperation">
+          <label for="feedbackChoice2">Cooperation</label>
+          <input type="radio" id="feedbackChoice3"
+                 v-model="feedbackInfo.type" value="others">
+          <label for="feedbackChoice3">Others</label>
+        </div>
+        <textarea rows="4" v-model="feedbackInfo.comment"></textarea>
+        <div class="create-btn" @click="sendFeedback"><span>Send</span></div>
+        <div class="quit-btn" @click="closeFeedback"><span>Quit and Delete</span></div>
       </div>
-      -->
     </div>
-    <!--
-    <div class="build-button build-num" @click.self="getDust">
-      Get Dust
-      <div class="build-num-plus" :class="{'build-num-plus-active': numActive}">+88</div>
-    </div>
-    <div class="build-button build-new" @click="setUp">Set up a new planet</div>
-    -->
+    <tool-bar :is-explore="true" :is-list="false"></tool-bar>
   </div>
 </template>
 
 <script>
 import api from '@/api'
 import HelloCard from './commons/HelloCard'
+import ToolBar from './commons/ToolBar'
 
 export default {
   name: 'HelloPage',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       lastPos: { x: 0, y: 0 },
       toPos: { x: 0, y: 0 },
       pos: { x: 0, y: 0 },
+      feedbackIsOpen: false,
+      feedbackInfo: {
+        email: 'Your Email Address',
+        title: 'Title',
+        type: 'advice',
+        comment: 'Comment text'
+      },
       boundingInfo: null,
       building: [],
       planets: [],
-      numActive: false,
       planetsPos: 0,
       countIndex: 0,
       windowInfo: { w: 0, h: 0 },
@@ -78,6 +92,13 @@ export default {
     this.checkPlanetsList()
   },
   methods: {
+    openFeedback () {
+      console.log('working')
+      this.feedbackIsOpen = true
+    },
+    closeFeedback () {
+      this.feedbackIsOpen = false
+    },
     onwindowresize () {
       this.windowInfo = {
         w: window.innerWidth,
@@ -220,7 +241,8 @@ export default {
     }
   },
   components: {
-    HelloCard
+    HelloCard,
+    ToolBar
   }
 }
 </script>
@@ -239,11 +261,58 @@ export default {
   position absolute
   width 100%
   height 100%
-  //background  url(../assets/4.png) no-repeat
   overflow hidden
   .bg
     width 100%
     height 100%
+  .feedback-card
+    position absolute
+    top 10%
+    left 50%
+    transform translate3d(-50%, 0, 0)
+    width 720 px
+    background-color rgba(19,29,64,0.65)
+    border-radius 10px
+    transition 0.8s
+    .create-btn
+      position relative
+      width 11.4%
+      height 5%
+      left  9.35%
+      top 17.5%
+      background-color rgba(255,113,62,0.8)
+      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+      border-radius: 5.84px;
+      cursor pointer
+      span
+        position absolute
+        //display table
+        top 30%
+        left 35%
+        color white
+        font-size 14px
+        text-align center
+    .quit-btn
+      position relative
+      width 11.4%
+      height 5%
+      top 20%
+      left 9.35%
+      background-color rgba(103,104,131,0.8)
+      color white
+      font-size 14px
+      font-family Ubuntu-Medium
+      text-align center
+      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+      border-radius: 5.84px;
+      cursor pointer
+      span
+        position absolute
+        top 30%
+        left 18%
+        color white
+        font-size 14px
+        text-align center
 .box
   width 300px
   height 400px
@@ -283,42 +352,12 @@ export default {
     position absolute
     top 50%
     left 50%
-.logo
-  width 300px
+.mask
   position absolute
-  top 50%
-  left 50%
-  transform translate3d(190px, 200px, 0)
-.build-num
-  top 40px
-  background-color #FF0082
-  cursor pointer
-.build-new
-  top 106px
-  background-color #62B100
-  cursor pointer
-.build-num-plus
-  position absolute
-  line-height 50px
   top 0
-  right -60px
-  color #FF0082
-  font-size 30px
-  opacity 0
-  transform translate3d(0, 10px, 0)
-.build-num-plus-active
-  opacity 1
-  transform translate3d(0, 0, 0)
-  transition .6s
-.build-button
-  position absolute
-  left 40px
-  height 50px
-  line-height 22px
-  border-radius 25px
-  padding 14px 30px
-  color #FFF
-  font-size 16px
-  box-sizing border-box
-  box-shadow 0 1px 4px #0008
+  left 0
+  width 100%
+  height 100%
+  background-color #000A
+  z-index 80
 </style>

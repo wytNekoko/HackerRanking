@@ -39,7 +39,6 @@ export default {
     color: #FFFFFF
     letter-spacing: 0
     line-height 31px
-
   .intro
     font-family: PingFangSC-Regular
     font-size: 14px

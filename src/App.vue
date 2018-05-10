@@ -79,29 +79,7 @@
         <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
-    <div class="mask build-mask" v-if="feedbackIsOpen">
-      <div class="feedback-card">
-        <h3>Feedback</h3>
-        <input type="text" v-model="feedbackInfo.email">
-        <input type="text" v-model="feedbackInfo.title">
-        <div class="choice">
-          <input type="radio" id="feedbackChoice1"
-                 v-model="feedbackInfo.type" value="advice">
-          <label for="feedbackChoice1">Advice</label>
 
-          <input type="radio" id="feedbackChoice2"
-                 v-model="feedbackInfo.type" value="cooperation">
-          <label for="feedbackChoice2">Cooperation</label>
-
-          <input type="radio" id="feedbackChoice3"
-                 v-model="feedbackInfo.type" value="others">
-          <label for="feedbackChoice3">Others</label>
-        </div>
-        <textarea rows="4" v-model="feedbackInfo.comment"></textarea>
-        <div class="create-btn" @click="sendFeedback"><span>Send</span></div>
-        <div class="quit-btn" @click="closeFeedback"><span>Quit and Delete</span></div>
-      </div>
-    </div>
     <div class="mask build-mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
@@ -124,7 +102,6 @@
     </div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
-    <tool-bar v-if="this.$route.name!=='Hunter'" :is-explore="true" :is-list="false"></tool-bar>
     <receiving-station></receiving-station>
     <hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>
 
@@ -167,13 +144,6 @@ Welcome to contact us to better serve the resident.`,
       setIsOpen: false,
       buildIsOpen: false,
       registerIsOpen: false,
-      feedbackIsOpen: false,
-      feedbackInfo: {
-        email: 'Your Email Address',
-        title: 'Title',
-        type: 'advice',
-        comment: 'Comment text'
-      },
       buildNum: 10,
       leader: 'Alabama',
       pay: 1000,
@@ -246,13 +216,7 @@ Welcome to contact us to better serve the resident.`,
     closeRegister () {
       this.registerIsOpen = false
     },
-    openFeedback () {
-      alert('working')
-      this.feedbackIsOpen = true
-    },
-    closeFeedback () {
-      this.feedbackIsOpen = false
-    },
+
     sendFeedback () {
       // TODO
     },
@@ -343,6 +307,17 @@ Welcome to contact us to better serve the resident.`,
 </script>
 
 <style lang="stylus" scoped>
+  /*
+@font-face
+  font-family: "Allerta-Stencil";
+  src: url("http://developer.mozilla.org/@api/deki/files/2934/=VeraSeBd.ttf")
+@font-face
+  font-family: "Ubuntu-Medium";
+  src: url("http://developer.mozilla.org/@api/deki/files/2934/=VeraSeBd.ttf")
+@font-face
+  font-family "Ubuntu"
+  src url("")
+  */
 #app
   width 100vw
   height 100vh
@@ -680,53 +655,6 @@ Welcome to contact us to better serve the resident.`,
       &:last-child
         transform translate3d(-50%, -50%, 0) rotate(45deg)
 
-.feedback-card
-  position absolute
-  top 10%
-  left 50%
-  transform translate3d(-50%, 0, 0)
-  width 720px
-  background-color rgba(19,29,64,0.65)
-  border-radius 10px
-  transition 0.8s
-  .create-btn
-    position relative
-    width 11.4%
-    height 5%
-    left  9.35%
-    top 17.5%
-    background-color rgba(255,113,62,0.8)
-    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
-    border-radius: 5.84px;
-    cursor pointer
-    span
-      position absolute
-      //display table
-      top 30%
-      left 35%
-      color white
-      font-size 14px
-      text-align center
-  .quit-btn
-    position relative
-    width 11.4%
-    height 5%
-    top 20%
-    left 9.35%
-    background-color rgba(103,104,131,0.8)
-    color white
-    font-size 14px
-    font-family Ubuntu-Medium
-    text-align center
-    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
-    border-radius: 5.84px;
-    cursor pointer
-    span
-      position absolute
-      top 30%
-      left 18%
-      color white
-      font-size 14px
-      text-align center
+
 
 </style>

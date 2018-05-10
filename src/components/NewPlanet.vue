@@ -7,15 +7,16 @@
     <div class="card">
         <p class="bigtitle">Create a new planet</p>
         <input type="text" class="name" v-model="setUpInfo.name">
+        <p class="title">Email</p>
         <input type="text" class="text" v-model="setUpInfo.email">
         <p class="title">Description</p>
-        <textarea rows="3" class="text" v-model="setUpInfo.description"></textarea>
+        <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
         <p class="title">Demo URL</p>
         <input type="text" class="text" v-model="setUpInfo.demo">
         <p class="title">Github URL</p>
         <input type="text" class="text" v-model="setUpInfo.git">
         <p class="title">Team Introduction</p>
-        <textarea rows="4" class="text" v-model="setUpInfo.team"></textarea>
+        <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
 </template>
