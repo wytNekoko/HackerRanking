@@ -3,11 +3,13 @@ import Router from 'vue-router'
 import HelloPage from '@/components/HelloPage'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
-// import Register from '@/components/Register'
+import Register from '@/components/Register'
 import Rules from '@/components/Rules'
 import NewPlanet from '@/components/NewPlanet'
 import Hunter from '@/components/Hunter'
-
+import PostedRewards from '@/components/PostedRewards'
+import OwnedPlanets from '@/components/OwnedPlanets'
+import BuiltPlanets from '@/components/BuiltPlanets'
 Vue.use(Router)
 
 export default new Router({
@@ -17,11 +19,11 @@ export default new Router({
       name: 'HelloPage',
       component: HelloPage
     },
-    // {
-    //   path: '/register',
-    //   name: 'Register',
-    //   component: Register
-    // },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
     {
       path: '/profile',
       name: 'Profile',
@@ -46,6 +48,21 @@ export default new Router({
       path: '/hunter',
       name: 'Hunter',
       component: Hunter
-    }
+    },
+    {
+      path: '/profile/posted-rewards',
+      name: 'PostedRewards',
+      component: PostedRewards
+    },
+    {
+      path: '/profile/owned-planets',
+      name: 'OwnedPlanets',
+      component: OwnedPlanets
+    },
+    {
+      path: '/profile/built-planets',
+      name: 'BuiltPlanets',
+      component: BuiltPlanets
+    },
   ]
 })

@@ -175,6 +175,7 @@ export default {
     line-height 22px
     text-align justify
     color #FFF
+    font-family PingFangSC-Regular
 .mask
   position absolute
   top 0

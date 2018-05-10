@@ -9,12 +9,22 @@
               <h2 style="height:20px width:93px">Total Dusts</h2>
               <img width="10" height="10" :src="require('@/assets/symbols-dusts.png')"></div>
             <div class="button" @click="withdraw">withdraw</div>
-            <div class="line" @click="getDust">
-              <img width="16" height="24" :src="require('@/assets/symbols-getdusts.png')">
+            <div class="line" style="cursor:pointer" @click="getDust">
+              <img width="24" height="24" :src="require('@/assets/symbols-getdusts.png')">
               <h3>Get dusts</h3>
             </div>
           </div>
           <div class="right">
+            <h1>{{user.name}}</h1>
+            <p>Resident ID: {{user.id}}</p>
+            <p>Github link</p>
+            <div class="button-logout" @click="logout">logout</div>
+            <h1>Planets</h1>
+              <div class="box" @click="toOwnedPlanets"><p>Owned Planets</p></div>
+              <div class="box" @click="toBuiltPlanets"><p>Built Planets</p></div>
+            <h1>Bounty Hunter</h1>
+              <div class="box" @click="toPostedRewards"><p>Posted Rewards</p></div>
+
             <!--
             <ul class="infos">
               <li v-for="item in info" :key="info.indexOf(item)">
@@ -80,33 +90,51 @@ export default {
       setUp: [],
       contributed: [],
       totalDust: 0,
-      info
+      info: [],
     }
   },
   created () {
-    api.profile_main().then((res) => {
-      const d = res.data
-      this.totalDust = d.total_dust
-      this.info = d.planets
-    })
-    api.owned_planets().then((res) => {
-      const d = res.data
-      if (d.errcode) {
-        alert(d.errmsg)
-      } else {
-        this.setUp = d
+    if (window.cookieStorage.getItem('token')) {
+      this.user = {
+        name: window.cookieStorage.getItem('name'),
+        id: window.cookieStorage.getItem('id')
       }
-    })
-    api.builded_planets().then((res) => {
-      const d = res.data
-      if (d.errcode) {
-        alert(d.errmsg)
-      } else {
-        this.contributed = d
-      }
-    })
+    }
+    // api.profile_main().then((res) => {
+    //   const d = res.data
+    //   this.totalDust = d.total_dust
+    //   this.info = d.planets
+    // })
+    // api.owned_planets().then((res) => {
+    //   const d = res.data
+    //   if (d.errcode) {
+    //     alert(d.errmsg)
+    //   } else {
+    //     this.setUp = d
+    //   }
+    // })
+    // api.builded_planets().then((res) => {
+    //   const d = res.data
+    //   if (d.errcode) {
+    //     alert(d.errmsg)
+    //   } else {
+    //     this.contributed = d
+    //   }
+    // })
   },
   methods: {
+    logout () {
+      api.logout()
+    },
+    toPostedRewards () {
+      this.$router.push('/profile/posted-rewards')
+    },
+    toOwnedPlanets () {
+      this.$router.push('/profile/owned-planets')
+    },
+    toBuiltPlanets () {
+      this.$router.push('/profile/built-planets')
+    },
     viewSetUp (item) {
       api.planets_one(item.name).then((res) => {
         const d = res.data
@@ -126,8 +154,8 @@ export default {
       })
     },
     withdraw () {
-      // this.$emit('update')
       alert('Under construction...')
+      this.$emit('update')
     },
     getDust () {
       api.get_dust().then((res) => {
@@ -154,7 +182,7 @@ export default {
   height 100%
   position absolute
   display table
-  background  url(../assets/bg-home.jpg) no-repeat
+  background  url(../assets/2.png) no-repeat
   overflow hidden
   #title
     top 7%
@@ -183,19 +211,25 @@ export default {
     width 32.2%
     flex-direction column
     >img
-      margin-left 30%
-      margin-bottom 5%
+      display table
+      margin auto
+      //margin-left 30%
+      //margin-bottom 5%
     .total-dust
+      margin-top 2%
       font-size 30px
       text-align center
     .line
+      line-height 3%
       margin-left 30%
+      margin-bottom 3%
       display flex
       align-items center
       >img
         margin-left 2%
     .button
       margin auto
+      margin-bottom 5%
       display table
       width 17%
       border-radius 8px
@@ -203,12 +237,55 @@ export default {
       padding 0 30px
       border solid 1px #FFF
       cursor pointer
+
   .right
     position absolute
+    top 7.5%
     left 32.21%
     width 67.8%
     flex-direction column
-
+    h1
+      font-size 30px
+      color white
+      line-height 7%
+      margin-top 12%
+      margin-bottom 5%
+      &:first-child
+        margin-top 3%
+    >p
+      font-size 14px
+      color #9B9B9B
+      letter-spacing 0
+      line-height 5%
+      margin-bottom 3%
+    .box
+      display flex
+      width 65%
+      height 6%
+      border-top: 1px solid #979797;
+      border-bottom: 1px solid #979797;
+      cursor pointer
+      &:first-child
+        border-bottom 0
+      >p
+        display table
+        font-size 14px
+        color #9B9B9B
+        letter-spacing 0
+        margin 3% auto
+        text-align center
+    .button-logout
+      position absolute
+      top 5%
+      right 20%
+      //margin auto
+      width 10%
+      border-radius 8px
+      line-height 36px
+      padding 0 30px
+      border solid 1px #FFF
+      text-align center
+      cursor pointer
   .set-up
     width 48%
     height 48%

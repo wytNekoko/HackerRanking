@@ -4,19 +4,19 @@
     <div class="create-btn" @click="setupPlanet"><span>Create</span></div>
     <div class="quit-btn"><span>Quit and Delete</span></div>
     <div class="remind">We don’t save drafts, so make sure the content you’re edting is copied at somewhere safe.</div>
-      <div class="card">
+    <div class="card">
         <p class="bigtitle" @click="quit">Create a new planet</p>
         <input type="text" class="name" v-model="setUpInfo.name">
         <p class="title">Description</p>
-        <textarea rows="4" v-model="setUpInfo.description"></textarea>
+        <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
         <p class="title">Email</p>
-        <input type="text" v-model="setUpInfo.email">
+        <input type="text" class="text" v-model="setUpInfo.email">
         <p class="title">Demo URL</p>
-        <input type="text" v-model="setUpInfo.demo">
+        <input type="text" class="text" v-model="setUpInfo.demo">
         <p class="title">Github URL</p>
-        <input type="text" v-model="setUpInfo.git">
+        <input type="text" class="text" v-model="setUpInfo.git">
         <p class="title">Team Introduction</p>
-        <textarea rows="4" v-model="setUpInfo.team"></textarea>
+        <textarea rows="4" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ export default {
       this.setUpInfo.description = 'e.g. X service allows users to do sth or ...'
       this.setUpInfo.email = ''
       this.setUpInfo.demo = 'http://'
-      this.setUpInfo.git ='http://'
+      this.setUpInfo.git = 'http://'
       this.setUpInfo.team = ''
     }
   }
@@ -93,8 +93,8 @@ export default {
   left 0
   .create-btn
     position relative
-    width 160px
-    height 40px
+    width 11.4%
+    height 5%
     left 9.35%
     top 17.5%
     /*width 11.4%*/
@@ -104,6 +104,7 @@ export default {
     border-radius: 5.84px;
     span
       position absolute
+      //display table
       top 30%
       left 35%
       color white
@@ -112,8 +113,8 @@ export default {
       text-align center
   .quit-btn
     position relative
-    width 160px
-    height 40px
+    width 11.4%
+    height 5%
     top 20%
     left 9.35%
     /*width 11.4%*/
@@ -150,28 +151,30 @@ export default {
     top 17.5%
     width 55.6%
     height 80%
-    padding 0 80px
+    padding 0 5%
     box-sizing border-box
     box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20);
     border-radius: 4px
     background rgba(19,29,64,0.65)
+    .text
+      padding-left 1.5%
     input
       height 40px
-      width 623px
-      left 79px
+      width 100%
       background: rgba(0,0,0,0.57);
       border-radius: 3px;
       border 0
       font-size 14px
       color rgba(255,255,255,0.30)
+      text-align justify
     textarea
-      width 623px
-      left 79px
+      width 100%
       background: rgba(0,0,0,0.57);
       border-radius: 3px;
       border 0
       font-size 14px
       color rgba(255,255,255,0.30)
+      text-align justify
     .bigtitle
       font-family Ubuntu-Medium
       font-size 20px
@@ -182,8 +185,9 @@ export default {
       color: #9B9B9B
       letter-spacing: 0;
       text-align: justify;
-      line-height: 28px;
+      line-height: 15px;
     .name
       font-size 14px
       color rgba(255,255,255,0.30)
+      padding-left 1.5%
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <img class="bg" :src="require('@/assets/bg-home.jpg')">
-    <div class="mask"></div>
+    <img class="bg" :src="require('@/assets/4.png')">
+    <!--<div class="mask"></div>-->
     <div class="move-bg" :style="{'transform': `translate3d(${pos.x}px, ${pos.y}px ,0)`}">
       <hello-card v-for="item in building" :key="item.index"
         :window="windowInfo"
@@ -226,7 +226,7 @@ export default {
   position absolute
   width 100%
   height 100%
-  background  url(../assets/bg-home.jpg) no-repeat
+  //background  url(../assets/4.png) no-repeat
   overflow hidden
   .bg
     width 100%

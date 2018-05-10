@@ -1,13 +1,13 @@
 <template>
   <div id="register">
-    <div class="center">
-      <img class="logo"
-        :class="{'move-up': openBox}" width="300"
-        :src="require('@/assets/symbols-logo.png')" alt="logo">
-      <div class="button" @click="registeOnClick">Register / Login Here</div>
-      <p class="jump" @click="jump">Directly go to the Universe ></p>
-    </div>
-    <div class="register-box" :class="{'open': openBox}">
+    <!--<div class="center">-->
+      <!--<img class="logo"-->
+        <!--:class="{'move-up': openBox}" width="300"-->
+        <!--:src="require('@/assets/symbols-logo.png')" alt="logo">-->
+      <!--<div class="button" @click="registeOnClick">Register / Login Here</div>-->
+      <!--<p class="jump" @click="jump">Directly go to the Universe ></p>-->
+    <!--</div>-->
+    <div class="register-box"> <!--:class="{'open': openBox}">-->
       <h2>
         <span @click="login" :class="{'focus': !needRegister}">Login</span>
         <span @click="register" :class="{'focus': needRegister}">Register</span>
@@ -34,9 +34,11 @@
       </ul>
       <div class="submit" @click="submit">Submit</div>
       <p class="notice" v-html="notice"></p>
+      <!--
       <img class="register-bg" width="400"
         :src="require('@/assets/symbols-buildplanet.png')"
       alt="buildplanet">
+      -->
       <div class="close" @click="closeOnClick">Close X</div>
     </div>
   </div>
@@ -62,9 +64,9 @@ export default {
     jump () {
       this.$router.push('/')
     },
-    registeOnClick () {
-      this.openBox = true
-    },
+    // registeOnClick () {
+    //   this.openBox = true
+    // },
     closeOnClick () {
       this.openBox = false
     },
@@ -131,7 +133,7 @@ export default {
   width 100%
   height 100%
   position absolute
-  background-color #441D66
+  background  url(../assets/bg-home.jpg) no-repeat
   top 0
   left 0
   overflow hidden
@@ -167,18 +169,19 @@ export default {
   cursor pointer
 .register-box
   position absolute
-  top 100%
+  top 10%
   left 50%
   transform translate3d(-50%, 0, 0)
   width 720px
-  background-color #FFF
-  border-radius 60px
+  background-color rgba(0,0,0,0.8)
+  border-radius 10px
   transition 0.8s
   font-family 'Ubuntu'
   h2
     margin 50px 0 60px
     text-align center
     span
+      color white
       font-size 14px
       opacity 0.4
       cursor pointer
@@ -208,6 +211,7 @@ export default {
     margin 30px 0
     position relative
     span
+      color rgba(255,255,255,0.5)
       font-size 20px
       width 90px
       height 50px
@@ -215,11 +219,14 @@ export default {
       align-items center
       float left
       text-align center
+      &:last-child
+        color rgba(0,0,0,0.57)
     input
       border none
       width 420px
       height 50px
-      background-color #F6F6F6
+      background-color rgba(0,0,0,0.57)
+      color white
       border-radius 25px
       float right
       outline none
@@ -236,18 +243,19 @@ export default {
     height 100%
     top 0
     left 0
-    background-color #FFFd
+    background-color rgba(0,0,0,0.9)
 .submit
   font-size 20px
-  color #4C1978
+  color white
   margin 50px auto 0
   width 240px
   height 56px
   line-height 56px
   text-align center
   border-radius 30px
-  border solid 2px #4C1978
+  border solid 2px white
   cursor pointer
+
 .notice
   color #FF2100
   font-size 20px

@@ -1,7 +1,7 @@
 <template>
  <div class="bg">
-  <img class="stretch" :src="require('@/assets/bg-hunter.jpg')">
-   <div class="mask"></div>
+  <img class="stretch" :src="require('@/assets/3.png')">
+   <!--<div class="mask"></div>-->
    <div class="mainbox">
      <span class="subtitle">Bounty Hunter</span>
      <span class="title1">Claim a Mission</span>

@@ -86,6 +86,7 @@
         <ul>
           <li>
             <h2>Signed Resident:</h2>
+            <div class="button" @click="login">Login with cryptoname</div>
             <div class="button">Login with Github</div>
             <div class="button">Login with Facebook</div>
           </li>
@@ -157,16 +158,18 @@ export default {
     }
   },
   created () {
-    // if (!window.cookieStorage.getItem('token')) {
-    //   this.$router.push('/register')
-    // } else {
-    //   this.user = {
-    //     name: window.cookieStorage.getItem('name'),
-    //     id: window.cookieStorage.getItem('id')
-    //   }
-    // }
+    if (window.cookieStorage.getItem('token')) {
+      this.user = {
+        name: window.cookieStorage.getItem('name'),
+        id: window.cookieStorage.getItem('id')
+      }
+    }
   },
   methods: {
+    login () {
+      this.closeRegister()
+      this.$router.push('/register')
+    },
     openProfile () {
       if (!window.cookieStorage.getItem('token')) {
         this.$router.push('/register')
@@ -583,7 +586,7 @@ export default {
 .register-card
   color #fff
   position absolute
-  top 50%
+  top 45%
   left 50%
   transform translate3d(-50%, -50%, 0)
   h2
@@ -601,6 +604,7 @@ export default {
     padding 25px
     box-sizing border-box
     &:first-child
+      height 340px
       background-image linear-gradient(left, #2E2828, #000000)
     &:last-child
       background-image linear-gradient(left, #301B0F, #1E0618)
