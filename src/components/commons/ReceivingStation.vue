@@ -26,7 +26,7 @@ export default {
   position fixed
   right 0
   width 262.1px
-  top 73.1%
+  top 83%
   z-index 1
   .station
     width 0

@@ -73,6 +73,10 @@ export default {
       this.$emit('build')
     },
     onMousedown () {
+      if (!window.cookieStorage.getItem('token')) {
+        alert('Login required.')
+        return
+      }
       this.onbuilding = true
       this.timer = setTimeout(this.build, 1500)
     },

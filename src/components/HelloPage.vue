@@ -7,7 +7,7 @@
         :dx="pos.x"
         :dy="pos.y"
         :orgData="item"
-        v-on:childView="view(item.name)" v-on="$listeners"
+        v-on:childView="view(item.title)" v-on="$listeners"
       ></hello-card>
     </div>
     <div class="mask" v-if="feedbackIsOpen">

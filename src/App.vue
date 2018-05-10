@@ -104,7 +104,7 @@
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
     <receiving-station></receiving-station>
-    <hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>
+    <!--<hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>-->
 
   </div>
 </template>
