@@ -42,9 +42,12 @@ export default {
   methods: {
     togglePlanet () {
       if (!window.cookieStorage.getItem('token')) {
-        this.$router.push('/register')
+        alert('Login required')
+        // this.$router.push('/register')
       }
-      this.$router.push('/setup-planet')
+      else {
+        this.$router.push('/setup-planet')
+      }
     },
     getDust () {
       api.get_dust().then((res) => {
@@ -71,6 +74,8 @@ export default {
       this.$router.push('/ranking')
     },
     feedBack () {
+      console.log('openFeedback')
+      this.$emit('openFeedback')
     },
     help () {
 
@@ -96,6 +101,7 @@ export default {
     width 14.28%
     height 78.9px
     border-right 0.5px solid rgba(255,255,255,0.35)
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -115,6 +121,7 @@ export default {
     width 14.28%
     height 78.9px
     border-right 0.5px solid rgba(255,255,255,0.35)
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -133,6 +140,7 @@ export default {
     left 28.57%
     width 14.28%
     height 78.9px
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -152,6 +160,7 @@ export default {
     width 14.28%
     height 78.9px
     border-right 0.5px solid rgba(255,255,255,0.35)
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -171,6 +180,7 @@ export default {
     width 14.28%
     height 78.9px
     border-right 0.5px solid rgba(255,255,255,0.35)
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -189,6 +199,7 @@ export default {
     left: 71.42%
     width 14.28%
     height 78.9px
+    cursor pointer
     .icon
       position absolute
       left 30%
@@ -207,6 +218,7 @@ export default {
     left: 85.7%
     width 14.28%
     height 78.9px
+    cursor pointer
     .icon
       position absolute
       left 30%

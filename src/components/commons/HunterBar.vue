@@ -28,6 +28,7 @@ export default {
   border: 0.3px solid rgba(255,255,255,0.35);
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.50);
   border-radius: 3.94px;
+  cursor pointer
   .icon
     position absolute
     left 5%

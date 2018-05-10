@@ -145,8 +145,9 @@ export default {
                 git: newPlanet.git,
                 demo: newPlanet.demo,
                 team: newPlanet.team,
-                time: newPlanet.created_at
+                time: this.getLeft(newPlanet.created_at)
               }
+
               this.building.push(data)
             } else {
               this.building.push({
@@ -204,6 +205,18 @@ export default {
     },
     setUp () {
       this.$emit('setUp')
+    },
+    getLeft (ctime) {
+      const now = new Date()
+      const s = ctime.substring(0,10)
+      const start = new Date(s)
+      const delta = 30*24*3600*1000
+      const end = start.getTime() + delta
+      const left = new Date(end - now.getTime())
+      if (left < 0) {
+        return 0
+      }
+      return (left / (3600 * 1000 * 24)).toFixed(1)
     }
   },
   components: {
@@ -219,7 +232,7 @@ export default {
   left 0
   width 100%
   height 100%
-  background-color rgba(176,114,80,0.3)//rgba(2555,255,255,0.8)//rgba(176,103,62,0.8)
+  background-color rgba(176,114,80,0.3)
   z-index 0.5
   /*mix-blend-mode: soft-light;*/
 .hello

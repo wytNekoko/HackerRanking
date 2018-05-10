@@ -43,6 +43,7 @@
         </div>
       </div>
     </div>
+    <!--
     <div class="set-up" :class="{'view-show': setIsOpen}">
       <div class="card">
         <span class="close" @click="closeSet">Close X</span>
@@ -69,13 +70,36 @@
         <p>Get the way to contact the captain</p>
         <div class="button" @click="spy">{{leaderEmail ? leaderEmail : `${pay} Gift`}}</div>
       </div>
-    </div>
+    </div> -->
     <div class="mask build-mask" v-if="buildIsOpen">
       <div class="build-card">
         <span class="close" @click="closeBuild">Close X</span>
         <h3>Amount of investment</h3>
         <input type="text" v-model="buildNum"><span class="dust">Dust</span>
         <div class="button" @click="confirmBuild">Confirm</div>
+      </div>
+    </div>
+    <div class="mask build-mask" v-if="feedbackIsOpen">
+      <div class="feedback-card">
+        <h3>Feedback</h3>
+        <input type="text" v-model="feedbackInfo.email">
+        <input type="text" v-model="feedbackInfo.title">
+        <div class="choice">
+          <input type="radio" id="feedbackChoice1"
+                 v-model="feedbackInfo.type" value="advice">
+          <label for="feedbackChoice1">Advice</label>
+
+          <input type="radio" id="feedbackChoice2"
+                 v-model="feedbackInfo.type" value="cooperation">
+          <label for="feedbackChoice2">Cooperation</label>
+
+          <input type="radio" id="feedbackChoice3"
+                 v-model="feedbackInfo.type" value="others">
+          <label for="feedbackChoice3">Others</label>
+        </div>
+        <textarea rows="4" v-model="feedbackInfo.comment"></textarea>
+        <div class="create-btn" @click="sendFeedback"><span>Send</span></div>
+        <div class="quit-btn" @click="closeFeedback"><span>Quit and Delete</span></div>
       </div>
     </div>
     <div class="mask build-mask" v-if="registerIsOpen">
@@ -130,9 +154,9 @@ export default {
       user: null,
       viewPro: {
         title: 'DoraDust',
-        intro: `在DoraDust中可以看到DoraHacks Hacker们做的有趣项目，每一个用户都是Dora的建设者，
-每个人手里都有一定的筹码，可以选择自己看好的项目“投资”，每个投资者的投资额会根据他的“信誉”值变化，
-信誉值对应的是项目贡献能力和项目评估能力。DoraDust 的项目会根据“投资”情况进行排名。`,
+        intro: `Please pay attention to Galaxy Convention to get more resident policy.
+We will work hard to create galactic welfare all the time.
+Welcome to contact us to better serve the resident.`,
         demo: 'http://sdflakdflakdflakldfklakd.com',
         git: '',
         team: '',
@@ -143,6 +167,13 @@ export default {
       setIsOpen: false,
       buildIsOpen: false,
       registerIsOpen: false,
+      feedbackIsOpen: false,
+      feedbackInfo: {
+        email: 'Your Email Address',
+        title: 'Title',
+        type: 'advice',
+        comment: 'Comment text'
+      },
       buildNum: 10,
       leader: 'Alabama',
       pay: 1000,
@@ -214,6 +245,16 @@ export default {
     },
     closeRegister () {
       this.registerIsOpen = false
+    },
+    openFeedback () {
+      alert('working')
+      this.feedbackIsOpen = true
+    },
+    closeFeedback () {
+      this.feedbackIsOpen = false
+    },
+    sendFeedback () {
+      // TODO
     },
     update (data) {
       const d = new Date()
@@ -638,4 +679,54 @@ export default {
         transform translate3d(-50%, -50%, 0) rotate(-45deg)
       &:last-child
         transform translate3d(-50%, -50%, 0) rotate(45deg)
+
+.feedback-card
+  position absolute
+  top 10%
+  left 50%
+  transform translate3d(-50%, 0, 0)
+  width 720px
+  background-color rgba(19,29,64,0.65)
+  border-radius 10px
+  transition 0.8s
+  .create-btn
+    position relative
+    width 11.4%
+    height 5%
+    left  9.35%
+    top 17.5%
+    background-color rgba(255,113,62,0.8)
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+    border-radius: 5.84px;
+    cursor pointer
+    span
+      position absolute
+      //display table
+      top 30%
+      left 35%
+      color white
+      font-size 14px
+      text-align center
+  .quit-btn
+    position relative
+    width 11.4%
+    height 5%
+    top 20%
+    left 9.35%
+    background-color rgba(103,104,131,0.8)
+    color white
+    font-size 14px
+    font-family Ubuntu-Medium
+    text-align center
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
+    border-radius: 5.84px;
+    cursor pointer
+    span
+      position absolute
+      top 30%
+      left 18%
+      color white
+      font-size 14px
+      text-align center
+
 </style>

@@ -4,14 +4,18 @@
       <div class="content" :style="{
         'transform': `translate3d(${k < 30 ? 24 * k / 30 - 24 : -16 * (k - 30) / 70}px, 0, 0)`
       }"></div>
-      </div>
+    </div>
+    <div class="time" :class="{'time-show': isShow}">{{time}} days left</div>
     <div class="front-part" :style="{
         'transform': `translate3d(${16 - 16 * (k - 30) / 70}px, ${16 * (k - 30) / 70 - 16}px, 0)`
       }">
-      <div class="content" :style="{
-        'transform': `translate3d(${k < 30 ? 100 : ((k - 90) * (k - 90) - 100) / 35}%, 0, 0)`
+      <div class="content" style='display: flex' :style=" {
+        'transform':`translate3d(${k < 30 ? 100 : ((k - 90) * (k - 90) - 100) / 35}%, 0, 0)`
       }" @mousedown="onMousedown" @mouseleave="onMouseleave">
-        <span :class="{'hide': onbuilding}">Build it!</span>
+        <img width="40" height="40" style="margin-top:3px"
+             :class="{'hide': onbuilding}"
+             :src="require('@/assets/symbols-build2.png')">
+        <span :class="{'hide': onbuilding}">Build 88 dusts</span>
         <div class="progress" :class="{'show': onbuilding}">
           <div :class="{'move': onbuilding}"></div>
         </div>
@@ -20,10 +24,9 @@
     <!--<img class="block"-->
       <!--:class="{'block-animation': onbuilding}"-->
       <!--:src="require('@/assets/symbols-blocks.png')" alt="">-->
-    <!--<img class="hammer"-->
-      <!--:class="{'hammer-animation': onbuilding}"-->
-      <!--:src="require('@/assets/symbols-build2.png')" alt="">-->
-    <div class="time" :class="{'time-show': isShow}">{{time}}</div>
+    <img class="hammer" width="70" height="70"
+      :class="{'hammer-animation': onbuilding}"
+      :src="require('@/assets/symbols-build2.png')" alt="">
   </div>
 </template>
 
@@ -78,7 +81,8 @@ export default {
       this.onbuilding = false
     },
     build () {
-      api.build(this.name, 22).then((res) => {
+      console.log('call build')
+      api.build(this.name, 88).then((res) => {
         const d = res.data
         if (d.errcode) {
           alert(d.errmsg)
@@ -102,7 +106,7 @@ export default {
   top 8px
   right -8px
   height 44px
-  width 140px
+  width 180px
   overflow hidden
   .content
     width 100%
@@ -121,10 +125,10 @@ export default {
     user-select none
     transition transform 0.2s
     font-size 14px
-    padding-left 10px
+    padding-left 0
     float left
   .hide
-    transform translate3d(100px, 0, 0)
+    transform translate3d(150px, 0, 0)
 .back-part
   position absolute
   top 4px
@@ -138,14 +142,14 @@ export default {
     height 100%
     background-color black
 .progress
-  width 80px
+  width 100px
   height 4px
   position absolute
   top 18px
-  left 8px
+  left 18px
   overflow hidden
   border solid 2px #FFF
-  transform translate3d(-100px, 0, 0)
+  transform translate3d(-200px, 0, 0)
   transition 0.2s
   div
     width 100%
@@ -154,7 +158,7 @@ export default {
     transform translate3d(-100%, 0, 0)
   .move
     transform translate3d(0, 0, 0) !important
-    transition transform 2s linear
+    transition transform 1.5s linear
 .show
   transform translate3d(0, 0, 0)
 .block
@@ -177,7 +181,7 @@ export default {
   opacity 1
   animation boom 1.5s
 .time
-  width 100px
+  width 130px
   height 20px
   line-height 16px
   font-size 12px
@@ -186,12 +190,13 @@ export default {
   background-color #4D9003
   position absolute
   top 56px
-  left -92px
+  left -130px
   transition 0.5s
   opacity 0
   transform translate3d(0, 10px, 0)
 .time-show
   opacity 1
+  display table
   transform translate3d(0, 0, 0)
 @keyframes boom
   0%
