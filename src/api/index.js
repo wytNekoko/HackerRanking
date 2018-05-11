@@ -69,6 +69,9 @@ export default {
   rank_dashboards () {
     return axios.get(`${url}/rank/dashboard`)
   },
+  rank_bounty () {
+    return axios.get(`${url}/rank/bounty`)
+  },
   owned_planets () {
     return axios.get(`${url}/profile/owned-planets`, {
       headers: {
@@ -105,5 +108,21 @@ export default {
   },
   planet_list () {
     return axios.get(`${url}/planets/ranklist`)
+  },
+  bounty_show () {
+    return axios.get(`${url}/bounty/show`)
+  },
+  bounty_setup (option) {
+    return axios.post(`${url}/bounty/setup`, {
+      name: option.name,
+      description: option.description,
+      keywords: option.keywords,
+      email: option.email
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
   }
 }
