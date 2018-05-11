@@ -3,7 +3,7 @@
     'transform': `translate3d(${transX}px, ${transY}px, 0)`
   }">
     <div class="board" :style="{'transform': `scale(${scale}) rotateY(${rotate}deg)`}">
-      <p class="rank">Rank #{{orgData.rank}}</p>
+      <p class="rank">Rank #</p>
       <h1 class="title">{{orgData.title}}</h1>
       <p class="intro">{{orgData.intro}}</p>
       <pink-silk

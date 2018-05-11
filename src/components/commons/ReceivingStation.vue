@@ -66,9 +66,8 @@ export default {
     top 32px
     width 262.1px
     height 20px
-    border: 0.3px solid rgba(255,255,255,0.35);
-    border-bottom-color black
-    border-left-color black
+    border: 0.3px solid rgba(255,255,255,0.2);
+    border-bottom 0
     background-color rgba(0,0,0,0.8)
     .arrow
       position absolute
@@ -76,14 +75,14 @@ export default {
       top 45%
   .messagebox
     position absolute
-    top 54px
-    right 0
+    top 51px
+    left 0
     width 262.1px
     height 84.3px
     background-image: linear-gradient(-136deg, rgba(46,40,40,0.95) 0%, rgba(0,0,0,0.94) 100%);
-    border: 0.3px solid rgba(255,255,255,0.35);
-    border-top-color black
-    border-right-color rgba(0,0,0,0.48)
+    border: 0.3px solid rgba(255,255,255,0.2);
+    border-top 0
+    border-right 0
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.50)
     border-radius: 3.51px;
 

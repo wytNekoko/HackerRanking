@@ -13,7 +13,11 @@
    </div>
    <div class="bar">
      <div class="post" @click="togglePost"><span>Post a reward</span></div>
-     <div class="feedback" @click="feedBack">
+     <div class="rank" @click="rank">
+       <img class="icon" width="40%" height="40%" :src="require('@/assets/symbols-ranking.png')">
+       <p class="text">Ranking</p>
+     </div>
+     <div class="feedback" @click="feedback">
        <img class="icon" width="40%" height="40%" :src="require('@/assets/symbols-feedback.png')">
        <p class="text">Feedback</p>
      </div>
@@ -22,15 +26,42 @@
        <p class="text">Help</p>
      </div>
    </div>
+   <feedback v-if="openFeedback" @closeFeedback="closeFeedback"></feedback>
  </div>
 </template>
 
 <script>
+import api from '@/api'
+import Feedback from './commons/Feedback'
+
 export default {
   name: 'Hunter',
+  components: { Feedback },
+  data () {
+    return {
+      openPost: false,
+      openFeedback: false,
+      openHelp: false
+    }
+  },
   methods: {
     togglePost () {
-
+      this.openPost = true
+    },
+    rank () {
+      this.$router.push('/ranking/hunters')
+    },
+    feedback () {
+      this.openFeedback = true
+    },
+    help () {
+      this.openHelp = true
+    },
+    closeFeedback () {
+      this.openFeedback = false
+    },
+    closeHelp () {
+      this.openHelp = false
     }
   }
 }
@@ -48,11 +79,6 @@ export default {
     width 100%
     height 100%
     opacity 0.5
-  .mask
-    width 100%
-    height 100%
-    background-color linear-gradient(180deg, rgba(88,66,101,0.83) 80%, rgba(76,37,37,0.71) 100%);
-    z-index 0.5
   .mainbox
     position absolute
     top 17.5%
@@ -117,17 +143,19 @@ export default {
   .bar
     position fixed
     top 87.875%
-    left 34.7%
-    width 36.6%
-    height 9.86%
+    left 30%
+    width 611px
+    height 78.9px
     background linear-gradient(142deg, rgba(48,59,70,0.95) 47%, rgba(78,46,46,0.94) 99%)
     border: 0.3px solid rgba(255,255,255,0.35);
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.50);
     border-radius: 3.94px;
+    color white
+    cursor pointer
     .post
       position absolute
       left 0
-      width 66%
+      width 340px
       height 100%
       font-family Ubuntu-Medium
       font-size 20px
@@ -137,10 +165,27 @@ export default {
         position absolute
         left 30%
         top 35.48%
+    .rank
+      position absolute
+      left 340.3px
+      width 86.8px
+      height 100%
+      border-right 0.3px solid rgba(255,255,255,0.35);
+      .icon
+        position absolute
+        left 30%
+        top 17%
+      .text
+        position absolute
+        left 30%
+        top 55%
+        font-family Ubuntu-Medium
+        font-size 10px
+        text-shadow: 0 2px 2px #000000;
     .feedback
       position absolute
-      left: 66%
-      width 16.8%
+      left: 437.4px
+      width 86.8px
       height 78.9px
       .icon
         position absolute
@@ -150,15 +195,15 @@ export default {
         position absolute
         left 23%
         top 55%
-        //font-family: Ubuntu-Medium;
+        font-family: Ubuntu-Medium;
         font-size: 10px;
         color: #FFFFFF;
         letter-spacing: 0;
         text-shadow: 0 2px 2px #000000;
     .help
       position absolute
-      left: 82.8%
-      width 16.8%
+      left: 520px
+      width 86.8px
       height 78.9px
       .icon
         position absolute
@@ -166,9 +211,9 @@ export default {
         top 17%
       .text
         position absolute
-        left 35%
+        left 38%
         top 55%
-        //font-family: Ubuntu-Medium;
+        font-family: Ubuntu-Medium;
         font-size: 10px;
         color: #FFFFFF;
         letter-spacing: 0;

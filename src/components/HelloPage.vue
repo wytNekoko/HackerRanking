@@ -10,27 +10,7 @@
         v-on:childView="view(item.title)" v-on="$listeners"
       ></hello-card>
     </div>
-    <div class="mask" v-if="feedbackIsOpen">
-      <div class="feedback-card">
-        <h3>Feedback</h3>
-        <input type="text"  v-model="feedbackInfo.email">
-        <input type="text"  v-model="feedbackInfo.title">
-        <div class="choice">
-          <input type="checkbox" id="feedbackChoice1"
-                 v-model="feedbackInfo.advice">
-          <label for="feedbackChoice1">Advice</label>
-          <input type="checkbox" id="feedbackChoice2"
-                 v-model="feedbackInfo.cooperation">
-          <label for="feedbackChoice2">Cooperation</label>
-          <input type="checkbox" id="feedbackChoice3"
-                 v-model="feedbackInfo.others">
-          <label for="feedbackChoice3">Others</label>
-        </div>
-        <textarea rows="10" v-model="feedbackInfo.comment"></textarea>
-        <div class="create-btn" @click="sendFeedback"><span>Send</span></div>
-        <div class="quit-btn" @click="closeFeedback"><span>Quit and Delete</span></div>
-      </div>
-    </div>
+    <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar :is-explore="true" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>
   </div>
 </template>
@@ -39,6 +19,7 @@
 import api from '@/api'
 import HelloCard from './commons/HelloCard'
 import ToolBar from './commons/ToolBar'
+import Feedback from './commons/Feedback'
 
 export default {
   name: 'HelloPage',
@@ -95,12 +76,7 @@ export default {
   },
   methods: {
     openFeedback () {
-      console.log('working')
       this.feedbackIsOpen = true
-    },
-    sendFeedback () {
-      // TODO
-      // this.feedbackIsOpen = false
     },
     closeFeedback () {
       this.feedbackIsOpen = false
@@ -254,7 +230,8 @@ export default {
   },
   components: {
     HelloCard,
-    ToolBar
+    ToolBar,
+    Feedback
   }
 }
 </script>
@@ -349,11 +326,6 @@ export default {
         color white
         font-size 14px
         text-align center
-.box
-  width 300px
-  height 400px
-  background-color #FFF
-  border-radius 8px
 .center
   transform translate3d(-150px, -200px, 0)
 .left-1
@@ -388,13 +360,6 @@ export default {
     position absolute
     top 50%
     left 50%
-.mask
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  background-color #000A
-  z-index 6
+
 
 </style>

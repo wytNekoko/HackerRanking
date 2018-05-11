@@ -102,5 +102,8 @@ export default {
   },
   planet_all () {
     return axios.get(`${url}/planets/all`)
+  },
+  planet_list () {
+    return axios.get(`${url}/planets/ranklist`)
   }
 }

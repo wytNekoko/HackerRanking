@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloPage from '@/components/HelloPage'
+import ListView from '@/components/ListView'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
+import RankHunters from '@/components/RankHunters'
 import Register from '@/components/Register'
 import Rules from '@/components/Rules'
 import NewPlanet from '@/components/NewPlanet'
@@ -22,6 +24,11 @@ export default new Router({
       component: HelloPage
     },
     {
+      path: '/list',
+      name: 'ListView',
+      component: ListView
+    },
+    {
       path: '/register',
       name: 'Register',
       component: Register
@@ -32,9 +39,14 @@ export default new Router({
       component: Profile
     },
     {
-      path: '/ranking',
+      path: '/ranking/planets',
       name: 'Ranking',
       component: Ranking
+    },
+    {
+      path: '/ranking/hunters',
+      name: 'RankHunters',
+      component: RankHunters
     },
     {
       path: '/rules',

@@ -16,13 +16,12 @@
       <p>{{pinfo.team_intro}}</p>
     </div>
     <div class="num-info">
-      <!--<div class="num">{{pinfo.builder_num}}</div>-->
-      <div class="num">0</div>
+      <div class="num">{{pinfo.builder_num}}</div>
       <p>Builders</p>
       <div class="num">{{pinfo.dust_num}}</div>
       <p>Dusts</p>
       <!--<div class="num">#{{pinfo.rank}}</div>-->
-      <div class="num">#0</div>
+      <div class="num">#{{rank}}</div>
       <p>Rank</p>
     </div>
     <div class="build-btn" @click="openBuild">
@@ -75,13 +74,14 @@ export default {
       leaderEmail: null,
       closeUnable: true,
       buildIsOpen: false,
-      buildNum: 10,
+      buildNum: 88,
       sentMsg: 'This Captain’s information will be ' +
     'sent to you as soon as the information is collected.\n' +
     'Please pay attention to your Receiving Station.',
       getMsg: '   Get me this Captain’s Infomation,\n' +
       'I need to talk to him/her.',
-      countdown: 5
+      countdown: 5,
+      rank: 0
     }
   },
   created () {
@@ -94,6 +94,9 @@ export default {
         this.time_left = this.getLeft(d.created_at)
       }
     })
+    if (this.$route.query.rank) {
+      this.rank = this.$route.query.rank
+    }
   },
   watch: {
     sent: function (val, oldVal) {
@@ -268,6 +271,7 @@ export default {
       margin 0 60px
       font-size 14px
       line-height 14px
+      width 480px
     p
       margin-left 60px
       margin-right 60px

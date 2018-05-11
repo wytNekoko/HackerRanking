@@ -70,10 +70,10 @@ export default {
       this.$router.push('/')
     },
     listView () {
-
+      this.$router.push('/list')
     },
     gotoRanking () {
-      this.$router.push('/ranking')
+      this.$router.push('/ranking/planets')
     },
     feedBack () {
       this.$emit('feedback')

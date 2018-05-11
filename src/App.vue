@@ -24,63 +24,6 @@
       'hide': this.$route.name !== 'Profile'
     }">Back ></div>
               -->
-
-    <div class="mask" v-if="viewIsOpen || setIsOpen"></div>
-    <div class="view" :class="{'view-show': viewIsOpen}">
-      <div class="spy" @click="openSpy">Spy the Team</div>
-      <div class="card">
-        <span class="close" @click="closeView">Close X</span>
-        <h2>{{viewPro.title}}</h2>
-        <p class="intro">{{viewPro.intro}}</p>
-        <p v-if="viewPro.demo">Demo URL：<a :href="viewPro.demo">{{viewPro.demo}}</a></p>
-        <p v-if="viewPro.git">Git URL：<a :href="viewPro.git">{{viewPro.git}}</a></p>
-        <p>Team: {{viewPro.team}}</p>
-        <div class="build">
-          <div class="button" @click="buildIt">Build it!</div>
-          <p>{{viewPro.builder}}Builders</p>
-          <p>{{viewPro.dust}}Dusts</p>
-          <p>Rank #{{viewPro.rank}}</p>
-        </div>
-      </div>
-    </div>
-    <!--
-    <div class="set-up" :class="{'view-show': setIsOpen}">
-      <div class="card">
-        <span class="close" @click="closeSet">Close X</span>
-        <input type="text" class="number" v-model="setUpInfo.name">
-        <textarea rows="4" v-model="setUpInfo.description"></textarea>
-        <p class="title">Email</p>
-        <input type="text" v-model="setUpInfo.email">
-        <p class="title">Demo URL</p>
-        <input type="text" v-model="setUpInfo.demo">
-        <p class="title">Github URL</p>
-        <input type="text" v-model="setUpInfo.git">
-        <p class="title">Team Introduction</p>
-        <textarea rows="4" v-model="setUpInfo.team"></textarea>
-        <div class="build">
-          <div class="button set" @click="setupPlanet">Set it up</div>
-        </div>
-      </div>
-    </div>
-    -->
-    <div class="mask spy-mask" v-if="spyIsOpen">
-      <div class="spy-card">
-        <span class="close" @click="closeSpy">Close X</span>
-        <img height="80" :src="require('@/assets/symbols-spy.png')" alt="">
-        <h3>Spy the Team</h3>
-        <p>Get the way to contact the captain</p>
-        <div class="button" @click="spy">{{leaderEmail ? leaderEmail : `${pay} Gift`}}</div>
-      </div>
-    </div>
-    <div class="mask build-mask" v-if="buildIsOpen">
-      <div class="build-card">
-        <span class="close" @click="closeBuild">Close X</span>
-        <h3>Amount of investment</h3>
-        <input type="text" v-model="buildNum"><span class="dust">Dust</span>
-        <div class="button" @click="confirmBuild">Confirm</div>
-      </div>
-    </div>
-
     <div class="mask build-mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
@@ -408,15 +351,7 @@ Welcome to contact us to better serve the resident.`,
   height 100%
   background-color #000A
   z-index 80
-.view
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  transform translate3d(0, 100%, 0)
-  transition transform 0.8s
-  z-index 100
+
 .card
   width 800px
   height 100%
@@ -522,85 +457,8 @@ Welcome to contact us to better serve the resident.`,
   transition transform 0.8s
 .view-show
   transform translate3d(0, 0, 0)
-.spy-card
-  width 470px
-  height 370px
-  background-color #FFDC00
-  border-radius 8px
-  position absolute
-  top 50%
-  left 50%
-  transform translate3d(-50%, -50%, 0)
-  text-align center
-  padding 40px
-  box-sizing border-box
-  h3
-    font-size 24px
-    margin 18px 0
-  .close
-    position absolute
-    top 24px
-    right 24px
-    cursor pointer
-  p
-    margin 28px 0
-    font-size 24px
-  .button
-    color #FFF
-    background-color #FF2929
-    border-radius 8px
-    height 50px
-    line-height 50px
-    font-size 24px
-    margin auto
-    cursor pointer
-    display table
-    padding 0 50px
 .build-mask
   z-index 120
-.build-card
-  width 400px
-  background-color #fff
-  border-radius 8px
-  position absolute
-  top 50%
-  left 50%
-  transform translate3d(-50%, -50%, 0)
-  text-align center
-  padding 40px
-  box-sizing border-box
-  font-size 16px
-  input
-    border none
-    text-align center
-    margin-right 10px
-    width 140px
-    height 50px
-    background-color #f6f6f6
-    border-radius 25px
-    outline none
-    box-sizing border-box
-    padding 0 30px
-    font-size 18px
-  h3
-    font-size 24px
-    margin 24px 0
-  .close
-    position absolute
-    top 24px
-    right 24px
-    cursor pointer
-  .button
-    width 184px
-    height 50px
-    background-color #FF0082
-    border-radius 25px
-    line-height 50px
-    text-align center
-    font-family 'Ubuntu'
-    color #FFF
-    cursor pointer
-    margin 30px auto 0
 .register-card
   color #fff
   position absolute

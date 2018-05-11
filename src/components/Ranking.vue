@@ -1,39 +1,40 @@
 <template>
   <div id="ranking">
+    <img class="stretch" :src="require('@/assets/5.png')">
     <div class="center">
-      <h1>Ranking</h1>
       <ul class="tables">
         <li>
-          <h2>Planet</h2>
+          <div class="rank-title"><h2>Top Planets</h2></div>
           <ul class="list">
             <li class="no-data" v-if="planet.length === 0">no data</li>
-            <li v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
+            <li style="cursor:pointer;" v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
               <span :class="{'name': planet.indexOf(item) < 3}">
-                {{planet.indexOf(item)}} {{item.name}}
+              <!--<span class="name">-->
+                {{planet.indexOf(item)+1}} {{item.name}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
           </ul>
         </li>
         <li>
-          <h2>Planet Owner</h2>
+          <div class="rank-title"><h2>Top Planet Owners</h2></div>
           <ul class="list">
             <li class="no-data" v-if="planet.length === 0">no data</li>
             <li v-for="item in owner" :key="owner.indexOf(item)">
               <span :class="{'name': owner.indexOf(item) < 3}">
-                {{owner.indexOf(item)}} {{item.username}}
+                {{owner.indexOf(item)+1}}  {{item.username}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
           </ul>
         </li>
         <li>
-          <h2>Builder</h2>
+          <div class="rank-title"><h2>Top Builders</h2></div>
           <ul class="list">
             <li class="no-data" v-if="planet.length === 0">no data</li>
             <li v-for="item in builder" :key="builder.indexOf(item)">
               <span :class="{'name': builder.indexOf(item) < 3}">
-                {{builder.indexOf(item)}} {{item.username}}
+                {{builder.indexOf(item)+1}} {{item.username}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
@@ -41,56 +42,24 @@
         </li>
       </ul>
     </div>
+    <tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>
   </div>
 </template>
 
 <script>
 import api from '@/api'
-
-// const planet = [
-//   { name: 'a bus', dust: 341 },
-//   { name: 'a bus', dust: 300 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 }
-// ]
-// const owner = [
-//   { name: 'a bus', dust: 341 },
-//   { name: 'a bus', dust: 300 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 }
-// ]
-// const builder = [
-//   { name: 'a bus', dust: 341 },
-//   { name: 'a bus', dust: 300 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 200 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 },
-//   { name: 'a bus', dust: 189 }
-// ]
+import ToolBar from "./commons/ToolBar";
 
 export default {
+  components: {ToolBar},
   name: 'Ranking',
   data () {
     return {
       planet: [],
       owner: [],
-      builder: []
+      builder: [],
+      feedbackIsOpen: false,
+      helpIsOpen: false,
     }
   },
   created () {
@@ -107,8 +76,20 @@ export default {
   },
   methods: {
     focus (item) {
-      this.$emit('view', item)
-    }
+      this.$router.push({ 'name': 'PlanetView', query: { name: item.name}})
+    },
+    openFeedback () {
+      this.feedbackIsOpen = true
+    },
+    closeFeedback () {
+      this.feedbackIsOpen = false
+    },
+    openHelp () {
+      this.helpIsOpen = true
+    },
+    closeHelp () {
+      this.helpIsOpen = false
+    },
   }
 }
 </script>
@@ -120,28 +101,11 @@ export default {
   position absolute
   top 0
   left 0
-  h1
-    font-size 50px
-    margin 0 0 50px
-    text-align center
-    color #FFF
-  h2
-    font-size 32px
-    margin 24px 0 40px
-    text-align center
-.tables
-  width 100%
-  margin auto
-  >li
-    width 30%
-    margin-left 2.5%
-    float left
-    background-color #FFF
-    border-radius 8px
-    height 571px
-  .no-data
-    opacity 0.5
-    text-align center
+  .stretch
+    width 100%
+    height 100%
+    /*opacity 0.5*/
+
 .center
   position absolute
   top 50%
@@ -149,13 +113,43 @@ export default {
   width 80%
   transform translate3d(0, -50%, 0)
 .list
-  margin 48px 40px
+  margin 28px 40px
+  font-size 20px
+  color #B7B7B7
   li
-    cursor pointer
     line-height 40px
+    border-bottom 1px solid rgba(255,255,255,0.20);
   .name
-    font-size 24px
+    font-size 20px
+    color white
   .dust
     color #B7B7B7
     float right
+
+.tables
+  width 100%
+  margin auto
+  >li
+    width 30%
+    margin-left 2.5%
+    float left
+    background-color rgba(27,23,22,0.6)
+    box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20);
+    border-radius: 7px;
+    height 571px
+    .rank-title
+      background-color rgba(29,22,19,0.8)
+      border-top-right-radius 7px
+      border-top-left-radius 7px
+      height 60px
+      h2
+        font-size 25px
+        margin 0 0 20px
+        text-align center
+        color white
+        line-height 2.4
+  .no-data
+    opacity 0.5
+    text-align center
+
 </style>
