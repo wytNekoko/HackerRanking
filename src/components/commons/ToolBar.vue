@@ -111,7 +111,7 @@ export default {
       position absolute
       left 15%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -131,7 +131,7 @@ export default {
       position absolute
       left 20%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -150,7 +150,7 @@ export default {
       position absolute
       left 15%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -170,7 +170,7 @@ export default {
       position absolute
       left 25%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -190,7 +190,7 @@ export default {
       position absolute
       left 28%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -209,7 +209,7 @@ export default {
       position absolute
       left 23%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;
@@ -228,7 +228,7 @@ export default {
       position absolute
       left 35%
       top 55%
-      font-family: Ubuntu-Medium;
+      font-family: Ubuntu;
       font-size: 10px;
       color: #FFFFFF;
       letter-spacing: 0;

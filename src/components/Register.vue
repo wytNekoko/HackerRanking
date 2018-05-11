@@ -10,7 +10,6 @@
     <div class="register-box"> <!--:class="{'open': openBox}">-->
       <h2>
         <span @click="login" :class="{'focus': !needRegister}">Login</span>
-        <span @click="register" :class="{'focus': needRegister}">Register</span>
       </h2>
       <ul class="form">
         <li>
@@ -25,12 +24,6 @@
           <p v-if="needRegister"
             :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
         </li>
-        <li>
-          <span>Password Confirm</span>
-          <input type="password" v-model="confirm" @change="checkConfirm">
-          <p :style="{'color': status[2] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[2]}}</p>
-          <div v-if="!needRegister" class="mask"></div>
-        </li>
       </ul>
       <div class="submit" @click="submit">Submit</div>
       <p class="notice" v-html="notice"></p>
@@ -39,7 +32,7 @@
         :src="require('@/assets/symbols-buildplanet.png')"
       alt="buildplanet">
       -->
-      <div class="close" @click="closeOnClick">Close X</div>
+      <div class="close" @click="jump">Close</div>
     </div>
   </div>
 </template>
@@ -67,9 +60,6 @@ export default {
     // registeOnClick () {
     //   this.openBox = true
     // },
-    closeOnClick () {
-      this.openBox = false
-    },
     checkUsername () {
       this.status.splice(0, 1, 'OK')
     },
