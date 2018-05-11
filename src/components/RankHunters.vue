@@ -30,16 +30,18 @@
         </li>
       </ul>
     </div>
-    <tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>
+    <!--<bounty-bar @feedback="openFeedback" @help="openHelp" @post="openPost"></bounty-bar>-->
+    <!--<feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>-->
+    <!--<tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>-->
   </div>
 </template>
 
 <script>
 import api from '@/api'
-import ToolBar from "./commons/ToolBar";
+import BountyBar from "./commons/BountyBar";
 
 export default {
-  components: {ToolBar},
+  components: {BountyBar},
   name: 'Ranking',
   data () {
     return {
@@ -63,6 +65,9 @@ export default {
   methods: {
     focus (item) {
       // this.$router.push({ 'name': 'PlanetView', query: { name: item.name}})
+    },
+    openPost () {
+
     },
     openFeedback () {
       this.feedbackIsOpen = true
