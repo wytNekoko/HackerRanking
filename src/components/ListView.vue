@@ -13,7 +13,7 @@
         <div class="display"> <!-- el2 -->
         <!-- your scrollable content -->
         <!--<lista :orgData="test"></lista>-->
-        <lista v-for="item in planets" :orgData="item"></lista>
+        <lista v-for="item in planets" :orgData="item" @view="view(item)"></lista>
         <!--@click="viewPlanet(item.name)"-->
         </div>
         <!-- dragger will be automatically added here -->
@@ -64,6 +64,10 @@ export default {
     },
     goto () {
       this.planets = this.allplanets.slice(this.toRank - 1)
+    },
+    view (orgData) {
+      console.log('rec')
+      this.$router.push({'name':'PlanetView', query:{name:orgData.name, rank:orgData.rank}})
     }
   }
 }

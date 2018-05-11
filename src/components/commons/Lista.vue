@@ -12,12 +12,10 @@
 export default {
   name: 'Lista',
   props: ['orgData', 'show'],
-  created () {
-   //console.log(this.orgData)
-  },
   methods: {
     viewPlanet () {
-      this.$router.push({'name':'PlanetView', query:{name:orgData.name, rank:orgData.rank}})
+      console.log('sent')
+      this.$emit('view', this.orgData)
     }
   }
 }

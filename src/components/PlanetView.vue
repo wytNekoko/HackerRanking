@@ -81,7 +81,7 @@ export default {
       getMsg: '   Get me this Captain’s Infomation,\n' +
       'I need to talk to him/her.',
       countdown: 5,
-      rank: 0
+      rank: ''
     }
   },
   created () {

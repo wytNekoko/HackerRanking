@@ -6,7 +6,7 @@
         <li>
           <div class="rank-title"><h2>Top Planets</h2></div>
           <ul class="list">
-            <li class="no-data" v-if="planet.length === 0">no data</li>
+            <li class="no-data" v-if="planet.length === 0">loading...</li>
             <li style="cursor:pointer;" v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
               <span :class="{'name': planet.indexOf(item) < 3}">
               <!--<span class="name">-->
@@ -19,7 +19,7 @@
         <li>
           <div class="rank-title"><h2>Top Planet Owners</h2></div>
           <ul class="list">
-            <li class="no-data" v-if="planet.length === 0">no data</li>
+            <li class="no-data" v-if="owner.length === 0">loading...</li>
             <li v-for="item in owner" :key="owner.indexOf(item)">
               <span :class="{'name': owner.indexOf(item) < 3}">
                 {{owner.indexOf(item)+1}}  {{item.username}}
@@ -31,7 +31,7 @@
         <li>
           <div class="rank-title"><h2>Top Builders</h2></div>
           <ul class="list">
-            <li class="no-data" v-if="planet.length === 0">no data</li>
+            <li class="no-data" v-if="builder.length === 0">loading...</li>
             <li v-for="item in builder" :key="builder.indexOf(item)">
               <span :class="{'name': builder.indexOf(item) < 3}">
                 {{builder.indexOf(item)+1}} {{item.username}}
