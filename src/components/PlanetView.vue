@@ -1,7 +1,7 @@
 <template>
   <div class="planet-view">
     <img class="bg" :src="require('@/assets/4.png')">
-    <div class="back-btn">
+    <div class="back-btn" @click="back">
       <img width="18px" height="18px" :src="require('@/assets/symbols-backarrow.png')">
       <span>Back to Galaxy</span>
     </div>
@@ -25,7 +25,7 @@
       <div class="num">#0</div>
       <p>Rank</p>
     </div>
-    <div class="build-btn">
+    <div class="build-btn" @click="openBuild">
       <img width="60" height="60" :src="require('@/assets/symbols-build2.png')">
       <h1>Build this planet</h1>
       <p>{{time_left}} days remained</p>
@@ -43,11 +43,20 @@
       <div class="sent" v-if="sent">
         <p class="msg">{{sentMsg}}</p>
         <div class="btn" v-if="closeUnable"><span>Close ( {{countdown}}s )</span></div>
+        <div class="btn" v-if="!closeUnable" @click="cancel" style="cursor: pointer;"><span>Close</span></div>
       </div>
     </div>
     <div class="next">
       <img width="20" height="20" :src="require('@/assets/symbols-backarrow.png')">
       <p>Next Planet:</p>
+    </div>
+    <div class="mask" v-if="buildIsOpen">
+      <div class="build-card">
+        <span class="close" @click="closeBuild">X</span>
+        <h3>Amount of investment</h3>
+        <input type="text" v-model="buildNum"><span class="dust">Dust</span>
+        <div class="button" @click="confirmBuild">Confirm</div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,9 +71,11 @@ export default {
       pinfo: null,
       time_left: 0,
       paybox: false,
-      sent: true,
+      sent: false,
       leaderEmail: null,
       closeUnable: true,
+      buildIsOpen: false,
+      buildNum: 10,
       sentMsg: 'This Captain’s information will be ' +
     'sent to you as soon as the information is collected.\n' +
     'Please pay attention to your Receiving Station.',
@@ -89,10 +100,23 @@ export default {
       if (val) {
         // TODO set a timer and enable close
         this.closeUnable = true
+        let that = this;
+        let countdown = that.countdown;
+        // 倒计时
+        let interval = window.setInterval(() => {
+          if (--that.countdown <= 0) {
+            that.countdown = countdown;
+            that.closeUnable = false;
+            window.clearInterval(interval);
+          }
+        }, 1000);
       }
     }
   },
   methods: {
+    back () {
+      this.$router.push('/')
+    },
     getLeft (ctime) {
       const now = new Date()
       const s = ctime.substring(0, 10)
@@ -104,6 +128,51 @@ export default {
         return 0
       }
       return (left / (3600 * 1000 * 24)).toFixed(1)
+    },
+    closeBuild () {
+      console.log('close')
+      this.buildIsOpen = false
+    },
+    openBuild () {
+      if (!window.cookieStorage.getItem('token')) {
+        alert('Login required.')
+        return
+      }
+      this.buildIsOpen = true
+    },
+    confirmBuild () {
+      console.log('build')
+      const num = parseInt(this.buildNum, 10)
+      console.log(num)
+      if (!num) {
+        alert('Invalid number')
+        this.buildNum = 10
+        return
+      }
+      if (num < 1) {
+        alert('At least 1 dust')
+        this.buildNum = 1
+        return
+      }
+      this.buildNum = num
+      api.build(this.pinfo.name, num).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          alert('Build success')
+          this.buildIsOpen = false
+        }
+      })
+      api.planets_one(this.$route.query.name).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          this.pinfo = d
+          this.time_left = this.getLeft(d.created_at)
+        }
+      })
     },
     spyView () {
       if (this.leaderEmail) {
@@ -117,15 +186,28 @@ export default {
       this.sent = false
     },
     spyPay () {
+      if (!window.cookieStorage.getItem('token')) {
+        alert('Login required.')
+        return
+      }
       if (this.leaderEmail) {
         this.sent = true
+        this.paybox = false
+        return
       }
-      api.spy(this.viewPro.title).then((res) => {
+      const answer = confirm('Pay now?')
+      if (!answer) {
+        return
+      }
+      api.spy(this.pinfo.name).then((res) => {
         const d = res.data
         if (d.errcode) {
           alert(d.errmsg)
         } else {
+          console.log('success')
           this.leaderEmail = d
+          this.sent = true
+          this.paybox = false
         }
       })
     },
@@ -286,6 +368,7 @@ export default {
         height 56px
         text-align center
         margin 20px 40px
+        cursor pointer
         span
           line-height 4
           font-size 14px
@@ -312,4 +395,56 @@ export default {
         margin 100px 30px 70px 30px
         font-size 14px
         text-align justify
+  .build-card
+    width 400px
+    background-image linear-gradient(45deg, rgba(105,157,0,0.9) 0%, rgba(67,128,0, 0.9) 100%);
+    border-radius 8px
+    position absolute
+    top 50%
+    left 40%
+    transform translate3d(-50%, -50%, 0)
+    text-align center
+    padding 40px
+    box-sizing border-box
+    font-size 16px
+  input
+    border none
+    text-align center
+    margin-right 10px
+    width 140px
+    height 50px
+    background-color fbga(255,255,255,0.6)
+    border-radius 10px
+    outline none
+    box-sizing border-box
+    padding 0 30px
+    font-size 18px
+  h3
+    font-size 24px
+    margin 24px 0
+  .close
+    position absolute
+    top 15px
+    right 20px
+    font-size 14px
+    cursor pointer
+  .button
+    width 184px
+    height 50px
+    background rgba(105,157,0,1)
+    color white
+    border-radius 10px
+    line-height 50px
+    text-align center
+    cursor pointer
+    margin 30px auto 0
+    font-family Ubuntu-Medium
+.mask
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background-color #000A
+  z-index 80
 </style>

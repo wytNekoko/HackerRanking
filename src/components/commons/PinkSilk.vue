@@ -91,7 +91,7 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          alert('success')
+          alert('Build success')
         }
       })
     }
