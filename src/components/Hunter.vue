@@ -129,6 +129,8 @@ export default {
       background rgba(29,22,19,0.8)
       font-size 10px
       color white
+      border-top-left-radius: 5.84px
+      border-top-right-radius: 5.84px
       span
         position absolute
         left 35%
@@ -179,7 +181,7 @@ export default {
         position absolute
         left 30%
         top 55%
-        font-family Ubuntu-Medium
+        font-family Ubuntu
         font-size 10px
         text-shadow: 0 2px 2px #000000;
     .feedback

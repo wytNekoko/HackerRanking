@@ -8,6 +8,7 @@
     <div class="to-btn" @click="goto">
       <img width="10" height="10" :src="require('@/assets/symbols-rightarrow.png')">
     </div>
+    <div class="loading" v-if="!planets"><span>Loading...</span></div>
     <div class="ctn-box">
       <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1   -->
         <div class="display"> <!-- el2 -->
@@ -38,7 +39,7 @@ export default {
       feedbackIsOpen: false,
       helpIsOpen: false,
       allplanets: [],
-      planets: [],
+      planets: null,
       toRank: 1
     }
   },
@@ -66,7 +67,6 @@ export default {
       this.planets = this.allplanets.slice(this.toRank - 1)
     },
     view (orgData) {
-      console.log('rec')
       this.$router.push({'name':'PlanetView', query:{name:orgData.name, rank:orgData.rank}})
     }
   }
@@ -81,6 +81,14 @@ export default {
   overflow hidden
   font-family Ubuntu-Medium
   color white
+  .loading
+    position absolute
+    top 50%
+    left 45%
+    span
+      font-size 40px
+      text-align center
+      color rgba(255,255,255,0.6)
   .ctn-box
     position absolute
     top 90px
@@ -117,6 +125,7 @@ export default {
     display flex
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
     border-radius: 2.92px;
+    font-family Ubuntu
     p
       font-size 10px
       margin 14px auto 10px 10px

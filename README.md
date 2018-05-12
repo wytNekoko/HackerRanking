@@ -1,6 +1,6 @@
-# doradust
+# DoraDust
 
-> Front-end visual communication exercise project.
+> Front-end project for DoraDust in Dorahacks.
 
 ## Build Setup
 

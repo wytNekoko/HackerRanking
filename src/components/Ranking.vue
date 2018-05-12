@@ -42,6 +42,7 @@
         </li>
       </ul>
     </div>
+    <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>
   </div>
 </template>
@@ -51,7 +52,7 @@ import api from '@/api'
 import ToolBar from "./commons/ToolBar";
 
 export default {
-  components: {ToolBar},
+  components: { ToolBar },
   name: 'Ranking',
   data () {
     return {

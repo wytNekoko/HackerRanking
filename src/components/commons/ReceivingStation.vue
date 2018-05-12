@@ -45,6 +45,7 @@ export default {
       border-radius: 3.51px
       transform-origin 50% 100%
       transform rotateX(30deg)
+      border-bottom 0
       left 0
       bottom 0
     .sign

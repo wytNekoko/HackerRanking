@@ -492,6 +492,7 @@ Welcome to contact us to better serve the resident.`,
     border solid 1px #fff
     border-radius 6px
     margin 20px auto
+    cursor pointer
   .close
     position absolute
     right -50px

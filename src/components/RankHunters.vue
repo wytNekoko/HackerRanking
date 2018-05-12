@@ -30,8 +30,8 @@
         </li>
       </ul>
     </div>
-    <!--<bounty-bar @feedback="openFeedback" @help="openHelp" @post="openPost"></bounty-bar>-->
-    <!--<feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>-->
+    <bounty-bar @feedback="openFeedback" @help="openHelp" @post="openPost"></bounty-bar>
+    <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <!--<tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>-->
   </div>
 </template>
@@ -57,8 +57,8 @@ export default {
       if (d.errcode) {
         alert(d.errmsg)
       } else {
-        this.planet = d.planets
-        this.owner = d.owners
+        this.rewards = d.rewards
+        this.hunters = d.hunters
       }
     })
   },

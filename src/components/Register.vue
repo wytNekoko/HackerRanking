@@ -159,7 +159,7 @@ export default {
   cursor pointer
 .register-box
   position absolute
-  top 10%
+  top 20%
   left 50%
   transform translate3d(-50%, 0, 0)
   width 720px
