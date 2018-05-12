@@ -1,23 +1,23 @@
 <template>
   <div class="page">
+    <img class="bg" :src="require('@/assets/3.png')">
     <div class="mask"></div>
-    <div class="create-btn" @click="setupPlanet"><span>Create</span></div>
+    <div class="create-btn" @click="post"><span>Create</span></div>
     <div class="quit-btn" @click="quit"><span>Quit and Delete</span></div>
     <div class="remind">We don’t save drafts, so make sure the content you’re edting is copied at somewhere safe.</div>
     <div class="card">
-        <p class="bigtitle">Create a new planet</p>
-        <input type="text" class="name" v-model="setUpInfo.name">
-        <p class="title">Email</p>
-        <input type="text" class="text" v-model="setUpInfo.email">
-        <p class="title">Description</p>
-        <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
-        <p class="title">Demo URL</p>
-        <input type="text" class="text" v-model="setUpInfo.demo">
-        <p class="title">Github URL</p>
-        <input type="text" class="text" v-model="setUpInfo.git">
-        <p class="title">Team Introduction</p>
-        <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
-      </div>
+      <p class="bigtitle">Create a new bounty reward</p>
+      <input type="text" class="name" v-model="setUpInfo.name">
+      <p class="title">Email</p>
+      <input type="text" class="text" v-model="setUpInfo.email">
+      <p class="title">Keywords</p>
+      <input type="text" class="text" v-model="setUpInfo.keywords">
+      <p class="title">Reward Dusts for Bounty Hunters</p>
+      <input type="text" class="text" v-model="setUpInfo.reward">
+      <p class="title">Description</p>
+      <textarea rows="13" class="text" v-model="setUpInfo.description"></textarea>
+
+    </div>
   </div>
 </template>
 
@@ -27,27 +27,30 @@ import Fringe from './commons/Fringe'
 
 export default {
   components: { Fringe },
-  name: 'NewPlanet',
+  name: 'NewBountyReward',
   data () {
     return {
       setUpInfo: {
         name: 'Name',
-        description: 'e.g. X service allows users to do sth or ...',
+        description: 'e.g. We want you to help us to resolve...',
         email: '',
-        demo: 'http://',
-        git: 'http://',
-        team: ''
+        keywords: '',
+        reward: 0
       }
     }
   },
   methods: {
-    setupPlanet () {
-      api.setup_planet(this.setUpInfo).then((res) => {
+    post () {
+      if (!window.cookieStorage.getItem('token')) {
+        alert('Login required')
+        return
+      }
+      api.bounty_setup(this.setUpInfo).then((res) => {
         const d = res.data
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          this.setIsOpen = false
+          alert('success')
           for (const i in this.setUpInfo) {
             if (i === 'name') {
               this.setUpInfo[i] = 'Name'
@@ -61,7 +64,7 @@ export default {
       })
     },
     quit () {
-      this.$router.push('/')
+      this.$router.push('/hunter')
     }
   }
 
@@ -77,17 +80,20 @@ export default {
   height 100%
   background-color rgba(176,114,80,0.3)
   z-index 0.5
-  //mix-blend-mode soft-light;      //柔光
+//mix-blend-mode soft-light;      //柔光
 .page
   position absolute
-  background  url(../assets/bg-home.jpg) no-repeat
+  //background  url(../assets/bg-hunter.jpg) no-repeat
   width 100%
   height 100%
   overflow hidden
   top 0
   left 0
+  .bg
+    width 100%
+    height 100%
   .create-btn
-    position relative
+    position absolute
     width 11.4%
     height 5%
     left 9.35%
@@ -105,10 +111,10 @@ export default {
       font-size 14px
       text-align center
   .quit-btn
-    position relative
+    position absolute
     width 11.4%
     height 5%
-    top 20%
+    top 25%
     left 9.35%
     background-color rgba(103,104,131,0.8)
     color white

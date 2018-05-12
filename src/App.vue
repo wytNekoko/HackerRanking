@@ -32,9 +32,9 @@
         <ul>
           <li>
             <h2>Signed Resident:</h2>
-            <div class="button" @click="login">Login with cryptoname</div>
-            <div class="button">Login with Github</div>
-            <div class="button">Login with Facebook</div>
+            <div class="button" @click="login">Login with Cryptoname</div>
+            <div class="button" @click="authenticate('github')">Login with Github</div>
+            <div class="button" @click="authenticate('facebook')">Login with Facebook</div>
           </li>
           <li>
             <h2>New Resident:</h2>
@@ -76,30 +76,15 @@ export default {
       viewPro: {
         title: 'DoraDust',
         intro: `Please pay attention to Galaxy Convention to get more resident policy.
-We will work hard to create galactic welfare all the time.
-Welcome to contact us to better serve the resident.`,
+        We will work hard to create galactic welfare all the time.
+        Welcome to contact us to better serve the resident.`,
         demo: 'http://sdflakdflakdflakldfklakd.com',
         git: '',
         team: '',
         rank: 1
       },
-      viewIsOpen: false,
-      spyIsOpen: false,
-      setIsOpen: false,
-      buildIsOpen: false,
       registerIsOpen: false,
-      buildNum: 10,
-      leader: 'Alabama',
-      pay: 1000,
-      leaderEmail: '',
-      setUpInfo: {
-        name: 'Name',
-        description: 'Description',
-        email: '',
-        demo: '',
-        git: '',
-        team: ''
-      }
+      git_state: ''
     }
   },
   created () {
@@ -111,49 +96,33 @@ Welcome to contact us to better serve the resident.`,
     }
   },
   methods: {
+    makestate () {
+      let text = '';
+      const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+      for (let i = 0; i < 10; i += 1) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+      }
+      return text;
+    },
     login () {
       this.closeRegister()
       this.$router.push('/register')
     },
-    openProfile () {
-      if (!window.cookieStorage.getItem('token')) {
-        this.$router.push('/register')
-      } else {
-        this.$router.push('/profile')
-      }
-    },
-    closeProfile () {
-      this.$router.push('/')
-    },
-    toggleRanking () {
-      if (this.$route.name === 'Ranking') {
-        this.$router.push('/')
-      } else {
-        this.$router.push('/ranking')
-      }
+    authenticate (provider) {
+      this.$auth.authenticate(provider).then(function (response) {
+        console.log(response)
+        this.registerIsOpen = false
+        // Execute application logic after successful social authentication
+      })
     },
     view (item) {
       // this.viewIsOpen = true
       // this.viewPro = item
       this.$router.push({ name: 'PlanetView', query: { name: item } })
     },
-    closeView () {
-      this.viewIsOpen = false
-    },
-    openSpy () {
-      this.leader = 'Alabama'
-      this.leaderEmail = ''
-      this.pay = 1000
-      this.spyIsOpen = true
-    },
-    closeSpy () {
-      this.spyIsOpen = false
-    },
     setUp () {
       this.setIsOpen = true
-    },
-    closeSet () {
-      this.setIsOpen = false
     },
     openRegister () {
       this.registerIsOpen = true
@@ -161,7 +130,6 @@ Welcome to contact us to better serve the resident.`,
     closeRegister () {
       this.registerIsOpen = false
     },
-
     sendFeedback () {
       // TODO
     },
@@ -172,7 +140,6 @@ Welcome to contact us to better serve the resident.`,
         d.setSeconds(d.getSeconds() + data.expires_in)
         this.user = {
           name: data.user_info.username,
-          postion: 'Builder',
           id: data.user_info.id
         }
         window.cookieStorage.setItem('token', data.auth_token, { expires: d })
@@ -186,67 +153,6 @@ Welcome to contact us to better serve the resident.`,
         window.cookieStorage.setItem('id', 'anyValue', { expires: d })
       }
     },
-    setupPlanet () {
-      api.setup_planet(this.setUpInfo).then((res) => {
-        const d = res.data
-        if (d.errcode) {
-          alert(d.errmsg)
-        } else {
-          this.setIsOpen = false
-          for (const i in this.setUpInfo) {
-            if (i === 'name') {
-              this.setUpInfo[i] = 'Name'
-            } else if (i === 'description') {
-              this.setUpInfo[i] = 'Description'
-            } else {
-              this.setUpInfo[i] = ''
-            }
-          }
-        }
-      })
-    },
-    buildIt () {
-      this.buildIsOpen = true
-    },
-    confirmBuild () {
-      const num = parseInt(this.buildNum, 10)
-      if (!num) {
-        alert('Invalid number')
-        this.buildNum = 10
-        return
-      }
-      if (num < 1) {
-        alert('At least 1dust')
-        this.buildNum = 1
-        return
-      }
-      this.buildNum = num
-      api.build(this.viewPro.title, num).then((res) => {
-        const d = res.data
-        if (d.errcode) {
-          alert(d.errmsg)
-        } else {
-          alert('success')
-          this.buildIsOpen = false
-        }
-      })
-    },
-    closeBuild () {
-      this.buildIsOpen = false
-    },
-    spy () {
-      if (this.leaderEmail) {
-        return
-      }
-      api.spy(this.viewPro.title).then((res) => {
-        const d = res.data
-        if (d.errcode) {
-          alert(d.errmsg)
-        } else {
-          this.leaderEmail = d
-        }
-      })
-    }
   }
 }
 </script>
@@ -481,9 +387,9 @@ Welcome to contact us to better serve the resident.`,
     box-sizing border-box
     &:first-child
       height 340px
-      background-image linear-gradient(left, #2E2828, #000000)
+      background-color linear-gradient(left, #2E2828, #000000)
     &:last-child
-      background-image linear-gradient(left, #301B0F, #1E0618)
+      background-color linear-gradient(left, #301B0F, #1E0618)
   .button
     width 420px
     height 60px
@@ -515,7 +421,5 @@ Welcome to contact us to better serve the resident.`,
         transform translate3d(-50%, -50%, 0) rotate(-45deg)
       &:last-child
         transform translate3d(-50%, -50%, 0) rotate(45deg)
-
-
 
 </style>

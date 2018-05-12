@@ -1,5 +1,6 @@
 <template>
   <div id="profile">
+    <img class="bg" :src="require('@/assets/2.png')">
     <p id="title">Control Center</p>
     <div class="container">
           <div class="left">
@@ -183,8 +184,11 @@ export default {
   height 100%
   position absolute
   display table
-  background  url(../assets/2.png) no-repeat
+  //background  url(../assets/2.png) no-repeat
   overflow hidden
+  .bg
+    width 100%
+    height 100%
   #title
     top 7%
     left 43.5%

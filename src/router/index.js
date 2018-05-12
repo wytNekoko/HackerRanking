@@ -13,6 +13,7 @@ import PostedRewards from '@/components/PostedRewards'
 import OwnedPlanets from '@/components/OwnedPlanets'
 import BuiltPlanets from '@/components/BuiltPlanets'
 import PlanetView from '@/components/PlanetView'
+import NewBountyReward from '@/components/NewBountyReward'
 
 Vue.use(Router)
 
@@ -57,6 +58,11 @@ export default new Router({
       path: '/setup-planet',
       name: 'NewPlanet',
       component: NewPlanet
+    },
+    {
+      path: '/post-reward',
+      name: 'NewBountyReward',
+      component: NewBountyReward
     },
     {
       path: '/hunter',

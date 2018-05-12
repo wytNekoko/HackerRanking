@@ -1,23 +1,27 @@
 <template>
   <div class="blackbox" >
-    <div class="reward"><span>300 Dusts Reward</span></div>
-    <p class="title">DoraDust</p>
+    <div class="reward"><span>{{post.reward}} Dusts Reward</span></div>
+    <p class="title">{{post.name}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'black-box'
+  name: 'Poster',
+  props: ['post']
 }
 </script>
 
 <style lang="stylus" scoped>
+// TODO debug for import error
 .blackbox
-  position absolute
+  position relative
+  width 300px
+  height 300px
 //  left 62.1%
 //  top 17.5%
-  width 21.4%
-  height 37.5%
+//  width 21.4%
+//  height 37.5%
   background rgba(27,23,22,0.6)
   box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20)
   border-radius: 5.84px

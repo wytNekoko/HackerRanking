@@ -12,11 +12,6 @@ export default {
       headers: { 'content-type': 'application/json' }
     })
   },
-  loginGithub (client_id, redirect_uri, state) {
-    // client_id=153a7fb787d1bd541839
-    // redirect_uri=https://dust.gitchain.org
-    return axios.get(`https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&state=${state}`)
-  },
   logout () {
     return axios.post(`${url}/logout`, {
       headers: {
