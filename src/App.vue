@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <router-view @view="view" @setUp="setUp" @update="update"/>
+      <router-view @view="view" @setUp="setUp" @update="update" @notify="notify"/>
     </transition>
     <fringe></fringe>
     <!--
@@ -46,7 +46,7 @@
     </div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
-    <receiving-station></receiving-station>
+    <receiving-station :notifications="notifications"></receiving-station>
     <!--<hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>-->
 
   </div>
@@ -84,7 +84,8 @@ export default {
         rank: 1
       },
       registerIsOpen: false,
-      git_state: ''
+      git_state: '',
+      notifications: []
     }
   },
   created () {
@@ -94,6 +95,7 @@ export default {
         id: window.cookieStorage.getItem('id')
       }
     }
+    this.notify()
     // window.fbAsyncInit = function() {
     //   FB.init({
     //     appId      : '{your-app-id}',
@@ -150,6 +152,12 @@ export default {
     setUp () {
       this.setIsOpen = true
     },
+    notify () {
+      api.notification().then((res) => {
+        const d = res.data
+        this.notifications = d
+      })
+    },
     openRegister () {
       this.registerIsOpen = true
     },
@@ -171,6 +179,7 @@ export default {
         window.cookieStorage.setItem('token', data.auth_token, {expires: d})
         window.cookieStorage.setItem('name', data.user_info.username, {expires: d})
         window.cookieStorage.setItem('id', data.user_info.id, {expires: d})
+        this.notify()
       } else {
         this.$router.push('/')
         this.user = null

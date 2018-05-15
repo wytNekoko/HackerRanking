@@ -208,7 +208,7 @@ export default {
           alert(d.errmsg)
         } else {
           console.log('success')
-          this.leaderEmail = d
+          this.$emit('notify')
           this.sent = true
           this.paybox = false
         }

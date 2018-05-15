@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 export default {
   name: 'Feedback',
   data () {
@@ -41,6 +43,23 @@ export default {
     sendFeedback () {
       // TODO
       // this.feedbackIsOpen = false
+      const info = {
+        email: this.feedbackInfo.email,
+        title: this.feedbackInfo.title,
+        comment: this.feedbackInfo.comment,
+        type: this.cooperation ? 'cooperation' : 'advice'
+      }
+      if (this.feedbackInfo.others) {
+        info.type = 'others'
+      }
+      api.send_feedback(info).then((res) => {
+        const d = res.data
+        if (d.errcode) {
+          alert(d.errmsg)
+        } else {
+          alert('We\'ve received your feedback. Thank you!')
+        }
+      })
       this.$emit('closeFeedback')
     },
     closeFeedback () {

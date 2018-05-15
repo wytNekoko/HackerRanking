@@ -10,7 +10,14 @@
     <div class="split">
         <img class="arrow" width="8" height="4" :src="require('@/assets/symbols-up.png')">
     </div>
-    <div class="messagebox"></div>
+    <div class="messagebox">
+      <div class="notification" v-for="item in notifications">
+        <img v-if="item.type===0" :src="require('@/assets/symbols-notification1.png')" width="10" height="10">
+        <img v-if="item.type===1" :src="require('@/assets/symbols-notification2.png')" width="10" height="10">
+        <h3>{{item.content}}</h3>
+        <p>{{item.created_at}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,5 +93,8 @@ export default {
     border-right 0
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.50)
     border-radius: 3.51px;
+    overflow hidden
+    .notification
+      display flex
 
 </style>

@@ -27,6 +27,9 @@ export default {
       headers: { 'content-type': 'application/json' }
     })
   },
+  register_auth_git () {
+
+  },
   setup_planet (option) {
     return axios.post(`${url}/user/planet`, {
       name: option.name,
@@ -34,6 +37,19 @@ export default {
       demo_url: option.demo,
       github_url: option.git,
       team_intro: option.team,
+      email: option.email
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  send_feedback (option) {
+    return axios.post(`${url}/feedback`, {
+      content: option.comment,
+      title: option.title,
+      type: option.type,
       email: option.email
     }, {
       headers: {
@@ -62,6 +78,13 @@ export default {
   },
   spy (name) {
     return axios.get(`${url}/user/spy/${name}`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  notification () {
+    return axios.get(`${url}/notifications`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }

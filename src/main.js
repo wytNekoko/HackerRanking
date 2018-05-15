@@ -19,7 +19,7 @@ Vue.use(VueAuthenticate, {
     github: {
       url: 'https://dust.gitchain.org/api/auth/github',
       clientId:  process.env.GH_CLIENT_ID,
-      redirect_uri: 'https://dust.giftchain.org/register'
+      redirect_uri: 'https://dust.giftchain.org'
     }
   }
 })
