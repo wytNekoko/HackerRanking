@@ -32,16 +32,19 @@
     </div>
     <bounty-bar @feedback="openFeedback" @help="openHelp" @post="openPost"></bounty-bar>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
+    <help v-if="helpIsOpen" @closeHelp="closeHelp"></help>
     <!--<tool-bar :is-explore="false" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>-->
   </div>
 </template>
 
 <script>
 import api from '@/api'
-import BountyBar from "./commons/BountyBar";
+import BountyBar from './commons/BountyBar'
+import Feedback from './commons/Feedback'
+import Help from './commons/Help'
 
 export default {
-  components: {BountyBar},
+  components: { BountyBar, Feedback, Help},
   name: 'Ranking',
   data () {
     return {
@@ -67,7 +70,7 @@ export default {
       // this.$router.push({ 'name': 'PlanetView', query: { name: item.name}})
     },
     openPost () {
-
+      this.$router.push('/post-reward')
     },
     openFeedback () {
       this.feedbackIsOpen = true

@@ -9,7 +9,7 @@
             <div class="line">
               <h2 style="height:20px width:93px">Total Dusts</h2>
               <img width="10" height="10" :src="require('@/assets/symbols-dusts.png')"></div>
-            <div class="button" @click="withdraw">withdraw</div>
+            <!--<div class="button" @click="withdraw">withdraw</div>-->
             <div class="line" style="cursor:pointer" @click="getDust">
               <img width="24" height="24" :src="require('@/assets/symbols-getdusts.png')">
               <h3>Get dusts</h3>
@@ -157,7 +157,6 @@ export default {
     },
     withdraw () {
       alert('Under construction...')
-      this.$emit('update')
     },
     getDust () {
       api.get_dust().then((res) => {

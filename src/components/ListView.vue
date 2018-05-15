@@ -20,6 +20,7 @@
         <!-- dragger will be automatically added here -->
       </div>
     </div>
+    <help v-if="helpIsOpen" @closeHelp="closeHelp"></help>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar :is-explore="false" :is-list="true" @feedback="openFeedback" @help="openHelp"></tool-bar>
   </div>
@@ -29,15 +30,16 @@
 import api from '@/api'
 import ToolBar from './commons/ToolBar'
 import Feedback from './commons/Feedback'
+import Help from './commons/Help'
 import Lista from './commons/Lista'
 
 export default {
   name: 'ListView',
-  components: { ToolBar, Feedback, Lista },
+  components: { ToolBar, Feedback, Lista, Help },
   data () {
     return {
       feedbackIsOpen: false,
-      helpIsOpen: false,
+      helpIsOpen: true,
       allplanets: [],
       planets: null,
       toRank: 1
@@ -58,6 +60,7 @@ export default {
       this.feedbackIsOpen = false
     },
     openHelp () {
+      console.log('open')
       this.helpIsOpen = true
     },
     closeHelp () {

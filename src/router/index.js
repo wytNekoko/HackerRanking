@@ -6,7 +6,6 @@ import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
 import RankHunters from '@/components/RankHunters'
 import Register from '@/components/Register'
-import Rules from '@/components/Rules'
 import NewPlanet from '@/components/NewPlanet'
 import Hunter from '@/components/Hunter'
 import PostedRewards from '@/components/PostedRewards'
@@ -14,6 +13,7 @@ import OwnedPlanets from '@/components/OwnedPlanets'
 import BuiltPlanets from '@/components/BuiltPlanets'
 import PlanetView from '@/components/PlanetView'
 import NewBountyReward from '@/components/NewBountyReward'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
@@ -35,6 +35,11 @@ export default new Router({
       component: Register
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
       path: '/profile',
       name: 'Profile',
       component: Profile
@@ -48,11 +53,6 @@ export default new Router({
       path: '/ranking/hunters',
       name: 'RankHunters',
       component: RankHunters
-    },
-    {
-      path: '/rules',
-      name: 'Rules',
-      component: Rules
     },
     {
       path: '/setup-planet',

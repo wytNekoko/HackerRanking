@@ -3,12 +3,12 @@
   <img class="stretch" :src="require('@/assets/3.png')">
    <!--<div class="mask"></div>-->
    <div class="mainbox">
-     <span class="subtitle">Bounty Hunter</span>
+     <!--<span class="subtitle">Bounty Hunter</span>-->
      <span class="title1">Claim a Mission</span>
      <span class="title2">Get Dusts Reward</span>
    </div>
    <div class="blackbox" >
-     <div class="reward"><span>300 Dusts Reward</span></div>
+     <div class="reward">DoraDust</div>
      <p class="title">DoraDust</p>
    </div>
    <!--<poster v-for="item in poster" :post="item"></poster>-->
@@ -27,6 +27,7 @@
        <p class="text">Help</p>
      </div>
    </div>
+   <help v-if="openHelp" @closeHelp="closeHelp"></help>
    <feedback v-if="openFeedback" @closeFeedback="closeFeedback"></feedback>
  </div>
 </template>
@@ -34,11 +35,12 @@
 <script>
 import api from '@/api'
 import Feedback from './commons/Feedback'
+import Help from './commons/Help'
 // import Poster from './commons/Poster'
 
 export default {
   name: 'Hunter',
-  components: { Feedback }, // , Poster },
+  components: { Feedback, Help }, // , Poster },
   data () {
     return {
       openFeedback: false,
@@ -136,14 +138,12 @@ export default {
     height 13.4%
     width 100%
     background rgba(29,22,19,0.8)
-    font-size 10px
+    font-size 14px
     color white
     border-top-left-radius: 5.84px
     border-top-right-radius: 5.84px
-    span
-      position absolute
-      left 35%
-      top 32.5%
+    text-align center
+    line-height 3
   .title
     position absolute
     top 12%

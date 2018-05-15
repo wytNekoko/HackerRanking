@@ -10,7 +10,9 @@
         v-on:childView="view(item.title)" v-on="$listeners"
       ></hello-card>
     </div>
+    <div class="hint" v-if="showHint">Drag to explore</div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
+    <help v-if="helpIsOpen" @closeHelp="closeHelp"></help>
     <tool-bar :is-explore="true" :is-list="false" @feedback="openFeedback" @help="openHelp"></tool-bar>
   </div>
 </template>
@@ -20,6 +22,7 @@ import api from '@/api'
 import HelloCard from './commons/HelloCard'
 import ToolBar from './commons/ToolBar'
 import Feedback from './commons/Feedback'
+import Help from './commons/Help'
 
 export default {
   name: 'HelloPage',
@@ -28,6 +31,7 @@ export default {
       lastPos: { x: 0, y: 0 },
       toPos: { x: 0, y: 0 },
       pos: { x: 0, y: 0 },
+      showHint: true,
       feedbackIsOpen: false,
       feedbackInfo: {
         email: ' Your Email Address',
@@ -53,6 +57,9 @@ export default {
       this.planets = res.data.records
       this.checkPlanetsList(true)
     })
+    setTimeout(() => {
+      this.showHint = false
+    }, 5000)
   },
   mounted () {
     requestAnimationFrame(this.render)
@@ -231,7 +238,8 @@ export default {
   components: {
     HelloCard,
     ToolBar,
-    Feedback
+    Feedback,
+    Help
   }
 }
 </script>
@@ -245,6 +253,18 @@ export default {
   .bg
     width 100%
     height 100%
+  .hint
+    position absolute
+    top 80%
+    left 40%
+    width 300px
+    height 50px
+    border-radius 20px
+    background-color white
+    color black
+    text-align center
+    line-height 3
+    font-family Ubuntu-Medium
   .feedback-card
     position absolute
     top 98px

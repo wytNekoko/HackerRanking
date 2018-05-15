@@ -8,14 +8,16 @@
     <div class="card">
       <p class="bigtitle">Create a new bounty reward</p>
       <input type="text" class="name" v-model="setUpInfo.name">
-      <p class="title">Email</p>
-      <input type="text" class="text" v-model="setUpInfo.email">
+      <input type="text" class="name" v-model="setUpInfo.company_name">
+      <input type="text" class="name" v-model="setUpInfo.email">
       <p class="title">Keywords</p>
       <input type="text" class="text" v-model="setUpInfo.keywords">
-      <p class="title">Reward Dusts for Bounty Hunters</p>
+      <p class="title">Digital currency rewards</p>
       <input type="text" class="text" v-model="setUpInfo.reward">
-      <p class="title">Description</p>
-      <textarea rows="13" class="text" v-model="setUpInfo.description"></textarea>
+      <p class="title">Problem background</p>
+      <textarea rows="3" class="text" v-model="setUpInfo.background"></textarea>
+      <p class="title">Question details</p>
+      <textarea rows="9" class="text" v-model="setUpInfo.description"></textarea>
 
     </div>
   </div>
@@ -32,8 +34,10 @@ export default {
     return {
       setUpInfo: {
         name: 'Name',
+        company_name: 'Company/Organization Name',
         description: 'e.g. We want you to help us to resolve...',
-        email: '',
+        background: '',
+        email: 'Email',
         keywords: '',
         reward: 0
       }

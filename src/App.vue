@@ -33,13 +33,13 @@
           <li>
             <h2>Signed Resident:</h2>
             <div class="button" @click="login">Login with Cryptoname</div>
-            <div class="button" @click="authenticate('github')">Login with Github</div>
-            <div class="button" @click="authenticate('facebook')">Login with Facebook</div>
+            <div class="button" @click="login_auth('github')">Login with Github</div>
+            <!--<div class="button" @click="login_auth('facebook')">Login with Facebook</div>-->
           </li>
           <li>
             <h2>New Resident:</h2>
-            <div class="button">Sign up with Github</div>
-            <div class="button">Sign up with Facebook</div>
+            <div class="button" @click="register_auth('github')">Sign up with Github</div>
+            <!--<div class="button" @click="register_auth('facebook')">Sign up with Facebook</div>-->
           </li>
         </ul>
       </div>
@@ -94,9 +94,28 @@ export default {
         id: window.cookieStorage.getItem('id')
       }
     }
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '{your-app-id}',
+    //     cookie     : true,
+    //     xfbml      : true,
+    //     version    : '{latest-api-version}'
+    //   });
+    //
+    //   FB.AppEvents.logPageView();
+    //
+    // }
+    //
+    // (function(d, s, id){
+    //   var js, fjs = d.getElementsByTagName(s)[0];
+    //   if (d.getElementById(id)) { return; }
+    //   js = d.createElement(s); js.id = id;
+    //   js.src = "https://connect.facebook.net/en_US/sdk.js";
+    //   fjs.parentNode.insertBefore(js, fjs);
+    // }(document, 'script', 'facebook-jssdk'))
   },
   methods: {
-    makestate () {
+    makestate() {
       let text = '';
       const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -107,9 +126,16 @@ export default {
     },
     login () {
       this.closeRegister()
-      this.$router.push('/register')
+      this.$router.push('/login')
     },
-    authenticate (provider) {
+    login_auth (provider) {
+      // this.$auth.authenticate(provider).then(function (response) {
+      //   console.log(response)
+      //   this.registerIsOpen = false
+      //   // Execute application logic after successful social authentication
+      // })
+    },
+    register_auth (provider) {
       this.$auth.authenticate(provider).then(function (response) {
         console.log(response)
         this.registerIsOpen = false
@@ -119,7 +145,7 @@ export default {
     view (item) {
       // this.viewIsOpen = true
       // this.viewPro = item
-      this.$router.push({ name: 'PlanetView', query: { name: item } })
+      this.$router.push({name: 'PlanetView', query: {name: item}})
     },
     setUp () {
       this.setIsOpen = true
@@ -142,19 +168,20 @@ export default {
           name: data.user_info.username,
           id: data.user_info.id
         }
-        window.cookieStorage.setItem('token', data.auth_token, { expires: d })
-        window.cookieStorage.setItem('name', data.user_info.username, { expires: d })
-        window.cookieStorage.setItem('id', data.user_info.id, { expires: d })
+        window.cookieStorage.setItem('token', data.auth_token, {expires: d})
+        window.cookieStorage.setItem('name', data.user_info.username, {expires: d})
+        window.cookieStorage.setItem('id', data.user_info.id, {expires: d})
       } else {
         this.$router.push('/')
         this.user = null
-        window.cookieStorage.setItem('token', 'anyValue', { expires: d })
-        window.cookieStorage.setItem('name', 'anyValue', { expires: d })
-        window.cookieStorage.setItem('id', 'anyValue', { expires: d })
+        window.cookieStorage.setItem('token', 'anyValue', {expires: d})
+        window.cookieStorage.setItem('name', 'anyValue', {expires: d})
+        window.cookieStorage.setItem('id', 'anyValue', {expires: d})
       }
     },
   }
 }
+
 </script>
 
 <style lang="stylus" scoped>
@@ -379,17 +406,18 @@ export default {
     margin auto
   li
     width 540px
-    height 240px
+    height 200px
     border solid 1px #fff4
     border-radius 6px
     margin 10px auto
     padding 25px
     box-sizing border-box
+    background-image linear-gradient(left, #301B0F, #1E0618)
     &:first-child
-      height 340px
-      background-color linear-gradient(left, #2E2828, #000000)
-    &:last-child
-      background-color linear-gradient(left, #301B0F, #1E0618)
+      height 240px
+      background-image linear-gradient(left, #2E2828, #000000)
+//    &:last-child
+//      background-color linear-gradient(left, #301B0F, #1E0618)
   .button
     width 420px
     height 60px

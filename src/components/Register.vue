@@ -9,29 +9,27 @@
     <!--</div>-->
     <div class="register-box"> <!--:class="{'open': openBox}">-->
       <h2>
-        <span @click="login" :class="{'focus': !needRegister}">Login</span>
+        <span :class="{'focus': !needRegister}">Register</span>
       </h2>
       <ul class="form">
         <li>
           <span>Cryptoname</span>
           <input type="text" v-model="username" @change="checkUsername">
-          <p v-if="needRegister"
-            :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
+          <p :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
         </li>
         <li>
           <span>Password</span>
           <input type="password" v-model="password" @change="checkPassword">
-          <p v-if="needRegister"
-            :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+        </li>
+        <li>
+          <span>Confirm Password</span>
+          <input type="password" v-model="confirm" @change="checkConfirm">
+          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
         </li>
       </ul>
       <div class="submit" @click="submit">Submit</div>
       <p class="notice" v-html="notice"></p>
-      <!--
-      <img class="register-bg" width="400"
-        :src="require('@/assets/symbols-buildplanet.png')"
-      alt="buildplanet">
-      -->
       <div class="close" @click="jump">Close</div>
     </div>
   </div>
@@ -53,13 +51,14 @@ export default {
       notice: ' '
     }
   },
+  created () {
+    // this.$emit('update')
+    console.log(this.request.env)
+  },
   methods: {
     jump () {
       this.$router.push('/')
     },
-    // registeOnClick () {
-    //   this.openBox = true
-    // },
     checkUsername () {
       this.status.splice(0, 1, 'OK')
     },
@@ -74,15 +73,15 @@ export default {
         this.status.splice(2, 1, 'Enter the password twice inconsistently')
       }
     },
-    login () {
-      this.confirm = ''
-      this.status.splice(2, 1, '')
-      this.needRegister = false
-      this.setNotice('')
-    },
+    // login () {
+    //   this.confirm = ''
+    //   this.status.splice(2, 1, '')
+    //   this.needRegister = false
+    //   this.setNotice('')
+    // },
     register () {
       this.needRegister = true
-      this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
+      // this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
     },
     setNotice (text) {
       this.notice = text

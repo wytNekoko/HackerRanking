@@ -12,20 +12,23 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.use(Vuebar)
 Vue.use(VueAuthenticate, {
-  baseUrl: 'https://dust.giftchain.org/api/',
+  baseUrl: null,
   tokenType: 'No Auth',
   tokenHeader: 'X-Auth-Token',
   providers: {
     github: {
-      clientId: process.env.GH_CLIENT_ID,
-      redirect_uri: 'http://localhost:8080'
-    },
-    facebook: {
-      clientId: '',
-      redirect_uri: 'http://localhost:8080'
+      url: 'https://dust.gitchain.org/api/auth/github',
+      clientId:  process.env.GH_CLIENT_ID,
+      redirect_uri: 'https://dust.giftchain.org/register'
     }
   }
 })
+//     facebook: {
+//       url: '',
+//       clientId: process.env.FB_CLIENT_ID,
+//       redirect_uri: 'https://dust.giftchain.org/register'
+//     }
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
