@@ -8,8 +8,10 @@
     <div class="card">
       <p class="bigtitle">Create a new bounty reward</p>
       <input type="text" class="name" v-model="setUpInfo.name">
-      <input type="text" class="name" v-model="setUpInfo.company_name">
-      <input type="text" class="name" v-model="setUpInfo.email">
+      <div class="inline">
+        <input type="text" class="text" v-model="setUpInfo.company_name">
+        <input type="text" class="text" v-model="setUpInfo.email">
+      </div>
       <p class="title">Keywords</p>
       <input type="text" class="text" v-model="setUpInfo.keywords">
       <p class="title">Digital currency rewards</p>
@@ -101,7 +103,7 @@ export default {
     width 11.4%
     height 5%
     left 9.35%
-    top 17.5%
+    top 15%
     background-color rgba(255,113,62,0.8)
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
     border-radius: 5.84px;
@@ -118,7 +120,7 @@ export default {
     position absolute
     width 11.4%
     height 5%
-    top 25%
+    top 23%
     left 9.35%
     background-color rgba(103,104,131,0.8)
     color white
@@ -149,7 +151,7 @@ export default {
   .card
     position absolute
     left 22.2%
-    top 17.5%
+    top 14%
     width 55.6%
     height 80%
     padding 0 5%
@@ -159,9 +161,9 @@ export default {
     background rgba(19,29,64,0.65)
     .text
       padding-left 1.5%
-    input
-      height 40px
-      width 100%
+    >input
+      height 35px
+      width 98.5%
       background: rgba(0,0,0,0.57);
       border-radius: 3px;
       border 0
@@ -170,7 +172,7 @@ export default {
       text-align justify
       margin 0 0 1% 0
     textarea
-      width 100%
+      width 98.5%
       background: rgba(0,0,0,0.57);
       border-radius: 3px;
       border 0
@@ -192,4 +194,18 @@ export default {
       font-size 14px
       color rgba(255,255,255,0.30)
       padding-left 1.5%
+    .inline
+      display flex
+      height 35px
+      width 100%
+      >input
+        background: rgba(0,0,0,0.57);
+        width 100%
+        border 0
+        border-radius: 3px;
+        font-size 14px
+        color rgba(255,255,255,0.30)
+        text-align justify
+        &:first-child
+          margin-right 10px
 </style>

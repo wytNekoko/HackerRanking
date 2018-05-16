@@ -98,7 +98,7 @@ export default {
     .notification
       display flex
       img
-        margin 10px 10px
+        margin 10px 10px 0 10px
       h3
         font-size 10px
       p

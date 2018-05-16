@@ -65,6 +65,7 @@ export default {
       },
       registerIsOpen: false,
       git_state: '',
+      redirect_uri: 'https://dust.dorahacks.com/',
       notifications: []
     }
   },
@@ -113,7 +114,7 @@ export default {
     login_auth (provider) {
       const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
       const popupOptions = { width: 1020, height: 618 }
-      const redirect = 'http://localhost:8080/'
+      const redirect = this.redirect_uri
       this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
       this.oauthPopup.open(redirect, false).then((res) => {
         api.login_auth(res.code).then((response) => {
@@ -130,7 +131,7 @@ export default {
     register_auth (provider) {
       const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
       const popupOptions = { width: 1020, height: 618 }
-      const redirect = 'http://localhost:8080/'
+      const redirect = this.redirect_uri
       this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
       this.oauthPopup.open(redirect, false).then((res) => {
         api.register_auth_git(res.code).then((response) => {
@@ -193,17 +194,16 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  /*
 @font-face
   font-family: "Allerta-Stencil";
-  src: url("http://developer.mozilla.org/@api/deki/files/2934/=VeraSeBd.ttf")
+  src: url("./assets/allerta_stencil.ttf")
 @font-face
   font-family: "Ubuntu-Medium";
-  src: url("http://developer.mozilla.org/@api/deki/files/2934/=VeraSeBd.ttf")
+  src: url("./assets/Ubuntu-M.ttf")
 @font-face
   font-family "Ubuntu"
-  src url("")
-  */
+  src: url("./assets/Ubuntu-R.ttf")
+
 #app
   width 100vw
   height 100vh

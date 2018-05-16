@@ -70,7 +70,11 @@ export default {
       // this.$router.push({ 'name': 'rewardsView', query: { name: item.name}})
     },
     openPost () {
-      this.$router.push('/post-reward')
+      if (!window.cookieStorage.getItem('token')) {
+        alert('Login required')
+      } else {
+        this.$router.push('/post-reward')
+      }
     },
     openFeedback () {
       this.feedbackIsOpen = true

@@ -151,7 +151,7 @@ export default {
     return axios.get(`${url}/bounty/show`)
   },
   bounty_setup (option) {
-    return axios.post(`${url}/bounty/setup`, {
+    return axios.post(`${url}/user/bounty`, {
       name: option.name,
       description: option.description,
       keywords: option.keywords,

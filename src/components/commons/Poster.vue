@@ -1,7 +1,8 @@
 <template>
-  <div class="blackbox" >
-    <div class="reward"><span>{{post.reward}} Dusts Reward</span></div>
+  <div class="poster" >
+    <div class="reward">{{post.company_name}}</div>
     <p class="title">{{post.name}}</p>
+    <!--<p>{{post.description}}</p>-->
   </div>
 </template>
 
@@ -13,18 +14,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-// TODO debug for import error
-.blackbox
+.poster
   position relative
-  width 300px
-  height 300px
-//  left 62.1%
-//  top 17.5%
-//  width 21.4%
-//  height 37.5%
+  width 265px
+  height 250px
   background rgba(27,23,22,0.6)
-  box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20)
-  border-radius: 5.84px
+  box-shadow 0 3px 12px 0 rgba(0,0,0,0.20)
+  border-radius 5.84px
+  margin-right 20px
+  margin-bottom 20px
   .reward
     position absolute
     top 0
@@ -33,10 +31,10 @@ export default {
     background rgba(29,22,19,0.8)
     font-size 10px
     color white
-    span
-      position absolute
-      left 35%
-      top 32.5%
+    border-top-left-radius: 5.84px
+    border-top-right-radius: 5.84px
+    text-align center
+    line-height 3
   .title
     position absolute
     top 12%

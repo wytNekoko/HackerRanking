@@ -43,9 +43,7 @@ export default {
     togglePlanet () {
       if (!window.cookieStorage.getItem('token')) {
         alert('Login required')
-        // this.$router.push('/register')
-      }
-      else {
+      } else {
         this.$router.push('/setup-planet')
       }
     },
