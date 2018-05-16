@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       feedbackIsOpen: false,
-      helpIsOpen: true,
+      helpIsOpen: false,
       allplanets: [],
       planets: null,
       toRank: 1

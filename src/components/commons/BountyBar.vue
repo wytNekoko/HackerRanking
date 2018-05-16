@@ -40,8 +40,8 @@ export default {
 .bar
   position fixed
   top 87.875%
-  left 30%
-  width 611px
+  left 27.3%
+  width 575.3px
   height 78.9px
   background linear-gradient(142deg, rgba(48,59,70,0.95) 47%, rgba(78,46,46,0.94) 99%)
   border: 0.3px solid rgba(255,255,255,0.35);
@@ -52,7 +52,7 @@ export default {
   .post
     position absolute
     left 0
-    width 340px
+    width 304.3px
     height 100%
     font-family Ubuntu-Medium
     font-size 20px
@@ -64,7 +64,7 @@ export default {
       top 35.48%
   .rank
     position absolute
-    left 340.3px
+    left 304.3px
     width 86.8px
     height 100%
     border-right 0.3px solid rgba(255,255,255,0.35);
@@ -81,7 +81,7 @@ export default {
       text-shadow: 0 2px 2px #000000;
   .feedback
     position absolute
-    left: 437.4px
+    left: 397px
     width 86.8px
     height 78.9px
     .icon
@@ -99,7 +99,7 @@ export default {
       text-shadow: 0 2px 2px #000000;
   .help
     position absolute
-    left: 520px
+    left: 477.9px
     width 86.8px
     height 78.9px
     .icon

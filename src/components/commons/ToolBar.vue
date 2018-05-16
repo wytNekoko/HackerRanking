@@ -50,6 +50,7 @@ export default {
       }
     },
     getDust () {
+      // console.log(window.cookieStorage.getItem('token'))
       api.get_dust().then((res) => {
         const d = res.data
         if (d.errcode) {
@@ -88,7 +89,7 @@ export default {
 <style lang="stylus" scoped>
 .box
   position fixed
-  left 29.4%
+  left 27.5%
   top 87.425%
   width 575.3px
   height 78.9px

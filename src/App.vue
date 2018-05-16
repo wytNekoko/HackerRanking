@@ -1,29 +1,9 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <router-view @view="view" @setUp="setUp" @update="update" @notify="notify"/>
+      <router-view @view="view" @update="update" @notify="notify"/>
     </transition>
     <fringe></fringe>
-    <!--
-    <div class="user" @click="openProfile" :class="{
-      'user-open': this.$route.name === 'Profile',
-      'user-hide': this.$route.name === 'Ranking' || this.$route.name === 'Register'
-    }">
-      <div v-if="user">
-        <p class="name">{{user.name}}</p>
-        <p class="posi">{{user.postion}}</p>
-        <p class="id">No. {{user.id}}</p>
-      </div>
-      <p v-else class="login">Login</p>
-    </div>
-    <div class="ranking" @click="toggleRanking"  :class="{
-      'ranking-open': this.$route.name === 'Ranking',
-      'ranking-hide': this.$route.name === 'Profile' || this.$route.name === 'Register'
-    }">{{this.$route.name === 'Ranking' ? '&lt; Back' : 'Ranking'}}</div>
-    <div class="back" @click="closeProfile" :class="{
-      'hide': this.$route.name !== 'Profile'
-    }">Back ></div>
-              -->
     <div class="mask build-mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
@@ -47,13 +27,13 @@
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
     <receiving-station :notifications="notifications"></receiving-station>
-    <!--<hunter-bar v-if="this.$route.name!=='Hunter'"></hunter-bar>-->
 
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import OAuthPopup from './utils/popup'
 import Fringe from './components/commons/Fringe'
 import SettleBar from './components/commons/SettleBar'
 import UserBar from './components/commons/UserBar'
@@ -131,23 +111,41 @@ export default {
       this.$router.push('/login')
     },
     login_auth (provider) {
-      // this.$auth.authenticate(provider).then(function (response) {
-      //   console.log(response)
-      //   this.registerIsOpen = false
-      //   // Execute application logic after successful social authentication
-      // })
+      const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
+      const popupOptions = { width: 1020, height: 618 }
+      const redirect = 'http://localhost:8080/'
+      this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
+      this.oauthPopup.open(redirect, false).then((res) => {
+        api.login_auth(res.code).then((response) => {
+          const dd = response.data
+          if (dd.errcode) {
+            alert(dd.errmsg)
+            return
+          }
+          this.registerIsOpen = false
+          this.update(dd)
+        })
+      })
     },
     register_auth (provider) {
-      this.$auth.authenticate(provider).then(function (response) {
-        console.log(response)
-        this.registerIsOpen = false
-        // Execute application logic after successful social authentication
+      const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
+      const popupOptions = { width: 1020, height: 618 }
+      const redirect = 'http://localhost:8080/'
+      this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
+      this.oauthPopup.open(redirect, false).then((res) => {
+        api.register_auth_git(res.code).then((response) => {
+          const dd = response.data
+          if (dd.errcode) {
+            alert(dd.errmsg)
+            return
+          }
+          this.registerIsOpen = false
+          this.update(dd)
+        })
       })
     },
     view (item) {
-      // this.viewIsOpen = true
-      // this.viewPro = item
-      this.$router.push({name: 'PlanetView', query: {name: item}})
+      this.$router.push({ name: 'PlanetView', query: { name: item } })
     },
     setUp () {
       this.setIsOpen = true
@@ -186,6 +184,7 @@ export default {
         window.cookieStorage.setItem('token', 'anyValue', {expires: d})
         window.cookieStorage.setItem('name', 'anyValue', {expires: d})
         window.cookieStorage.setItem('id', 'anyValue', {expires: d})
+        this.notifications = []
       }
     },
   }

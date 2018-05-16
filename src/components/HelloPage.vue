@@ -219,9 +219,6 @@ export default {
     view (item) {
       this.$emit('view', item)
     },
-    setUp () {
-      this.$emit('setUp')
-    },
     getLeft (ctime) {
       const now = new Date()
       const s = ctime.substring(0,10)
@@ -257,10 +254,10 @@ export default {
     position absolute
     top 80%
     left 40%
-    width 300px
+    width 250px
     height 50px
     border-radius 20px
-    background-color white
+    background-color rgba(255,255,255,1)
     color black
     text-align center
     line-height 3

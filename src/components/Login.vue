@@ -110,6 +110,7 @@ export default {
         if (d.errcode) {
           this.setNotice(d.errmsg)
         } else {
+          // console.log(d)
           this.$emit('update', d)
         }
       })

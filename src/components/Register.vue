@@ -81,7 +81,7 @@ export default {
     // },
     register () {
       this.needRegister = true
-      // this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
+      this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
     },
     setNotice (text) {
       this.notice = text

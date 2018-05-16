@@ -12,10 +12,10 @@
     </div>
     <div class="messagebox">
       <div class="notification" v-for="item in notifications">
-        <img v-if="item.type===0" :src="require('@/assets/symbols-notification1.png')" width="10" height="10">
-        <img v-if="item.type===1" :src="require('@/assets/symbols-notification2.png')" width="10" height="10">
+        <img v-if="item.type===0" :src="require('@/assets/symbols-notification1.png')" width="20" height="20">
+        <img v-if="item.type===1" :src="require('@/assets/symbols-notification2.png')" width="20" height="20">
         <h3>{{item.content}}</h3>
-        <p>{{item.created_at}}</p>
+        <!--<p>{{item.created_at}}</p>-->
       </div>
     </div>
   </div>
@@ -94,7 +94,15 @@ export default {
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.50)
     border-radius: 3.51px;
     overflow hidden
+    color white
     .notification
       display flex
+      img
+        margin 10px 10px
+      h3
+        font-size 10px
+      p
+        font-size 8px
+        color rgba(255,255,255,0.4)
 
 </style>

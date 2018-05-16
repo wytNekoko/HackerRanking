@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const url = 'https://dust.giftchain.org/api'
-// const url = 'http://localdust.dev'
+const url = 'https://dust.dorahacks.com/api'
 
 export default {
   login (username, password) {
@@ -27,8 +26,13 @@ export default {
       headers: { 'content-type': 'application/json' }
     })
   },
-  register_auth_git () {
-
+  login_auth (code) {
+    return axios.post(`${url}/auth-login/github`, { code: code },
+      { headers: { 'content-type': 'application/json' } })
+  },
+  register_auth_git (code) {
+    return axios.post(`${url}/register/github`, { code: code },
+      { headers: { 'content-type': 'application/json' } })
   },
   setup_planet (option) {
     return axios.post(`${url}/user/planet`, {
@@ -108,6 +112,13 @@ export default {
   },
   builded_planets () {
     return axios.get(`${url}/profile/builded-planets`, {
+      headers: {
+        'X-Auth-Token': window.cookieStorage.getItem('token')
+      }
+    })
+  },
+  posted_rewards () {
+    return axios.get(`${url}/profile/posted-rewards`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }

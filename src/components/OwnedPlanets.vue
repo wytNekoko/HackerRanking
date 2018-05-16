@@ -9,6 +9,7 @@
           <li v-for="item in setup" :key="setup.indexOf(item)">
             <span class="name">{{item.name}}</span>
             <span class="desc">{{item.description}}</span>
+            <span class="desc">{{item.dust_num}} Dusts Collected</span>
           </li>
         </ul>
       </div>
@@ -37,7 +38,7 @@ export default {
     })
   },
   methods: {
-    back() {
+    back () {
       this.$router.push('/profile')
     }
   }
@@ -68,7 +69,7 @@ export default {
     border-radius: 8px;
     >img
       position absolute
-      top 11.5%
+      top 13.5%
       left 10%
       opacity 0.8
       cursor pointer
@@ -86,4 +87,10 @@ export default {
         border-bottom: 1px solid #979797;
       li
         border-bottom: 0.5px solid #979797;
+        .name
+          font-size 20px
+          margin-left 30px
+        .desc
+          font-size 12px
+          margin-left 20px
 </style>

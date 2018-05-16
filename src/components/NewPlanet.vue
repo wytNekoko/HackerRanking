@@ -16,7 +16,7 @@
         <p class="title">Github URL</p>
         <input type="text" class="text" v-model="setUpInfo.git">
         <p class="title">Team Introduction</p>
-        <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
+        <textarea rows="8" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
 </template>
@@ -47,7 +47,7 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          this.setIsOpen = false
+          alert('Create success')
           for (const i in this.setUpInfo) {
             if (i === 'name') {
               this.setUpInfo[i] = 'Name'

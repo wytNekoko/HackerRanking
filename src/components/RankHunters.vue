@@ -7,10 +7,10 @@
           <div class="rank-title"><h2>Top Bounty Rewards</h2></div>
           <ul class="list">
             <li class="no-data" v-if="rewards.length === 0">no data</li>
-            <li style="cursor:pointer;" v-for="item in planet" :key="planet.indexOf(item)" @click="focus(item)">
-              <span :class="{'name': planet.indexOf(item) < 3}">
+            <li style="cursor:pointer;" v-for="item in rewards" :key="rewards.indexOf(item)" @click="focus(item)">
+              <span :class="{'name': rewards.indexOf(item) < 3}">
               <!--<span class="name">-->
-                {{planet.indexOf(item)+1}} {{item.name}}
+                {{rewards.indexOf(item)+1}} {{item.name}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
@@ -20,9 +20,9 @@
           <div class="rank-title"><h2>Top Bounty Hunters</h2></div>
           <ul class="list">
             <li class="no-data" v-if="hunters.length === 0">no data</li>
-            <li v-for="item in owner" :key="owner.indexOf(item)">
-              <span :class="{'name': owner.indexOf(item) < 3}">
-                {{owner.indexOf(item)+1}}  {{item.username}}
+            <li v-for="item in hunters" :key="hunters.indexOf(item)">
+              <span :class="{'name': hunters.indexOf(item) < 3}">
+                {{hunters.indexOf(item)+1}}  {{item.username}}
               </span>
               <span class="dust">{{item.dust}}</span>
             </li>
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     focus (item) {
-      // this.$router.push({ 'name': 'PlanetView', query: { name: item.name}})
+      // this.$router.push({ 'name': 'rewardsView', query: { name: item.name}})
     },
     openPost () {
       this.$router.push('/post-reward')

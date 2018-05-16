@@ -18,80 +18,27 @@
           <div class="right">
             <h1>{{user.name}}</h1>
             <p>Resident ID: {{user.id}}</p>
-            <p>Github link</p>
+            <p>{{github_link}}</p>
             <div class="button-logout" @click="logout">logout</div>
             <h1>Planets</h1>
               <div class="box" @click="toOwnedPlanets"><p>Owned Planets</p></div>
               <div class="box" @click="toBuiltPlanets"><p>Built Planets</p></div>
             <h1>Bounty Hunter</h1>
               <div class="box" @click="toPostedRewards"><p>Posted Rewards</p></div>
-
-            <!--
-            <ul class="infos">
-              <li v-for="item in info" :key="info.indexOf(item)">
-                <span class="time">{{item.created_at}}</span>
-                <span>Build the planet {{item.name}} to get {{item.reward}} dust</span>
-              </li>
-            </ul>
-            -->
           </div>
       </div>
-      <!--
-      <div class="set-up">
-        <div class="center">
-          <h2>Planets You Set up</h2>
-          <ul class="lists">
-            <li v-for="item in setUp" :key="setUp.indexOf(item)">
-              <span class="name">{{item.name}}</span>
-              <span class="dust">got {{item.dust_num}} Dusts</span>
-              <span class="button" @click="viewSetUp(item)">view</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="contributed">
-        <div class="center">
-          <h2>Planets You Contributed to</h2>
-          <ul class="lists">
-            <li v-for="item in contributed" :key="contributed.indexOf(item)">
-              <span class="name">{{item.name}}</span>
-              <span class="dust">got {{item.reward_dust}} Dusts</span>
-              <span class="button" @click="viewSetUp(item)">view</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      -->
   </div>
 </template>
 
 <script>
 import api from '@/api'
 
-// const setUp = [
-//   { name: 'asdfg', dust: 232 },
-//   { name: 'asd', dust: 21 },
-//   { name: 'asdfga asd', dust: 22 },
-//   { name: 'asdfg a', dust: 232 }
-// ]
-// const contributed = [
-//   { name: 'sdkjf ljflai ', dust: 32 },
-//   { name: 'sdkjf ljflai ', dust: 32 },
-//   { name: 'sdkjf ljflai ', dust: 32 },
-//   { name: 'sdkjf ljflai ', dust: 32 }
-// ]
-const info = [
-  { created_at: '2018-10-23 12:22:33', name: 'asdf', reward: 3 }
-]
-
 export default {
   name: 'Profile',
   data () {
     return {
-      setUp: [],
-      contributed: [],
+      github_link: 'Github_link',
       totalDust: 0,
-      info: [],
     }
   },
   created () {
@@ -104,24 +51,8 @@ export default {
     api.profile_main().then((res) => {
       const d = res.data
       this.totalDust = d.total_dust
-      this.info = d.planets
+      this.github_link = d.github_link
     })
-    // api.owned_planets().then((res) => {
-    //   const d = res.data
-    //   if (d.errcode) {
-    //     alert(d.errmsg)
-    //   } else {
-    //     this.setUp = d
-    //   }
-    // })
-    // api.builded_planets().then((res) => {
-    //   const d = res.data
-    //   if (d.errcode) {
-    //     alert(d.errmsg)
-    //   } else {
-    //     this.contributed = d
-    //   }
-    // })
   },
   methods: {
     logout () {
@@ -136,24 +67,6 @@ export default {
     },
     toBuiltPlanets () {
       this.$router.push('/profile/built-planets')
-    },
-    viewSetUp (item) {
-      api.planets_one(item.name).then((res) => {
-        const d = res.data
-        if (d.errcode) {
-          alert(d.errmsg)
-        } else {
-          const data = {
-            title: d.name,
-            intro: d.description,
-            demo: d.demo_url,
-            git: d.github_url,
-            team: d.team_intro,
-            rank: 0
-          }
-          this.$emit('view', data)
-        }
-      })
     },
     withdraw () {
       alert('Under construction...')

@@ -26,7 +26,7 @@ export default {
 <style lang="stylus" scoped>
 .box
   position absolute
-  left 32.2%
+  left 30.1%
   display inline-flex
   .head
     width 498.4px
