@@ -1,31 +1,28 @@
 <template>
   <div class="hello">
     <img class="bg" :src="require('@/assets/4.png')">
+    <div class="slogan" v-html="hint"></div>
     <div class="loading" v-if="!projects"><span>Loading...</span></div>
-    <table class="ctn-box">
-      <tr class="inline">
+    <div class="ctn-box">
+      <div class="inline">
         <h4>Ranking</h4>
         <h4>Project</h4>
         <h4>Total Gift</h4>
         <h4>Keywords</h4>
-      </tr>
+      </div>
       <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1  -->
         <div> <!-- el2 -->
           <!-- your scrollable content -->
-          <tr v-for="item in projects" :key="projects.indexOf(item)" @click="view(item)" class="display">
-            <!--<p class="rank">{{item.rank}}</p>-->
-            <!--<p class="name">{{item.name}}</p>-->
-            <!--<p class="gift">{{item.dust_num}}</p>-->
-            <!--<p class="keywords">{{item.keywords}}</p>-->
-            <p>{{item.rank}}</p>
-            <p>{{item.name}}</p>
-            <span>{{item.dust_num}}</span>
-            <span>{{item.keywords}}</span>
+          <tr v-for="item in projects" :key="projects.indexOf(item)" @click="view(item)">
+            <td>{{item.rank}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.dust_num}}</td>
+            <td>{{item.keywords}}</td>
           </tr>
         </div>
         <!-- dragger will be automatically added here -->
       </div>
-    </table>
+    </div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar @feedback="openFeedback"></tool-bar>
   </div>
@@ -42,7 +39,9 @@ export default {
   data () {
     return {
       feedbackIsOpen: false,
-      projects: []
+      projects: null,
+      hint: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
+
     }
   },
   created () {
@@ -83,58 +82,35 @@ export default {
       color rgba(255,255,255,0.6)
   .ctn-box
     position absolute
-    top 90px
+    top 120px
     left 230px
-    height 600px
+    height 505px
     width 1000px
     overflow hidden
     table-layout automatic
     .inline
       display flex
       h4
-        margin-right 120px
+        margin-right 75px
+        margin-left 60px
     .size
       height 600px
       width 800px
-    .display
-      display -webkit-flex
-      display flex
-      text-align center
-      color white
-      line-height 40px
-      border-bottom 1px solid rgba(255,255,255,0.20);
-      cursor pointer
-      overflow hidden
-      p
+      td
+        border-bottom 1px solid rgba(255,255,255,0.20);
+        cursor pointer
+        width 200px
         font-size 16px
-        padding 0 120px 0 30px
-        display table
-      span
-        line-height 4.5
-        margin-right 80px
-        /*
-      .rank
-        position relative
-        left 30px
-      .name
-        position relative
-        left 170px
-      .gift
-        position: relative;
-        left: 300px;
-        line-height: 4.5;
-      .keywords
-        position relative
-        left 430px
-        //line-height: 4.5;
-        */
-      .btn
-        width 100px
-        height 35px
-        font-size 12px
-        line-height 1.5
-        border-radius 5px
-        background-color #2e2828
+        line-height 3
+        text-align center
+  .slogan
+    position absolute
+    left 350px
+    top 70px
+    width 600px
+    height 150px
+    font-size 15px
+    text-align center
   .bg
     width 100%
     height 100%

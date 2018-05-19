@@ -1,23 +1,24 @@
 <template>
   <div class="hello">
     <img class="bg" :src="require('@/assets/4.png')">
+    <div class="slogan" v-html="hint"></div>
     <div class="loading" v-if="!hackers"><span>Loading...</span></div>
     <div class="ctn-box">
       <div class="inline">
         <h4>Ranking</h4>
         <h4>Hacker</h4>
-        <h4>Own Project</h4>
-        <h4>Total Project Gift</h4>
+        <h4>Own Projects</h4>
+        <h4>Total Gift</h4>
       </div>
       <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1  -->
         <div> <!-- el2 -->
           <!-- your scrollable content -->
-          <li v-for="item in hackers" :key="hackers.indexOf(item)" @click="viewHacker(item)" class="display">
-            <p>{{hackers.indexOf(item) + 1}}</p>
-            <p>{{item.hacker}}</p>
-            <p>{{item.project_num}}</p>
-            <p>{{item.gift}}</p>
-          </li>
+          <tr v-for="item in hackers" :key="hackers.indexOf(item)" @click="viewHacker(item)">
+            <td>{{hackers.indexOf(item) + 1}}</td>
+            <td>{{item.hacker}}</td>
+            <td>{{item.project_num}}</td>
+            <td>{{item.gift}}</td>
+          </tr>
         </div>
         <!-- dragger will be automatically added here -->
       </div>
@@ -38,7 +39,8 @@ export default {
   data () {
     return {
       feedbackIsOpen: false,
-      hackers: []
+      hackers: null,
+      hint: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
     }
   },
   created () {
@@ -81,38 +83,34 @@ export default {
       color rgba(255,255,255,0.6)
   .ctn-box
     position absolute
-    top 90px
+    top 120px
     left 230px
-    height 600px
+    height 505px
     width 1000px
     overflow hidden
     .inline
       display flex
       h4
-        margin-right 120px
+        margin-right 70px
+        margin-left 60px
     .size
-      height 600px
+      height 500px
       width 800px
-    .display
-      display -webkit-flex
-      display flex
-      text-align center
-      color white
-      line-height 40px
-      border-bottom 1px solid rgba(255,255,255,0.20);
-      cursor pointer
-      overflow hidden
-      p
+      td
+        border-bottom 1px solid rgba(255,255,255,0.20);
+        cursor pointer
+        width 200px
         font-size 16px
-        padding 0 120px 0 30px
-        display table
-      .btn
-        width 100px
-        height 35px
-        font-size 12px
-        line-height 1.5
-        border-radius 5px
-        background-color #2e2828
+        line-height 3
+        text-align center
+  .slogan
+    position absolute
+    left 350px
+    top 70px
+    width 600px
+    height 150px
+    font-size 15px
+    text-align center
   .bg
     width 100%
     height 100%
