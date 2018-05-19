@@ -1,8 +1,9 @@
 <template>
   <div class="hello">
     <img class="bg" :src="require('@/assets/4.png')">
-    <div class="slogan" v-html="hint"></div>
+    <div class="slogan" v-html="slogan"></div>
     <div class="loading" v-if="!projects"><span>Loading...</span></div>
+    <div class="hint-invest" v-if="showHint">View project to invest</div>
     <div class="ctn-box">
       <div class="inline">
         <h4>Ranking</h4>
@@ -40,8 +41,8 @@ export default {
     return {
       feedbackIsOpen: false,
       projects: null,
-      hint: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
-
+      showHint: true,
+      slogan: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
     }
   },
   created () {
@@ -49,6 +50,9 @@ export default {
       // console.log(res)
       this.projects = res.data
     })
+    setTimeout(() => {
+      this.showHint = false
+    }, 5000)
   },
   methods: {
     openFeedback () {
@@ -72,6 +76,17 @@ export default {
   overflow hidden
   font-family Ubuntu-Medium
   color white
+  .hint-invest
+    position absolute
+    top 180px
+    right 50px
+    width 200px
+    height 40px
+    background-color rgba(255,255,255,0.5)
+    color black
+    text-align center
+    line-height 2.5
+    border-radius 8px
   .loading
     position absolute
     top 50%

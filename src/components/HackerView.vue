@@ -1,6 +1,10 @@
 <template>
   <div id="profile">
     <img class="bg" :src="require('@/assets/2.png')">
+    <div class="back-btn" @click="back">
+      <img width="18px" height="18px" :src="require('@/assets/symbols-backarrow.png')">
+      <span>Back to Ranking</span>
+    </div>
     <div class="container">
       <div class="left">
         <img width="100" height="100" :src="require('@/assets/symbols-profile.png')">
@@ -42,6 +46,9 @@ export default {
     })
   },
   methods: {
+    back () {
+      this.$router.push('/hackers')
+    },
     toOwnedPlanets () {
       this.$router.push({
         'name': 'HackerOwnedProjects', query: { name: this.$route.query.name }
@@ -85,6 +92,29 @@ export default {
     .bg
       width 100%
       height 100%
+    .back-btn
+      position absolute
+      left 80px
+      top 20%
+      width 145px
+      height 40px
+      background rgba(31,19,18,0.23)
+      border: 0.5px solid rgba(255,255,255,0.1);
+      box-shadow: 0 1px 23px 0 rgba(0,0,0,0.36);
+      border-radius: 8px;
+      display flex
+      cursor pointer
+      >img
+        position absolute
+        left 10px
+        top 10px
+      >span
+        position absolute
+        left 30px
+        top 12px
+        font-size 14px
+        color white
+        line-height 14px
     #title
       top 7%
       left 43.5%
@@ -96,9 +126,9 @@ export default {
   .container
     position absolute
     top 17.5%
-    height 90%
+    height 60%
     width 67.1%
-    left 16.4%
+    left 20%
     z-index 100
     color #FFF
     background: rgba(31,19,18,0.23);
@@ -207,27 +237,5 @@ export default {
       color white
       text-align center
       margin-left 5%
-  .infos
-    font-size 12px
-    li
-      margin 10px 0
-    .time
-      opacity 0.4
-      margin-right 1em
-  .lists
-    height 234px
-    overflow hidden
-    li
-      font-size 16px
-      line-height 24px
-      margin 30px auto 10px
-    .dust
-      padding-left 1em
-      opacity 0.5
-      font-size 12px
-    .button
-      color #FF573E
-      float right
-      cursor pointer
 
 </style>

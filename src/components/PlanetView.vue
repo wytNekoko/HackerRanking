@@ -235,7 +235,7 @@ export default {
   .back-btn
     position absolute
     left 70px
-    top 140px
+    top 100px
     width 145px
     height 40px
     background rgba(43,45,81,0.8)
@@ -258,7 +258,7 @@ export default {
     background rgba(19,29,64,0.59)
     position absolute
     left 230px
-    top 140px
+    top 100px
     width 620px
     height 597px
     font-family PingFangSC-Regular
@@ -283,7 +283,7 @@ export default {
   .num-info
     position absolute
     left 870px
-    top 140px
+    top 100px
     width 136px
     height 260px
     background rgba(19,29,64,0.59)
@@ -297,7 +297,7 @@ export default {
       font-size 14px
   .build-btn
     position absolute
-    top 420px
+    top 380px
     left 870px
     background-image: linear-gradient(45deg, rgba(105,157,0,0.8) 0%, rgba(67,128,0, 0.8) 100%);
     border-radius: 5.84px;
@@ -321,7 +321,7 @@ export default {
       font-size 12px
   .spy-btn
     position absolute
-    top 500px
+    top 460px
     left 870px
     color black
     background-image: linear-gradient(45deg, rgba(255,176,135,0.8) 0%, rgba(238,190,0,0.8) 100%);
@@ -340,7 +340,7 @@ export default {
       left 35%
   .next
     position absolute
-    top 580px
+    top 540px
     left 870px
     background: rgba(43,45,81,0.8)
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
