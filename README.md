@@ -1,6 +1,6 @@
-# DoraDust
+# HackerRanking
 
-> Front-end project for DoraDust in Dorahacks.
+> Front-end project for HackerRanking in Dorahacks.
 
 ## Build Setup
 
