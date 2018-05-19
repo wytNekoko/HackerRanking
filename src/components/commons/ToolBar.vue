@@ -36,7 +36,7 @@ export default {
           alert(d.errmsg)
         } else if (parseInt(d, 10)) {
           console.log(d)
-          alert('88 dusts got.')
+          alert('10 Gift got.')
           // this.numActive = true
           // setTimeout(() => {
           //   this.numActive = false
