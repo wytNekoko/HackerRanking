@@ -1,11 +1,12 @@
 <template>
   <div class="box">
     <div class="logo">
-      <img width="141" height="29" :src="require('@/assets/logo_white.png')" alt="logo">
+      <img width="30" height="29" :src="require('@/assets/logo_white.png')" alt="logo">
+      <p class="t">Hacker Ranking</p>
     </div>
     <div class="head"></div>
-    <div class="planet" @click="projects" :class="{'on': this.$route.name === 'HelloPage'}" >Projects Ranking</div>
-    <div class="hunter" @click="hackers" :class="{'on': this.$route.name === 'Hunter'}">Hackers Ranking</div>
+    <div class="project" @click="projects" :class="{'on': this.$route.name === 'HelloPage'}" >Projects</div>
+    <div class="hackers" @click="hackers" :class="{'on': this.$route.name === 'Hunter'}">Hackers</div>
   </div>
 </template>
 
@@ -38,13 +39,13 @@ export default {
     box-shadow 0 2px 16px 0 rgba(0,0,0,0.50)
     border-top-left-radius 23.38px
     border-top-right-radius 23.38px
-  .planet
+  .project
     position absolute
     color white
     font-family Allerta-Stencil
     font-size 14px
     top 25px
-    left 240px
+    left 270px
     z-index 5
     cursor pointer
     .on
@@ -53,13 +54,13 @@ export default {
       width 100px
       height 30px
       z-index 4
-  .hunter
+  .hackers
     position absolute
     color white
     font-family Allerta-Stencil
     font-size 14px
     top 25px
-    left 340px
+    left 370px
     z-index 5
     cursor pointer
     .on
@@ -72,9 +73,14 @@ export default {
     position absolute
     left 10%
     top 12px
-    width 141px
+    width 200px
     height 29px
     z-index 5
+    color white
+    .t
+      position absolute
+      left 36px
+      top -7px
 
 
 </style>

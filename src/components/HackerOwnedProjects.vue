@@ -4,12 +4,12 @@
     <div class="container">
       <img @click="back" width="40px" height="40px" :src="require('@/assets/symbols-backarrow.png')">
       <div class="content">
-        <h1>Invested Projects</h1>
+        <h1>Owned Projects</h1>
         <ul>
-          <li v-for="item in contributed" :key="contributed.indexOf(item)">
+          <li v-for="item in setup" :key="setup.indexOf(item)">
             <span class="name">{{item.name}}</span>
             <span class="desc">{{item.description}}</span>
-            <span class="desc">{{item.reward_dust}} Gift gained</span>
+            <span class="desc">{{item.dust_num}} Gift Collected</span>
           </li>
         </ul>
       </div>
@@ -21,25 +21,27 @@
 import api from '@/api'
 
 export default {
-  name: 'BuiltPlanets',
+  name: 'HackerOwnedProjects',
   data() {
     return {
-      contributed: []
+      setup: []
     }
   },
   created() {
-    api.builded_planets(this.user.name).then((res) => {
+    api.owned_planets(this.$route.query.name).then((res) => {
       const d = res.data
       if (d.errcode) {
         alert(d.errmsg)
       } else {
-        this.contributed = d
+        this.setup = d
       }
     })
   },
   methods: {
-    back() {
-      this.$router.push('/profile')
+    back () {
+      this.$router.push({
+        'name': 'HackerView', query: { name: this.$route.query.name }
+      })
     }
   }
 }
@@ -50,6 +52,7 @@ export default {
   position absolute
   width 100%
   height 100%
+  //background url(../assets/4.png) no-repeat
   overflow hidden
   .bg
     width 100%
@@ -85,7 +88,7 @@ export default {
         border-top: 1px solid #979797;
         border-bottom: 1px solid #979797;
       li
-        border-bottom: 0.5px solid rgba(255,255,255,0.20)
+        border-bottom: 0.5px solid #979797;
         .name
           font-size 20px
           margin-left 30px

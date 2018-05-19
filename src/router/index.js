@@ -15,7 +15,9 @@ import NewBountyReward from '@/components/NewBountyReward'
 import Login from '@/components/Login'
 import ProjectsRanking from '@/components/ProjectsRanking'
 import HackersRanking from '@/components/HackersRanking'
-
+import HackerView from '@/components/HackerView'
+import HackerOwnedProjects from '@/components/HackerOwnedProjects'
+import HackerInvested from '@/components/HackerInvested'
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +31,21 @@ export default new Router({
       path: '/hackers',
       name: 'HackersRanking',
       component: HackersRanking
+    },
+    {
+      path: '/hacker',
+      name: 'HackerView',
+      component: HackerView
+    },
+    {
+      path: '/hacker/owned-projects',
+      name: 'HackerOwnedProjects',
+      component: HackerOwnedProjects
+    },
+    {
+      path: '/hacker/invested',
+      name: 'HackerInvested',
+      component: HackerInvested
     },
     {
       path: '/list',
@@ -81,12 +98,12 @@ export default new Router({
       component: PostedRewards
     },
     {
-      path: '/profile/owned-planets',
+      path: '/profile/owned-projects',
       name: 'OwnedPlanets',
       component: OwnedPlanets
     },
     {
-      path: '/profile/built-planets',
+      path: '/profile/invested',
       name: 'BuiltPlanets',
       component: BuiltPlanets
     },

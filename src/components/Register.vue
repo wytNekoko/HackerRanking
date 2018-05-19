@@ -12,7 +12,7 @@
         </li>
         <li>
           <span>Email</span>
-          <input type="text" v-model="username" @change="checkUsername">
+          <input type="text" v-model="email" @change="checkEmail">
           <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
         </li>
         <li>
@@ -40,9 +40,9 @@ export default {
   name: 'Register',
   data () {
     return {
-      needRegister: false,
+      needRegister: true,
       openBox: false,
-      username: '',
+      username: null,
       password: '',
       email: '',
       confirm: '',
@@ -59,10 +59,19 @@ export default {
       this.$router.push('/')
     },
     checkUsername () {
-      this.status.splice(0, 1, 'OK')
+      if (this.username) {
+        this.status.splice(0, 1, 'OK')
+      } else {
+        this.status.splice(0, 1, 'Cryptoname can\'t empty')
+      }
     },
     checkEmail () {
-      this.status.splice(1, 1, 'OK')
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(String(this.email).toLowerCase())) {
+        this.status.splice(1, 1, 'OK')
+      } else {
+        this.status.splice(1, 1, 'Invalid email')
+      }
     },
     checkPassword () {
       this.checkConfirm()
@@ -76,7 +85,6 @@ export default {
       }
     },
     register () {
-      this.needRegister = true
       this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
     },
     setNotice (text) {
@@ -84,7 +92,7 @@ export default {
     },
     submit () {
       if (this.needRegister) {
-        if (this.status[2] !== 'OK') {
+        if (this.status[3] !== 'OK' || this.status[1] !== 'OK') {
           return
         }
         api.register(this.username, this.email, this.password).then((res) => {
@@ -122,31 +130,6 @@ export default {
   top 0
   left 0
   overflow hidden
-.logo
-  display table
-  margin auto
-  transition transform 0.8s
-.move-up
-  transform translate3d(0, -220px, 0)
-.button
-  width 360px
-  height 80px
-  border solid 2px #fff
-  border-radius 80px
-  text-align center
-  display table
-  margin 150px auto 30px
-  cursor pointer
-  color #fff
-  font-size 24px
-  font-family 'Ubuntu'
-  line-height 80px
-.center
-  position absolute
-  top 50%
-  left 10%
-  width 80%
-  transform translate3d(0, -50%, 0)
 .jump
   display table
   margin auto
@@ -154,7 +137,7 @@ export default {
   cursor pointer
 .register-box
   position absolute
-  top 20%
+  top 10%
   left 50%
   transform translate3d(-50%, 0, 0)
   width 720px

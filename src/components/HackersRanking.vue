@@ -1,6 +1,27 @@
 <template>
   <div class="hello">
     <img class="bg" :src="require('@/assets/4.png')">
+    <div class="loading" v-if="!hackers"><span>Loading...</span></div>
+    <div class="ctn-box">
+      <div class="inline">
+        <h4>Ranking</h4>
+        <h4>Hacker</h4>
+        <h4>Own Project</h4>
+        <h4>Total Project Gift</h4>
+      </div>
+      <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1  -->
+        <div> <!-- el2 -->
+          <!-- your scrollable content -->
+          <li v-for="item in hackers" :key="hackers.indexOf(item)" @click="viewHacker(item)" class="display">
+            <p>{{hackers.indexOf(item) + 1}}</p>
+            <p>{{item.hacker}}</p>
+            <p>{{item.project_num}}</p>
+            <p>{{item.gift}}</p>
+          </li>
+        </div>
+        <!-- dragger will be automatically added here -->
+      </div>
+    </div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar @feedback="openFeedback"></tool-bar>
   </div>
@@ -33,6 +54,11 @@ export default {
     closeFeedback () {
       this.feedbackIsOpen = false
     },
+    viewHacker (it) {
+      this.$router.push({
+        'name': 'HackerView', query: { name: it.hacker }
+      })
+    }
   }
 }
 </script>
@@ -57,13 +83,36 @@ export default {
     position absolute
     top 90px
     left 230px
+    height 600px
+    width 1000px
+    overflow hidden
+    .inline
+      display flex
+      h4
+        margin-right 120px
     .size
-      height 750px
-      width 950px
+      height 600px
+      width 800px
     .display
       display -webkit-flex
-      display flex !important
-      flex-wrap wrap !important
+      display flex
+      text-align center
+      color white
+      line-height 40px
+      border-bottom 1px solid rgba(255,255,255,0.20);
+      cursor pointer
+      overflow hidden
+      p
+        font-size 16px
+        padding 0 120px 0 30px
+        display table
+      .btn
+        width 100px
+        height 35px
+        font-size 12px
+        line-height 1.5
+        border-radius 5px
+        background-color #2e2828
   .bg
     width 100%
     height 100%

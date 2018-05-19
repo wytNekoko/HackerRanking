@@ -28,7 +28,7 @@ export default {
     }
   },
   created() {
-    api.builded_planets(this.user.name).then((res) => {
+    api.builded_planets(this.$route.query.name).then((res) => {
       const d = res.data
       if (d.errcode) {
         alert(d.errmsg)
@@ -39,7 +39,9 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push('/profile')
+      this.$router.push({
+        'name': 'HackerView', query: { name: this.$route.query.name }
+      })
     }
   }
 }

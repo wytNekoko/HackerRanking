@@ -2,26 +2,30 @@
   <div class="hello">
     <img class="bg" :src="require('@/assets/4.png')">
     <div class="loading" v-if="!projects"><span>Loading...</span></div>
-    <div class="ctn-box">
-      <div class="inline">
-        <h4>Projects Ranking</h4>
+    <table class="ctn-box">
+      <tr class="inline">
+        <h4>Ranking</h4>
         <h4>Project</h4>
         <h4>Total Gift</h4>
-      </div>
+        <h4>Keywords</h4>
+      </tr>
       <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1  -->
-        <div class="display"> <!-- el2 -->
+        <div> <!-- el2 -->
           <!-- your scrollable content -->
-          <li v-for="item in projects" @click="view(item)">
+          <tr v-for="item in projects" :key="projects.indexOf(item)" @click="view(item)" class="display">
+            <!--<p class="rank">{{item.rank}}</p>-->
+            <!--<p class="name">{{item.name}}</p>-->
+            <!--<p class="gift">{{item.dust_num}}</p>-->
+            <!--<p class="keywords">{{item.keywords}}</p>-->
             <p>{{item.rank}}</p>
             <p>{{item.name}}</p>
-            <p>{{item.dust_num}}</p>
-            <p>{{item.keywords}}</p>
-            <div class="btn">invest</div>
-          </li>
+            <span>{{item.dust_num}}</span>
+            <span>{{item.keywords}}</span>
+          </tr>
         </div>
         <!-- dragger will be automatically added here -->
       </div>
-    </div>
+    </table>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar @feedback="openFeedback"></tool-bar>
   </div>
@@ -81,20 +85,49 @@ export default {
     position absolute
     top 90px
     left 230px
+    height 600px
+    width 1000px
+    overflow hidden
+    table-layout automatic
+    .inline
+      display flex
+      h4
+        margin-right 120px
     .size
-      height 750px
-      width 950px
+      height 600px
+      width 800px
     .display
       display -webkit-flex
-      display flex !important
-      flex-wrap wrap !important
+      display flex
       text-align center
       color white
-      >li
-        line-height 40px
-        border-bottom 1px solid rgba(255,255,255,0.20);
+      line-height 40px
+      border-bottom 1px solid rgba(255,255,255,0.20);
+      cursor pointer
+      overflow hidden
       p
-        font-size 12px
+        font-size 16px
+        padding 0 120px 0 30px
+        display table
+      span
+        line-height 4.5
+        margin-right 80px
+        /*
+      .rank
+        position relative
+        left 30px
+      .name
+        position relative
+        left 170px
+      .gift
+        position: relative;
+        left: 300px;
+        line-height: 4.5;
+      .keywords
+        position relative
+        left 430px
+        //line-height: 4.5;
+        */
       .btn
         width 100px
         height 35px
@@ -102,7 +135,6 @@ export default {
         line-height 1.5
         border-radius 5px
         background-color #2e2828
-
   .bg
     width 100%
     height 100%

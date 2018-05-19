@@ -4,12 +4,12 @@
     <div class="container">
       <img @click="back" width="40px" height="40px" :src="require('@/assets/symbols-backarrow.png')">
       <div class="content">
-        <h1>Owned Planets</h1>
+        <h1>Owned Projects</h1>
         <ul>
           <li v-for="item in setup" :key="setup.indexOf(item)">
             <span class="name">{{item.name}}</span>
             <span class="desc">{{item.description}}</span>
-            <span class="desc">{{item.dust_num}} Dusts Collected</span>
+            <span class="desc">{{item.dust_num}} Gift Collected</span>
           </li>
         </ul>
       </div>
@@ -28,7 +28,7 @@ export default {
     }
   },
   created() {
-    api.owned_planets().then((res) => {
+    api.owned_planets(this.user.name).then((res) => {
       const d = res.data
       if (d.errcode) {
         alert(d.errmsg)
@@ -69,7 +69,7 @@ export default {
     border-radius: 8px;
     >img
       position absolute
-      top 13.5%
+      top 80px
       left 10%
       opacity 0.8
       cursor pointer

@@ -107,22 +107,22 @@ export default {
   rank_hacker () {
     return axios.get(`${url}/rank/hacker`)
   },
-  owned_planets () {
-    return axios.get(`${url}/profile/owned-planets`, {
+  owned_planets (name) {
+    return axios.get(`${url}/hacker/owned-planets/${name}`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
     })
   },
-  builded_planets () {
-    return axios.get(`${url}/profile/builded-planets`, {
+  builded_planets (name) {
+    return axios.get(`${url}/hacker/builded-planets/${name}`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
     })
   },
   posted_rewards () {
-    return axios.get(`${url}/profile/posted-rewards`, {
+    return axios.get(`${url}/hacker/posted-rewards`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
@@ -137,6 +137,9 @@ export default {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
     })
+  },
+  hacker (name) {
+    return axios.get(`${url}/hacker/${name}`)
   },
   planets_one (name) {
     return axios.get(`${url}/planets/one/${name}`, {

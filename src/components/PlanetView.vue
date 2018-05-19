@@ -3,12 +3,13 @@
     <img class="bg" :src="require('@/assets/4.png')">
     <div class="back-btn" @click="back">
       <img width="18px" height="18px" :src="require('@/assets/symbols-backarrow.png')">
-      <span>Back to Galaxy</span>
+      <span>Back to Ranking</span>
     </div>
     <div class="main-box">
       <h1>{{pinfo.name}}</h1>
       <h3>Keywords</h3>
       <p>{{pinfo.keywords}}</p>
+      <h3>Description</h3>
       <p>{{pinfo.description}}</p>
       <h3>Github url</h3>
       <span>{{pinfo.github_url}}</span>
@@ -21,7 +22,7 @@
       <div class="num">{{pinfo.builder_num}}</div>
       <p>Investments</p>
       <div class="num">{{pinfo.dust_num}}</div>
-      <p>Dusts</p>
+      <p>Gift</p>
       <!--<div class="num">#{{pinfo.rank}}</div>-->
       <div class="num">#{{rank}}</div>
       <p>Rank</p>
@@ -38,7 +39,7 @@
     <div class="spy-box" v-if="sent || paybox">
       <div class="pay" v-if="paybox">
         <p class="msg">{{getMsg}}</p>
-        <div class="btn" @click="spyPay"><span>Pay 100 Dusts</span></div>
+        <div class="btn" @click="spyPay"><span>Pay 100 Gift</span></div>
         <div class="cancel" @click="cancel">Cancel</div>
       </div>
       <div class="sent" v-if="sent">
@@ -49,13 +50,13 @@
     </div>
     <div class="next">
       <img width="20" height="20" :src="require('@/assets/symbols-backarrow.png')">
-      <p>Next Planet:</p>
+      <p>Next Project:</p>
     </div>
     <div class="mask" v-if="buildIsOpen">
       <div class="build-card">
         <span class="close" @click="closeBuild">X</span>
         <h3>Amount of investment</h3>
-        <input type="text" v-model="buildNum"><span class="dust">Dust</span>
+        <input type="text" v-model="buildNum"><span class="dust">Gift</span>
         <div class="button" @click="confirmBuild">Confirm</div>
       </div>
     </div>
@@ -235,7 +236,7 @@ export default {
     position absolute
     left 70px
     top 140px
-    width 140px
+    width 145px
     height 40px
     background rgba(43,45,81,0.8)
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
@@ -336,7 +337,7 @@ export default {
       font-size 16px
       position absolute
       top 4px
-      left 40%
+      left 35%
   .next
     position absolute
     top 580px

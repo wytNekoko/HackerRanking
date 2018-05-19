@@ -16,7 +16,7 @@
         <p class="title">Github URL</p>
         <input type="text" class="text" v-model="setUpInfo.git">
         <p class="title">Team Introduction</p>
-        <textarea rows="8" class="text" v-model="setUpInfo.team"></textarea>
+        <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
 </template>
@@ -139,7 +139,7 @@ export default {
   .card
     position absolute
     left 22.2%
-    top 17.5%
+    top 13%
     width 55.6%
     height 80%
     padding 0 5%

@@ -1,8 +1,8 @@
 {
-  "name": "doradust",
+  "name": "hackerRanking",
   "version": "1.0.0",
-  "description": "Front-end visual communication exercise project.",
-  "author": "Felix <2680383605@qq.com>",
+  "description": "Front-end project.",
+  "author": "Gigi233",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -67,7 +67,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": "^2.11.2",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

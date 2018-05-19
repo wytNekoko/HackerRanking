@@ -20,7 +20,7 @@
             <p>Resident ID: {{user.id}}</p>
             <p>{{github_link}}</p>
             <div class="button-logout" @click="logout">logout</div>
-            <h1>Planets</h1>
+            <h1>Projects</h1>
               <div class="box" @click="toOwnedPlanets"><p>Owned Projects</p></div>
               <div class="box" @click="toBuiltPlanets"><p>Invested Projects</p></div>
             <!--<h1>Bounty Hunter</h1>-->
@@ -63,10 +63,10 @@ export default {
       this.$router.push('/profile/posted-rewards')
     },
     toOwnedPlanets () {
-      this.$router.push('/profile/owned-planets')
+      this.$router.push('/profile/owned-projects')
     },
     toBuiltPlanets () {
-      this.$router.push('/profile/built-planets')
+      this.$router.push('/profile/invested')
     },
     withdraw () {
       alert('Under construction...')
@@ -165,7 +165,8 @@ export default {
       font-size 30px
       color white
       line-height 7%
-      margin-top 12%
+      //margin-top 12%
+      margin-top 20%
       margin-bottom 5%
       &:first-child
         margin-top 3%
