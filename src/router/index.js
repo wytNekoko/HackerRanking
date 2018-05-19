@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloPage from '@/components/HelloPage'
 import ListView from '@/components/ListView'
 import Profile from '@/components/Profile'
 import Ranking from '@/components/Ranking'
@@ -14,6 +13,8 @@ import BuiltPlanets from '@/components/BuiltPlanets'
 import PlanetView from '@/components/PlanetView'
 import NewBountyReward from '@/components/NewBountyReward'
 import Login from '@/components/Login'
+import ProjectsRanking from '@/components/ProjectsRanking'
+import HackersRanking from '@/components/HackersRanking'
 
 Vue.use(Router)
 
@@ -21,8 +22,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloPage',
-      component: HelloPage
+      name: 'ProjectsRanking',
+      component: ProjectsRanking
+    },
+    {
+      path: '/hackers',
+      name: 'HackersRanking',
+      component: HackersRanking
     },
     {
       path: '/list',
@@ -85,7 +91,7 @@ export default new Router({
       component: BuiltPlanets
     },
     {
-      path: '/planet-view',
+      path: '/project-view',
       name: 'PlanetView',
       component: PlanetView
     }

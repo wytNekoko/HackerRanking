@@ -1,11 +1,11 @@
 <template>
   <div class="box">
     <div class="logo">
-      <img width="141" height="29" :src="require('@/assets/logoWhite.png')" alt="logo">
+      <img width="141" height="29" :src="require('@/assets/logo_white.png')" alt="logo">
     </div>
     <div class="head"></div>
-    <div class="planet" @click="goPlanets" :class="{'on': this.$route.name === 'HelloPage'}" >Planets</div>
-    <div class="hunter" @click="goHunter" :class="{'on': this.$route.name === 'Hunter'}">Bounty Hunter</div>
+    <div class="planet" @click="projects" :class="{'on': this.$route.name === 'HelloPage'}" >Projects Ranking</div>
+    <div class="hunter" @click="hackers" :class="{'on': this.$route.name === 'Hunter'}">Hackers Ranking</div>
   </div>
 </template>
 
@@ -13,11 +13,11 @@
 export default {
   name: 'Fringe',
   methods: {
-    goPlanets () {
+    projects () {
       this.$router.push('/')
     },
-    goHunter () {
-      this.$router.push('/Hunter')
+    hackers () {
+      this.$router.push('/hackers')
     }
   }
 }

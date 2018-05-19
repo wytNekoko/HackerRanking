@@ -5,7 +5,7 @@
     <div class="quit-btn" @click="quit"><span>Quit and Delete</span></div>
     <div class="remind">We don’t save drafts, so make sure the content you’re edting is copied at somewhere safe.</div>
     <div class="card">
-        <p class="bigtitle">Create a new planet</p>
+        <p class="bigtitle">Create a new project</p>
         <input type="text" class="name" v-model="setUpInfo.name">
         <p class="title">Email</p>
         <input type="text" class="text" v-model="setUpInfo.email">
@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       setUpInfo: {
-        name: 'Name',
+        name: 'Project Name',
         description: 'e.g. X service allows users to do sth or ...',
         email: '',
         demo: 'http://',

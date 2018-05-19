@@ -18,10 +18,11 @@ export default {
         'X-Auth-Token': window.cookieStorage.getItem('token') }
     })
   },
-  register (username, password) {
+  register (username, email, password) {
     return axios.post(`${url}/register`, {
       username,
-      password
+      password,
+      email
     }, {
       headers: { 'content-type': 'application/json' }
     })
@@ -103,6 +104,9 @@ export default {
   rank_bounty () {
     return axios.get(`${url}/rank/bounty`)
   },
+  rank_hacker () {
+    return axios.get(`${url}/rank/hacker`)
+  },
   owned_planets () {
     return axios.get(`${url}/profile/owned-planets`, {
       headers: {
@@ -162,5 +166,5 @@ export default {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }
     })
-  }
+  },
 }

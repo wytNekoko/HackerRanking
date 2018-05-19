@@ -7,12 +7,12 @@
             <img width="100" height="100" :src="require('@/assets/symbols-profile.png')">
             <div class="total-dust">{{totalDust}}</div>
             <div class="line">
-              <h2 style="height:20px width:93px">Total Dusts</h2>
+              <h2 style="height:20px width:93px">Total Gift</h2>
               <img width="10" height="10" :src="require('@/assets/symbols-dusts.png')"></div>
             <!--<div class="button" @click="withdraw">withdraw</div>-->
             <div class="line" style="cursor:pointer" @click="getDust">
               <img width="24" height="24" :src="require('@/assets/symbols-getdusts.png')">
-              <h3>Get dusts</h3>
+              <h3>Get Gift</h3>
             </div>
           </div>
           <div class="right">
@@ -21,10 +21,10 @@
             <p>{{github_link}}</p>
             <div class="button-logout" @click="logout">logout</div>
             <h1>Planets</h1>
-              <div class="box" @click="toOwnedPlanets"><p>Owned Planets</p></div>
-              <div class="box" @click="toBuiltPlanets"><p>Built Planets</p></div>
-            <h1>Bounty Hunter</h1>
-              <div class="box" @click="toPostedRewards"><p>Posted Rewards</p></div>
+              <div class="box" @click="toOwnedPlanets"><p>Owned Projects</p></div>
+              <div class="box" @click="toBuiltPlanets"><p>Invested Projects</p></div>
+            <!--<h1>Bounty Hunter</h1>-->
+              <!--<div class="box" @click="toPostedRewards"><p>Posted Rewards</p></div>-->
           </div>
       </div>
   </div>

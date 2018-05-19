@@ -1,12 +1,5 @@
 <template>
   <div id="register">
-    <!--<div class="center">-->
-      <!--<img class="logo"-->
-        <!--:class="{'move-up': openBox}" width="300"-->
-        <!--:src="require('@/assets/symbols-logo.png')" alt="logo">-->
-      <!--<div class="button" @click="registeOnClick">Register / Login Here</div>-->
-      <!--<p class="jump" @click="jump">Directly go to the Universe ></p>-->
-    <!--</div>-->
     <div class="register-box"> <!--:class="{'open': openBox}">-->
       <h2>
         <span :class="{'focus': !needRegister}">Register</span>
@@ -18,14 +11,19 @@
           <p :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</p>
         </li>
         <li>
+          <span>Email</span>
+          <input type="text" v-model="username" @change="checkUsername">
+          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+        </li>
+        <li>
           <span>Password</span>
           <input type="password" v-model="password" @change="checkPassword">
-          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+          <p :style="{'color': status[2] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[2]}}</p>
         </li>
         <li>
           <span>Confirm Password</span>
           <input type="password" v-model="confirm" @change="checkConfirm">
-          <p :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</p>
+          <p :style="{'color': status[3] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[3]}}</p>
         </li>
       </ul>
       <div class="submit" @click="submit">Submit</div>
@@ -46,8 +44,9 @@ export default {
       openBox: false,
       username: '',
       password: '',
+      email: '',
       confirm: '',
-      status: ['', '', ''],
+      status: ['', '', '', ''],
       notice: ' '
     }
   },
@@ -62,23 +61,20 @@ export default {
     checkUsername () {
       this.status.splice(0, 1, 'OK')
     },
+    checkEmail () {
+      this.status.splice(1, 1, 'OK')
+    },
     checkPassword () {
       this.checkConfirm()
-      this.status.splice(1, 1, 'OK')
+      this.status.splice(2, 1, 'OK')
     },
     checkConfirm () {
       if (this.password === this.confirm) {
-        this.status.splice(2, 1, 'OK')
+        this.status.splice(3, 1, 'OK')
       } else if (this.confirm !== '') {
-        this.status.splice(2, 1, 'Enter the password twice inconsistently')
+        this.status.splice(3, 1, 'Enter the password twice inconsistently')
       }
     },
-    // login () {
-    //   this.confirm = ''
-    //   this.status.splice(2, 1, '')
-    //   this.needRegister = false
-    //   this.setNotice('')
-    // },
     register () {
       this.needRegister = true
       this.setNotice('Please remember your cryptoname and passwords<br>or you will for ever lose your planet')
@@ -91,7 +87,7 @@ export default {
         if (this.status[2] !== 'OK') {
           return
         }
-        api.register(this.username, this.password).then((res) => {
+        api.register(this.username, this.email, this.password).then((res) => {
           const d = res.data
           if (d.errcode) {
             this.setNotice(d.errmsg)

@@ -4,7 +4,7 @@
       <router-view @view="view" @update="update" @notify="notify"/>
     </transition>
     <fringe></fringe>
-    <div class="mask build-mask" v-if="registerIsOpen">
+    <div class="mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
           <span></span><span></span>
@@ -18,12 +18,14 @@
           </li>
           <li>
             <h2>New Resident:</h2>
+            <div class="button" @click="register">Sign up with Email</div>
             <div class="button" @click="register_auth('github')">Sign up with Github</div>
             <!--<div class="button" @click="register_auth('facebook')">Sign up with Facebook</div>-->
           </li>
         </ul>
       </div>
     </div>
+    <div class="hint" v-if="showHint">You can get 10 Gift today</div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
     <receiving-station :notifications="notifications"></receiving-station>
@@ -53,20 +55,11 @@ export default {
   data () {
     return {
       user: null,
-      viewPro: {
-        title: 'DoraDust',
-        intro: `Please pay attention to Galaxy Convention to get more resident policy.
-        We will work hard to create galactic welfare all the time.
-        Welcome to contact us to better serve the resident.`,
-        demo: 'http://sdflakdflakdflakldfklakd.com',
-        git: '',
-        team: '',
-        rank: 1
-      },
       registerIsOpen: false,
       git_state: '',
       redirect_uri: 'https://dust.dorahacks.com/',
-      notifications: []
+      notifications: [],
+      showHint: true
     }
   },
   created () {
@@ -77,28 +70,9 @@ export default {
       }
     }
     this.notify()
-    // window.fbAsyncInit = function() {
-    //   FB.init({
-    //     appId      : '{your-app-id}',
-    //     cookie     : true,
-    //     xfbml      : true,
-    //     version    : '{latest-api-version}'
-    //   });
-    //
-    //   FB.AppEvents.logPageView();
-    //
-    // }
-    //
-    // (function(d, s, id){
-    //   var js, fjs = d.getElementsByTagName(s)[0];
-    //   if (d.getElementById(id)) { return; }
-    //   js = d.createElement(s); js.id = id;
-    //   js.src = "https://connect.facebook.net/en_US/sdk.js";
-    //   fjs.parentNode.insertBefore(js, fjs);
-    // }(document, 'script', 'facebook-jssdk'))
   },
   methods: {
-    makestate() {
+    makestate () {
       let text = '';
       const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -111,8 +85,12 @@ export default {
       this.closeRegister()
       this.$router.push('/login')
     },
+    register () {
+      this.closeRegister()
+      this.$router.push('/register')
+    },
     login_auth (provider) {
-      const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
+      const url = 'https://github.com/login/oauth/authorize?client_id=&scope=user'
       const popupOptions = { width: 1020, height: 618 }
       const redirect = this.redirect_uri
       this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
@@ -129,7 +107,7 @@ export default {
       })
     },
     register_auth (provider) {
-      const url = 'https://github.com/login/oauth/authorize?client_id={}&scope=user'
+      const url = 'https://github.com/login/oauth/authorize?client_id=&scope=user'
       const popupOptions = { width: 1020, height: 618 }
       const redirect = this.redirect_uri
       this.oauthPopup = new OAuthPopup(url, provider, popupOptions)
@@ -148,9 +126,6 @@ export default {
     view (item) {
       this.$router.push({ name: 'PlanetView', query: { name: item } })
     },
-    setUp () {
-      this.setIsOpen = true
-    },
     notify () {
       api.notification().then((res) => {
         const d = res.data
@@ -162,9 +137,6 @@ export default {
     },
     closeRegister () {
       this.registerIsOpen = false
-    },
-    sendFeedback () {
-      // TODO
     },
     update (data) {
       const d = new Date()
@@ -211,74 +183,18 @@ export default {
   background-color rgba(0,0,0,0.95)
   position relative
   font-family 'Ubuntu'
-.user
-  position fixed
-  top 50%
-  left 0
-  width 120px
-  height 120px
-  transform translate3d(0, -50%, 0)
-  background-color #1B0033
-  box-shadow 0 2px 16px #0008
-  color #FFF
-  text-align center
-  box-sizing border-box
-  padding 24px 14px
-  z-index 99
-  cursor pointer
-  transition 1s
-  .name
-    line-height 22px
-    font-size 16px
-    margin 0 0 14px
-  .posi, .id
-    line-height 18px
-    font-size 12px
-    margin 0
-  .login
-    line-height 72px
-    font-size 16px
-    margin 0
-.user-open
-  left 80%
-  transform translate3d(0, -50%, 0) scale(1.5)
-  box-shadow none
-.user-hide
-  transform translate3d(-200%, -50%, 0)
-.ranking
-  position fixed
-  top 50%
-  right 0
-  width 120px
-  height 120px
-  transform translate3d(0, -50%, 0)
-  background-color #1B0033
-  box-shadow 0 2px 16px #0008
-  color #FFF
-  text-align center
-  box-sizing border-box
-  padding 24px
-  z-index 70
-  line-height 72px
-  cursor pointer
-  transition 1s
-.ranking-open
-  right 100%
-  transform translate3d(120px, -50%, 0)
-  box-shadow none
-.ranking-hide
-  transform translate3d(200%, -50%, 0)
-.back
-  position fixed
-  font-size 20px
-  top 50px
-  right 40px
-  color #fff
-  transition opacity 1s
-  cursor pointer
-.hide
-  opacity 0
-
+  .hint
+    position absolute
+    top 80%
+    left 40%
+    width 250px
+    height 50px
+    border-radius 20px
+    background-color rgba(255,255,255,1)
+    color black
+    text-align center
+    line-height 3
+    font-family Ubuntu-Medium
 .fade-enter-active, .fade-leave-active
   transition opacity 1s
 .fade-enter, .fade-leave-to
@@ -292,114 +208,6 @@ export default {
   height 100%
   background-color #000A
   z-index 80
-
-.card
-  width 800px
-  height 100%
-  background-color #FFF
-  margin 80px auto
-  border-radius 16px
-  padding 100px 120px
-  box-sizing border-box
-  position relative
-  .close
-    position absolute
-    right 30px
-    top 30px
-    cursor pointer
-    font-weight 400
-  h2
-    font-size 30px
-    margin 0 0 30px
-    text-align center
-  .intro
-    font-size 16px
-    line-height 30px
-    text-align justify
-  .number
-    font-size 24px
-    line-height 40px
-    padding-left 16px
-    background-color #F5F5F5
-    margin-bottom 30px
-  textarea
-    width 100%
-    font-size 16px
-    padding 6px 16px
-    line-height 30px
-    outline none
-    border none
-    background-color #F5F5F5
-    margin 0px
-    resize none
-    box-sizing border-box
-  .title
-    padding-left 16px
-    line-height 20px
-    margin 6px 0
-  input
-    width 100%
-    font-size 16px
-    line-height 20px
-    padding 6px 16px
-    outline none
-    border none
-    background-color #F5F5F5
-    margin 0px
-    resize none
-    box-sizing border-box
-  .build
-    position absolute
-    bottom 130px
-    left 50%
-    transform translate3d(-50%, 0, 0)
-    .button
-      width 180px
-      height 50px
-      background-color #FF0082
-      border-radius 25px
-      line-height 50px
-      text-align center
-      font-family 'Ubuntu'
-      color #FFF
-      cursor pointer
-      margin-bottom 16px
-    .set
-      background-color #62B100
-      margin-bottom 0
-    p
-      margin 0
-      line-height 18px
-      font-family 'Ubuntu'
-      text-align center
-.spy-mask
-  z-index 120
-.spy
-  position absolute
-  left 50%
-  top 60%
-  width 160px
-  transform rotate(90deg) translate3d(0,-340px,0)
-  height 70px
-  text-align center
-  line-height 50px
-  font-weight 400
-  border-radius 8px
-  background-color #ffdc00
-  cursor pointer
-.set-up
-  z-index 100
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  transform translate3d(0, 100%, 0)
-  transition transform 0.8s
-.view-show
-  transform translate3d(0, 0, 0)
-.build-mask
-  z-index 120
 .register-card
   color #fff
   position absolute
@@ -414,7 +222,7 @@ export default {
     margin auto
   li
     width 540px
-    height 200px
+    height 240px
     border solid 1px #fff4
     border-radius 6px
     margin 10px auto
@@ -422,7 +230,6 @@ export default {
     box-sizing border-box
     background-image linear-gradient(left, #301B0F, #1E0618)
     &:first-child
-      height 240px
       background-image linear-gradient(left, #2E2828, #000000)
 //    &:last-child
 //      background-color linear-gradient(left, #301B0F, #1E0618)

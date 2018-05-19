@@ -4,7 +4,7 @@
       <div class="icon">
         <img width="32" height="32" :src="require('@/assets/symbols-settle-in-galaxy.png')" alt="">
       </div>
-      <span class="slogan">Settle in Galaxy</span>
+      <span class="slogan">Login / Register</span>
     </div>
   </div>
 </template>

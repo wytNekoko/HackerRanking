@@ -7,6 +7,8 @@
     </div>
     <div class="main-box">
       <h1>{{pinfo.name}}</h1>
+      <h3>Keywords</h3>
+      <p>{{pinfo.keywords}}</p>
       <p>{{pinfo.description}}</p>
       <h3>Github url</h3>
       <span>{{pinfo.github_url}}</span>
@@ -17,7 +19,7 @@
     </div>
     <div class="num-info">
       <div class="num">{{pinfo.builder_num}}</div>
-      <p>Builders</p>
+      <p>Investments</p>
       <div class="num">{{pinfo.dust_num}}</div>
       <p>Dusts</p>
       <!--<div class="num">#{{pinfo.rank}}</div>-->
@@ -26,17 +28,17 @@
     </div>
     <div class="build-btn" @click="openBuild">
       <img width="60" height="60" :src="require('@/assets/symbols-build2.png')">
-      <h1>Build this planet</h1>
+      <h1>Invest this project</h1>
       <p>{{time_left}} days remained</p>
     </div>
     <div class="spy-btn" @click="spyView">
       <img width="33" height="40" :src="require('@/assets/symbols-spy.png')">
-      <p>Spy the team</p>
+      <p>Contact the team</p>
     </div>
     <div class="spy-box" v-if="sent || paybox">
       <div class="pay" v-if="paybox">
         <p class="msg">{{getMsg}}</p>
-        <div class="btn" @click="spyPay"><span>Pay 1000 Dusts</span></div>
+        <div class="btn" @click="spyPay"><span>Pay 100 Dusts</span></div>
         <div class="cancel" @click="cancel">Cancel</div>
       </div>
       <div class="sent" v-if="sent">
@@ -74,7 +76,7 @@ export default {
       leaderEmail: null,
       closeUnable: true,
       buildIsOpen: false,
-      buildNum: 88,
+      buildNum: 10,
       sentMsg: 'This Captain’s information will be ' +
     'sent to you as soon as the information is collected.\n' +
     'Please pay attention to your Receiving Station.',
@@ -207,7 +209,7 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          console.log('success')
+          console.log('Invest success')
           this.$emit('notify')
           this.sent = true
           this.paybox = false
