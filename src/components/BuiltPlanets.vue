@@ -5,13 +5,13 @@
       <img @click="back" width="40px" height="40px" :src="require('@/assets/symbols-backarrow.png')">
       <div class="content">
         <h1>Invested Projects</h1>
-        <ul>
-          <li v-for="item in contributed" :key="contributed.indexOf(item)">
-            <span class="name">{{item.name}}</span>
-            <span class="desc">{{item.description}}</span>
-            <span class="desc">{{item.reward_dust}} Gift gained</span>
-          </li>
-        </ul>
+        <table>
+          <tr v-for="item in contributed" :key="contributed.indexOf(item)">
+            <td class="name">{{item.name}}</td>
+            <td class="desc">{{item.description}}</td>
+            <td class="gift">{{item.reward_dust}} Gift gained</td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -27,7 +27,13 @@ export default {
       contributed: []
     }
   },
-  created() {
+  created () {
+    if (window.cookieStorage.getItem('token')) {
+      this.user = {
+        name: window.cookieStorage.getItem('name'),
+        id: window.cookieStorage.getItem('id')
+      }
+    }
     api.builded_planets(this.user.name).then((res) => {
       const d = res.data
       if (d.errcode) {
@@ -84,12 +90,23 @@ export default {
         padding 3% 0
         border-top: 1px solid #979797;
         border-bottom: 1px solid #979797;
-      li
-        border-bottom: 0.5px solid rgba(255,255,255,0.20)
+      table
+        table-layout fixed
+      tr
+        width 100%
         .name
           font-size 20px
           margin-left 30px
+          width 20%
+          border-bottom 0.5px solid rgba(255,255,255,0.20)
         .desc
-          font-size 12px
+          font-size 14px
           margin-left 20px
+          width 73%
+          overflow hidden
+          border-bottom 0.5px solid rgba(255,255,255,0.20)
+        .gift
+          font-size 14px
+          width 20%
+          border-bottom 0.5px solid rgba(255,255,255,0.20)
 </style>

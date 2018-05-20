@@ -7,9 +7,12 @@
     <div class="card">
         <p class="bigtitle">Create a new project</p>
         <input type="text" class="name" v-model="setUpInfo.name">
+        <input type="text" class="text" v-model="setUpInfo.email">
+        <p class="title">Keywords</p>
         <div class="inline">
-          <input type="text" class="text" v-model="setUpInfo.email">
-          <input type="text" class="text" v-model="setUpInfo.keywords">
+          <input type="text" class="text" v-model="keys[0]">
+          <input type="text" class="text" v-model="keys[1]">
+          <input type="text" class="text" v-model="keys[2]">
         </div>
         <p class="title">Description</p>
         <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
@@ -17,7 +20,7 @@
         <input type="text" class="text" v-model="setUpInfo.demo">
         <p class="title">Github URL</p>
         <input type="text" class="text" v-model="setUpInfo.git">
-        <p class="title">Team Introduction</p>
+        <p class="title">Team Introduction (Optional)</p>
         <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
@@ -40,11 +43,14 @@ export default {
         demo: 'http://',
         git: 'http://',
         team: ''
-      }
+      },
+      keys: ['Keyword1', 'Keyword2','Keyword3']
     }
   },
   methods: {
     setupPlanet () {
+      this.setUpInfo.keywords = this.keys.join(' ')
+      console.log(this.setUpInfo.keywords)
       api.setup_planet(this.setUpInfo).then((res) => {
         const d = res.data
         if (d.errcode) {
@@ -146,7 +152,7 @@ export default {
     left 22.2%
     top 13%
     width 55.6%
-    height 80%
+    height 90%
     padding 0 5%
     box-sizing border-box
     box-shadow: 0 3px 12px 0 rgba(0,0,0,0.20);
@@ -188,16 +194,16 @@ export default {
       width 101.5%
       >input
         height 40px
-        width 60%
+        width 50%
         background: rgba(0,0,0,0.57);
         border-radius: 3px;
         border 0
         font-size 14px
         color rgba(255,255,255,0.30)
         text-align justify
-        &:first-child
-          margin-right 10px
-          width 40%
+        margin-right 10px
+        &:last-child
+          margin-right 0
     .name
       font-size 14px
       color rgba(255,255,255,0.30)

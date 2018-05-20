@@ -5,8 +5,8 @@
       <p class="t">Hacker Ranking</p>
     </div>
     <div class="head"></div>
-    <div class="project" @click="projects" :class="{'on': this.$route.name === 'HelloPage'}" >Projects</div>
-    <div class="hackers" @click="hackers" :class="{'on': this.$route.name === 'Hunter'}">Hackers</div>
+    <div class="project" @click="projects" :class="{'on': this.$route.name === 'ProjectsRanking'}" >Projects</div>
+    <div class="hackers" @click="hackers" :class="{'on': this.$route.name === 'HackersRanking'}">Hackers</div>
   </div>
 </template>
 
@@ -48,12 +48,6 @@ export default {
     left 270px
     z-index 5
     cursor pointer
-    .on
-      background: rgba(255,255,255,0.20);
-      border-radius: 65px;
-      width 100px
-      height 30px
-      z-index 4
   .hackers
     position absolute
     color white
@@ -63,12 +57,8 @@ export default {
     left 370px
     z-index 5
     cursor pointer
-    .on
-      background: rgba(255,255,255,0.20);
-      border-radius: 65px;
-      width 100px
-      height 30px
-      z-index 4
+  .on
+    font-size 18px
   .logo
     position absolute
     left 10%
