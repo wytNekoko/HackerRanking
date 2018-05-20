@@ -48,10 +48,10 @@
         <div class="btn" v-if="!closeUnable" @click="cancel" style="cursor: pointer;"><span>Close</span></div>
       </div>
     </div>
-    <div class="next">
-      <img width="20" height="20" :src="require('@/assets/symbols-backarrow.png')">
-      <p>Next Project:</p>
-    </div>
+    <!--<div class="next">-->
+      <!--<img width="20" height="20" :src="require('@/assets/symbols-backarrow.png')">-->
+      <!--<p>Next Project:</p>-->
+    <!--</div>-->
     <div class="mask" v-if="buildIsOpen">
       <div class="build-card">
         <span class="close" @click="closeBuild">X</span>
@@ -166,7 +166,7 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          alert('Build success')
+          alert('Invest success')
           this.buildIsOpen = false
         }
       })
@@ -347,7 +347,6 @@ export default {
     border-radius: 5.84px;
     width 260px
     height 120px
-    cursor pointer
     img
       position absolute
       right 10px

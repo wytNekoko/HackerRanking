@@ -42,7 +42,8 @@ export default {
       demo_url: option.demo,
       github_url: option.git,
       team_intro: option.team,
-      email: option.email
+      email: option.email,
+      keywords: option.keywords
     }, {
       headers: {
         'content-type': 'application/json',

@@ -2,6 +2,10 @@
   <div id="profile">
     <img class="bg" :src="require('@/assets/2.png')">
     <p id="title">Control Center</p>
+    <div class="back-btn" @click="back">
+      <img width="18px" height="18px" :src="require('@/assets/symbols-backarrow.png')">
+      <span>Back to Ranking</span>
+    </div>
     <div class="container">
           <div class="left">
             <img width="100" height="100" :src="require('@/assets/symbols-profile.png')">
@@ -55,6 +59,9 @@ export default {
     })
   },
   methods: {
+    back () {
+      this.$router.push('/')
+    },
     logout () {
       api.logout()
       this.$emit('update')
@@ -109,12 +116,35 @@ export default {
     font-size 30px
     letter-spacing 0
     color white
+  .back-btn
+    position absolute
+    left 80px
+    top 20%
+    width 145px
+    height 40px
+    background rgba(31,19,18,0.23)
+    border: 0.5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 1px 23px 0 rgba(0,0,0,0.36);
+    border-radius: 8px;
+    display flex
+    cursor pointer
+    >img
+      position absolute
+      left 10px
+      top 10px
+    >span
+      position absolute
+      left 30px
+      top 12px
+      font-size 14px
+      color white
+      line-height 14px
 .container
   position absolute
   top 17.5%
-  height 90%
+  height 60%
   width 67.1%
-  left 16.4%
+  left 20%
   z-index 100
   color #FFF
   background: rgba(31,19,18,0.23);

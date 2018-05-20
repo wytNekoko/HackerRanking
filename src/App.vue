@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <router-view @view="view" @update="update" @notify="notify"/>
+      <router-view @view="view" @update="update" @notify="notify" @got="got"/>
     </transition>
     <fringe></fringe>
     <div class="mask" v-if="registerIsOpen">
@@ -25,7 +25,9 @@
         </ul>
       </div>
     </div>
-    <div class="hint" v-if="showHint">You can get 10 Gift today</div>
+    <div class="hint" v-if="showHint">You can get 10 Gift today
+      <img width="10" height="10" :src="require('@/assets/symbols-close.png')" @click="closeHint">
+    </div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
     <settle-bar v-else @register="openRegister"></settle-bar>
     <receiving-station :notifications="notifications"></receiving-station>
@@ -57,21 +59,29 @@ export default {
       user: null,
       registerIsOpen: false,
       git_state: '',
-      redirect_uri: 'https://dust.dorahacks.com/',
+      redirect_uri: 'https://ranking.dorahacks.com/',
       notifications: [],
-      showHint: true
+      showHint: true,
     }
   },
   created () {
     if (window.cookieStorage.getItem('token')) {
       this.user = {
         name: window.cookieStorage.getItem('name'),
-        id: window.cookieStorage.getItem('id')
+        id: window.cookieStorage.getItem('id'),
       }
+      this.showHint = false
     }
     this.notify()
   },
   methods: {
+    got () {
+      console.log('got')
+      this.showHint = false
+    },
+    closeHint () {
+      this.showHint = false
+    },
     makestate () {
       let text = '';
       const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -184,17 +194,21 @@ export default {
   position relative
   font-family 'Ubuntu'
   .hint
-    position absolute
-    top 80%
-    left 40%
-    width 250px
-    height 50px
-    border-radius 20px
-    background-color rgba(255,255,255,1)
-    color black
-    text-align center
-    line-height 3
-    font-family Ubuntu-Medium
+    position: absolute;
+    top: 80%;
+    left: 42%;
+    width: 238px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    line-height: 2.5;
+    font-family: Ubuntu-Medium;
+    img
+      background-color black
+      border-radius 10px
+      cursor pointer
 .fade-enter-active, .fade-leave-active
   transition opacity 1s
 .fade-enter, .fade-leave-to

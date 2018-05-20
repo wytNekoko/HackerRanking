@@ -30,6 +30,7 @@ export default {
     },
     getDust () {
       // console.log(window.cookieStorage.getItem('token'))
+      this.$emit('got')
       api.get_dust().then((res) => {
         const d = res.data
         if (d.errcode) {
@@ -37,10 +38,6 @@ export default {
         } else if (parseInt(d, 10)) {
           console.log(d)
           alert('10 Gift got.')
-          // this.numActive = true
-          // setTimeout(() => {
-          //   this.numActive = false
-          // }, 1000)
         } else {
           alert(d)
         }

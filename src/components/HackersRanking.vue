@@ -8,7 +8,7 @@
         <h4>Ranking</h4>
         <h4>Hacker</h4>
         <h4>Own Projects</h4>
-        <h4>Total Gift</h4>
+        <h4>Total Project Gift</h4>
       </div>
       <div class="size" v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" > <!-- el1  -->
         <div> <!-- el2 -->
@@ -23,8 +23,9 @@
         <!-- dragger will be automatically added here -->
       </div>
     </div>
+    <div class="hint-scroll" v-if="showHint">Scroll down to view more</div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
-    <tool-bar @feedback="openFeedback"></tool-bar>
+    <tool-bar @feedback="openFeedback" @got="got"></tool-bar>
   </div>
 </template>
 
@@ -40,6 +41,7 @@ export default {
     return {
       feedbackIsOpen: false,
       hackers: null,
+      showHint: true,
       hint: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
     }
   },
@@ -48,8 +50,14 @@ export default {
       // console.log(res)
       this.hackers = res.data
     })
+    setTimeout(() => {
+      this.showHint = false
+    }, 3000)
   },
   methods: {
+    got () {
+      this.$emit('got')
+    },
     openFeedback () {
       this.feedbackIsOpen = true
     },
@@ -83,7 +91,7 @@ export default {
       color rgba(255,255,255,0.6)
   .ctn-box
     position absolute
-    top 120px
+    top 150px
     left 230px
     height 505px
     width 1000px
@@ -93,6 +101,8 @@ export default {
       h4
         margin-right 70px
         margin-left 60px
+        &:last-child
+          margin-left 10px
     .size
       height 500px
       width 800px
@@ -105,12 +115,24 @@ export default {
         text-align center
   .slogan
     position absolute
-    left 350px
-    top 70px
-    width 600px
-    height 150px
-    font-size 15px
+    left: 250px;
+    top: 70px;
+    width: 800px;
+    height: 150px;
+    font-size: 20px;
+    text-align: center
+    color rgba(255,255,255,0.5)
+  .hint-scroll
+    position absolute
+    top 40%
+    left 40%
+    width 200px
+    height 35px
+    background-color rgba(255,255,255,0.5)
+    color black
     text-align center
+    line-height 2
+    border-radius 8px
   .bg
     width 100%
     height 100%

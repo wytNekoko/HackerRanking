@@ -7,8 +7,10 @@
     <div class="card">
         <p class="bigtitle">Create a new project</p>
         <input type="text" class="name" v-model="setUpInfo.name">
-        <p class="title">Email</p>
-        <input type="text" class="text" v-model="setUpInfo.email">
+        <div class="inline">
+          <input type="text" class="text" v-model="setUpInfo.email">
+          <input type="text" class="text" v-model="setUpInfo.keywords">
+        </div>
         <p class="title">Description</p>
         <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
         <p class="title">Demo URL</p>
@@ -33,7 +35,8 @@ export default {
       setUpInfo: {
         name: 'Project Name',
         description: 'e.g. X service allows users to do sth or ...',
-        email: '',
+        keywords: 'Keywords',
+        email: 'Email',
         demo: 'http://',
         git: 'http://',
         team: ''
@@ -53,9 +56,11 @@ export default {
               this.setUpInfo[i] = 'Name'
             } else if (i === 'description') {
               this.setUpInfo[i] = 'e.g. X service that allows users to do sth or ...'
-            } else {
-              this.setUpInfo[i] = ''
-            }
+            } else if (i === 'keywords') {
+              this.setUpInfo[i] = 'Keywords'
+            } else if (i === 'email') {
+              this.setUpInfo[i] = 'Email'
+            } else this.setUpInfo[i] = ''
           }
         }
       })
@@ -149,7 +154,7 @@ export default {
     background rgba(19,29,64,0.65)
     .text
       padding-left 1.5%
-    input
+    >input
       height 40px
       width 100%
       background: rgba(0,0,0,0.57);
@@ -178,6 +183,21 @@ export default {
       letter-spacing: 0;
       text-align: justify;
       line-height: 5px;
+    .inline
+      display flex
+      width 101.5%
+      >input
+        height 40px
+        width 60%
+        background: rgba(0,0,0,0.57);
+        border-radius: 3px;
+        border 0
+        font-size 14px
+        color rgba(255,255,255,0.30)
+        text-align justify
+        &:first-child
+          margin-right 10px
+          width 40%
     .name
       font-size 14px
       color rgba(255,255,255,0.30)
