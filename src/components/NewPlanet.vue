@@ -15,7 +15,7 @@
           <input type="text" class="text" v-model="keys[2]">
         </div>
         <p class="title">Description</p>
-        <textarea rows="4" class="text" v-model="setUpInfo.description"></textarea>
+        <textarea rows="6" class="text" v-model="setUpInfo.description"></textarea>
         <p class="title">Demo URL</p>
         <input type="text" class="text" v-model="setUpInfo.demo">
         <p class="title">Github URL</p>
@@ -36,15 +36,15 @@ export default {
   data () {
     return {
       setUpInfo: {
-        name: 'Project Name',
-        description: 'e.g. X service allows users to do sth or ...',
+        name: 'Project Name (<= 30 characters)',
+        description: 'What problem we are committed to solving. What approach do we take. What we have already done.',
         keywords: 'Keywords',
         email: 'Email',
         demo: 'http://',
         git: 'http://',
         team: ''
       },
-      keys: ['Keyword1', 'Keyword2','Keyword3']
+      keys: ['<=15char', '<=15char','<=15char']
     }
   },
   methods: {

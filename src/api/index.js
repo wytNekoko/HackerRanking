@@ -89,8 +89,8 @@ export default {
       }
     })
   },
-  notification () {
-    return axios.get(`${url}/notifications`, {
+  notification (uid) {
+    return axios.get(`${url}/notifications/${uid}`, {
       headers: {
         'X-Auth-Token': window.cookieStorage.getItem('token')
       }

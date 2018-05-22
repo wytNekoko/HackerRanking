@@ -23,7 +23,9 @@
         <!-- dragger will be automatically added here -->
       </div>
     </div>
-    <div class="hint-scroll" v-if="showHint">Scroll down to view more</div>
+    <div class="down-arrow">
+      <img :src="require('@/assets/symbols-downarrow.png')" width="20" height="20">
+    </div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar @feedback="openFeedback" @got="got"></tool-bar>
   </div>
@@ -79,8 +81,13 @@ export default {
   width 100%
   height 100%
   overflow hidden
-  font-family Ubuntu-Medium
+  font-family Ubuntu
   color white
+  .down-arrow
+    position absolute
+    top 85%
+    left 48%
+    animation twinkling 1s infinite ease-in-out
   .loading
     position absolute
     top 50%
@@ -91,48 +98,39 @@ export default {
       color rgba(255,255,255,0.6)
   .ctn-box
     position absolute
-    top 150px
-    left 230px
-    height 505px
-    width 1000px
+    top 130px
+    left 20%
+    height 65%
+    width 80%
     overflow hidden
     .inline
       display flex
       h4
-        margin-right 70px
-        margin-left 60px
+        margin-right 8%
+        margin-left 4.5%
         &:last-child
           margin-left 10px
     .size
-      height 500px
-      width 800px
+      height 100%
+      width 100%
       td
         border-bottom 1px solid rgba(255,255,255,0.20);
         cursor pointer
-        width 200px
+        width 26.5%
         font-size 16px
         line-height 3
         text-align center
+        &:first-child
+          width 160px
   .slogan
     position absolute
-    left: 250px;
+    left: 20%;
     top: 70px;
-    width: 800px;
-    height: 150px;
+    width: 60%;
+    height: 10%;
     font-size: 20px;
     text-align: center
     color rgba(255,255,255,0.5)
-  .hint-scroll
-    position absolute
-    top 40%
-    left 40%
-    width 200px
-    height 35px
-    background-color rgba(255,255,255,0.5)
-    color black
-    text-align center
-    line-height 2
-    border-radius 8px
   .bg
     width 100%
     height 100%
@@ -172,4 +170,9 @@ export default {
         background-color rgba(48, 121, 244,.5)
         margin 0px
         height 100%
+@keyframes twinkling
+  0%
+    opacity:0
+  100%
+    opacity:1
 </style>

@@ -3,10 +3,10 @@
     <img class="bg" :src="require('@/assets/4.png')">
     <div class="slogan" v-html="slogan"></div>
     <div class="loading" v-if="!projects"><span>Loading...</span></div>
-    <div class="hint-invest" v-if="showHint">Do invest to share bonus</div>
+    <div class="arrow-box" v-if="projects&showHint">Do invest to share bonus</div>
     <div class="ctn-box">
       <div class="inline">
-        <h4>Ranking</h4>
+        <h4>Monthly Ranking</h4>
         <h4>Project</h4>
         <h4>Total Gift</h4>
         <h4>Keywords</h4>
@@ -15,11 +15,12 @@
         <div> <!-- el2 -->
           <!-- your scrollable content -->
           <tr v-for="item in projects" :key="projects.indexOf(item)">
+            <p v-if="projects.indexOf(item)<=9">+{{bonus[projects.indexOf(item)]}} Gift</p>
             <td @click="view(item)">{{item.rank}}</td>
             <td @click="view(item)">{{item.name}}</td>
             <td @click="view(item)">{{item.dust_num}}</td>
             <td @click="view(item)">{{item.keywords}}</td>
-            <div class="invest-btn" @click="invest(item.name)">invest</div>
+            <div class="invest-btn" @click="invest(item.name)">Invest</div>
           </tr>
         </div>
         <!-- dragger will be automatically added here -->
@@ -33,7 +34,9 @@
         <div class="button" @click="confirmBuild()">Confirm</div>
       </div>
     </div>
-    <div class="hint-scroll" v-if="showHint">Scroll down to view more</div>
+    <div class="down-arrow" v-if="projects">
+      <img v-if="projects.length>8" :src="require('@/assets/symbols-downarrow.png')" width="20" height="20">
+    </div>
     <feedback v-if="feedbackIsOpen" @closeFeedback="closeFeedback"></feedback>
     <tool-bar @feedback="openFeedback" @got="got"></tool-bar>
   </div>
@@ -55,6 +58,7 @@ export default {
       buildIsOpen: false,
       buildNum: 10,
       investedName: null,
+      bonus: [5000, 4000, 3000, 1500, 1500, 1000, 1000, 1000, 1000, 1000],
       slogan: 'Upload top project to win bonus. Invest potential project to share bonus.<br>The only way to get Gift which is the limited cryptocurrency.'
     }
   },
@@ -131,8 +135,32 @@ export default {
   width 100%
   height 100%
   overflow hidden
-  font-family Ubuntu-Medium
+  font-family Ubuntu
   color white
+  .arrow-box
+    position: absolute;
+    top: 169px;
+    right: 154px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    height: 34px;
+    width: 213px;
+    line-height: 2.2;
+    text-align: center;
+    color: black;
+    font-size 15px
+    &:after
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: rgba(255,255,255,0.8);
+      border-width: 6px;
+      margin-left: -30px;
   .hint-invest
     position absolute
     top 214px
@@ -152,58 +180,67 @@ export default {
       font-size 40px
       text-align center
       color rgba(255,255,255,0.6)
+  .down-arrow
+    position absolute
+    top 85%
+    left 47%
+    animation twinkling 1s infinite ease-in-out
   .ctn-box
     position absolute
-    top 150px
-    left 230px
-    height 455px
-    width 1000px
+    top 130px
+    left 10%
+    height 65%
+    width 80%
     overflow hidden
     table-layout automatic
     .inline
       display flex
+      margin-left 8%
       h4
-        margin-right 42px
-        margin-left 60px
+        margin-right 12%
+        &:first-child
+          margin-right 8%
+        &:last-child
+          margin-left 5%
     .size
-      height 450px
-      width 800px
+      height 90%
+      width 100%
+      p
+        color red
+        margin-right 0.05%
       td
         border-bottom 1px solid rgba(255,255,255,0.20);
         cursor pointer
-        width 180px
+        width 24%
         font-size 16px
         line-height 3
         text-align center
+        &:first-of-type
+          width 10%
+        &:nth-child(4)
+          width 10%
+        &:last-of-type
+          text-align center
+          width 35%
       .invest-btn
         text-align center
-        width: 100px;
-        height: 35px;
+        margin-left 1%
+        width: 100px
+        height: 35px
         line-height: 2;
-        background #699d00
+        background #4D9003
         border-radius 5px
         color white
         cursor pointer
   .slogan
     position absolute
-    left: 250px;
+    left: 20%;
     top: 70px;
-    width: 800px;
-    height: 150px;
+    width: 60%;
+    height: 10%;
     font-size: 20px;
     text-align: center
     color rgba(255,255,255,0.5)
-  .hint-scroll
-    position absolute
-    top 40%
-    left 40%
-    width 200px
-    height 35px
-    background-color rgba(255,255,255,0.5)
-    color black
-    text-align center
-    line-height 2
-    border-radius 8px
   .bg
     width 100%
     height 100%
@@ -295,5 +332,9 @@ export default {
         background-color rgba(48, 121, 244,.5)
         margin 0px
         height 100%
-
+@keyframes twinkling
+  0%
+    opacity:0
+  100%
+    opacity:1
 </style>

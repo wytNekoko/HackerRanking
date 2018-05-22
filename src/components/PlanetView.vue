@@ -5,22 +5,26 @@
       <img width="18px" height="18px" :src="require('@/assets/symbols-backarrow.png')">
       <span>Back to Ranking</span>
     </div>
-    <div class="main-box">
-      <h1>{{pinfo.name}}</h1>
-      <h3>Keywords</h3>
-      <p>{{pinfo.keywords}}</p>
-      <h3>Description</h3>
-      <p>{{pinfo.description}}</p>
-      <h3>Github url</h3>
-      <span>{{pinfo.github_url}}</span>
-      <h3>Demo url</h3>
-      <p>{{pinfo.demo_url}}</p>
-      <h3>Team information</h3>
-      <p>{{pinfo.team_intro}}</p>
+        <div class="main-box">
+          <div v-bar="{ preventParentScroll: true, scrollThrottle: 30,}" >
+            <div>
+        <h1>{{pinfo.name}}</h1>
+        <h3>Keywords</h3>
+        <p>{{pinfo.keywords}}</p>
+        <h3>Description</h3>
+            <p>{{pinfo.description}}</p>
+        <h3>Github url</h3>
+        <span>{{pinfo.github_url}}</span>
+        <h3>Demo url</h3>
+        <p>{{pinfo.demo_url}}</p>
+        <h3>Team information</h3>
+          <p>{{pinfo.team_intro}}</p>
+        </div>
+      </div>
     </div>
     <div class="num-info">
       <div class="num">{{pinfo.builder_num}}</div>
-      <p>Investments</p>
+      <p>Investors</p>
       <div class="num">{{pinfo.dust_num}}</div>
       <p>Gift</p>
       <!--<div class="num">#{{pinfo.rank}}</div>-->
@@ -88,6 +92,12 @@ export default {
     }
   },
   created () {
+    if (window.cookieStorage.getItem('token')) {
+      this.user = {
+        name: window.cookieStorage.getItem('name'),
+        id: window.cookieStorage.getItem('id'),
+      }
+    }
     api.planets_one(this.$route.query.name).then((res) => {
       const d = res.data
       if (d.errcode) {
@@ -210,8 +220,8 @@ export default {
         if (d.errcode) {
           alert(d.errmsg)
         } else {
-          console.log('Invest success')
-          this.$emit('notify')
+          console.log('success')
+          this.$emit('notify', this.user.id)
           this.sent = true
           this.paybox = false
         }
@@ -260,16 +270,17 @@ export default {
     left 230px
     top 100px
     width 620px
-    height 597px
+    height 800px
     font-family PingFangSC-Regular
+    border-radius: 5.84px
     h1
       font-family PingFangSC-Medium
-      margin 10% 10% 6% 10%
+      margin 30px 10% 20px 10%
       font-size 24px
     h3
       color #9B9B9B
       font-size 14px
-      margin 5% auto 0 10%
+      margin 10px auto 0 10%
     span
       margin 0 60px
       font-size 14px
@@ -453,4 +464,40 @@ export default {
   height 100%
   background-color #000A
   z-index 80
+.vb
+  & > .vb-dragger
+    z-index 5
+    width 12px
+    right 0
+    & > .vb-dragger-styler
+      -webkit-backface-visibility hidden
+      backface-visibility hidden
+      -webkit-transform rotate3d(0,0,0,0)
+      transform rotate3d(0,0,0,0)
+      -webkit-transition background-color 100ms ease-out,
+      margin 100ms ease-out,
+      height 100ms ease-out
+      transition background-color 100ms ease-out,
+      margin 100ms ease-out,
+      height 100ms ease-out
+      background-color rgba(48, 121, 244,.1)
+      margin 5px 5px 5px 0
+      border-radius 20px
+      height calc(100% - 10px)
+      display block
+    &:hover
+      & > .vb-dragger-styler
+        background-color rgba(48, 121, 244,.5)
+        margin 0px
+        height 100%
+  &.vb-scrolling-phantom
+    & > .vb-dragger
+      & > .vb-dragger-styler
+        background-color rgba(48, 121, 244,.3)
+  &.vb-dragging
+    & > .vb-dragger
+      & > .vb-dragger-styler
+        background-color rgba(48, 121, 244,.5)
+        margin 0px
+        height 100%
 </style>

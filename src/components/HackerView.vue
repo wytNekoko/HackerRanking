@@ -8,10 +8,6 @@
     <div class="container">
       <div class="left">
         <img width="100" height="100" :src="require('@/assets/symbols-profile.png')">
-        <div class="total-dust">{{property}}</div>
-        <div class="line">
-          <h2 style="height:20px width:93px">Total Gift</h2>
-          <img width="10" height="10" :src="require('@/assets/symbols-dusts.png')"></div>
         <!--<div class="button" @click="withdraw">withdraw</div>-->
       </div>
       <div class="right">

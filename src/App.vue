@@ -25,7 +25,7 @@
         </ul>
       </div>
     </div>
-    <div class="hint" v-if="showHint">You can get 10 Gift today
+    <div class="hint" v-if="showHint">You can get 10 Gift today.
       <img width="10" height="10" :src="require('@/assets/symbols-close.png')" @click="closeHint">
     </div>
     <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
@@ -72,7 +72,7 @@ export default {
       }
       this.showHint = false
     }
-    this.notify()
+    this.notify(this.user.id)
   },
   methods: {
     got () {
@@ -136,8 +136,8 @@ export default {
     view (item) {
       this.$router.push({ name: 'PlanetView', query: { name: item } })
     },
-    notify () {
-      api.notification().then((res) => {
+    notify (uid) {
+      api.notification(uid).then((res) => {
         const d = res.data
         this.notifications = d
       })
@@ -160,7 +160,7 @@ export default {
         window.cookieStorage.setItem('token', data.auth_token, {expires: d})
         window.cookieStorage.setItem('name', data.user_info.username, {expires: d})
         window.cookieStorage.setItem('id', data.user_info.id, {expires: d})
-        this.notify()
+        this.notify(this.user.id)
       } else {
         this.$router.push('/')
         this.user = null
@@ -196,8 +196,8 @@ export default {
   .hint
     position: absolute;
     top: 80%;
-    left: 42%;
-    width: 238px;
+    left: 40%;
+    width: 255px;
     height: 40px;
     border-radius: 20px;
     background-color: #fff;
@@ -243,9 +243,11 @@ export default {
     padding 25px
     box-sizing border-box
     background-image linear-gradient(left, #301B0F, #1E0618)
+    background-image -webkit-gradient(left, #301B0F, #1E0618)
     &:first-child
       background-image linear-gradient(left, #2E2828, #000000)
-//    &:last-child
+      background-image -webkit-gradient(left, #2E2828, #000000)
+  //    &:last-child
 //      background-color linear-gradient(left, #301B0F, #1E0618)
   .button
     width 420px
@@ -265,6 +267,7 @@ export default {
     border solid 1px #fff4
     border-radius 6px
     background-image linear-gradient(left, #2E2828, #000000)
+    background-image -webkit-gradient(left, #2E2828, #000000)
     cursor pointer
     span
       width 20px
