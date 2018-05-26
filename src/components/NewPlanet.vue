@@ -6,21 +6,38 @@
     <div class="remind">We don’t save drafts, so make sure the content you’re edting is copied at somewhere safe.</div>
     <div class="card">
         <p class="bigtitle">Create a new project</p>
-        <input type="text" class="name" v-model="setUpInfo.name">
-        <input type="text" class="text" v-model="setUpInfo.email">
+        <input type="text" class="name" v-model="setUpInfo.name" @change="checkName">
+        <input type="text" class="email" v-model="setUpInfo.email" @change="checkEmail">
+        <span :style="{'color': status[0] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[0]}}</span>
+        <span class="checkemail" :style="{'color': status[1] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[1]}}</span>
         <p class="title">Keywords</p>
-        <div class="inline">
-          <input type="text" class="text" v-model="keys[0]">
-          <input type="text" class="text" v-model="keys[1]">
-          <input type="text" class="text" v-model="keys[2]">
-        </div>
+        <!--<div class="inline">-->
+          <!--<input type="text" class="text" v-model="keys[0]" @change="checkKeywords(0)">-->
+          <!--<input type="text" class="text" v-model="keys[1]" @change="checkKeywords(1)">-->
+          <!--<input type="text" class="text" v-model="keys[2]" @change="checkKeywords(2)">-->
+        <!--</div>-->
+      <table style="table-layout: fixed">
+        <tr>
+          <td><input type="text" class="text" v-model="keys[0]" @change="checkKeywords(0)"></td>
+          <td><input type="text" class="text" v-model="keys[1]" @change="checkKeywords(1)"></td>
+          <td><input type="text" class="text" v-model="keys[2]" @change="checkKeywords(2)"></td>
+        </tr>
+        <tr>
+          <td :style="{'color': status[2] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[2]}}</td>
+          <td :style="{'color': status[3] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[3]}}</td>
+          <td :style="{'color': status[4] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[4]}}</td>
+        </tr>
+      </table>
+
         <p class="title">Description</p>
         <textarea rows="6" class="text" v-model="setUpInfo.description"></textarea>
         <p class="title">Demo URL</p>
-        <input type="text" class="text" v-model="setUpInfo.demo">
+        <input type="text" class="text" v-model="setUpInfo.demo" @change="checkDemo">
+        <span :style="{'color': status[5] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[5]}}</span>
         <p class="title">Github URL</p>
-        <input type="text" class="text" v-model="setUpInfo.git">
-        <p class="title">Team Introduction (Optional)</p>
+        <input type="text" class="text" v-model="setUpInfo.git" @change="checkGit">
+        <span :style="{'color': status[6] === 'OK' ? '#00BF08' : '#FF2100'}">{{status[6]}}</span>
+      <p class="title">Team Introduction (Optional)</p>
         <textarea rows="5" class="text" v-model="setUpInfo.team"></textarea>
       </div>
   </div>
@@ -36,7 +53,7 @@ export default {
   data () {
     return {
       setUpInfo: {
-        name: 'Project Name (<= 30 characters)',
+        name: 'Project Name (<= 30 char)',
         description: 'What problem we are committed to solving. What approach do we take. What we have already done.',
         keywords: 'Keywords',
         email: 'Email',
@@ -44,11 +61,60 @@ export default {
         git: 'http://',
         team: ''
       },
-      keys: ['<=15char', '<=15char','<=15char']
+      keys: ['<=10char', '<=10char','<=10char'],
+      status: ['', '', '', '', '', '', ''],
     }
   },
   methods: {
+    checkName () {
+      if (this.setUpInfo.name.length > 30) {
+        this.status.splice(0, 1, 'Name should be less than 30 characters')
+      } else if (!this.setUpInfo.name) {
+        this.status.splice(0, 1, 'Name can\'t be empty')
+      } else {
+        this.status.splice(0, 1, 'OK')
+      }
+    },
+    checkEmail () {
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(String(this.setUpInfo.email).toLowerCase())) {
+        this.status.splice(1, 1, 'OK')
+      } else {
+        this.status.splice(1, 1, 'Invalid email')
+      }
+    },
+    checkKeywords (index) {
+      if (this.keys[index].length > 10) {
+        this.status.splice(index + 2, 1, 'Keyword is too long')
+      } else {
+        this.status.splice(index + 2, 1, 'OK')
+      }
+    },
+    checkDemo () {
+      if (this.checkUrl(String(this.setUpInfo.demo))) {
+        this.status.splice(5, 1, 'OK')
+      } else {
+        this.status.splice(5, 1, 'Invalid demo url')
+      }
+    },
+    checkGit () {
+      if (this.checkUrl(String(this.setUpInfo.git))) {
+        this.status.splice(6, 1, 'OK')
+      } else {
+        this.status.splice(6, 1, 'Invalid Github url')
+      }
+    },
+    checkUrl (str) {
+      const pattern = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
+      return pattern.test(str)
+    },
     setupPlanet () {
+      for (let i = 0; i <= 6; i += 1) {
+        if (status[i] !== 'OK') {
+          alert('Invalid information exits. Please check the form again.')
+          return
+        }
+      }
       this.setUpInfo.keywords = this.keys.join(' ')
       console.log(this.setUpInfo.keywords)
       api.setup_planet(this.setUpInfo).then((res) => {
@@ -160,7 +226,16 @@ export default {
     background rgba(19,29,64,0.65)
     .text
       padding-left 1.5%
-    >input
+    .email
+      padding-left 1.5%
+      width 49%
+      margin-left 2%
+    .name
+      font-size 14px
+      color rgba(255,255,255,0.30)
+      padding-left 1.5%
+      width 45%
+    input
       height 40px
       width 100%
       background: rgba(0,0,0,0.57);
@@ -170,6 +245,12 @@ export default {
       color rgba(255,255,255,0.30)
       text-align justify
       margin 0 0 1% 0
+    span
+      clear both
+      text-align right
+      font-size 12px
+    .checkemail
+      padding-left 47%
     textarea
       width 100%
       background: rgba(0,0,0,0.57);
@@ -204,8 +285,11 @@ export default {
         margin-right 10px
         &:last-child
           margin-right 0
-    .name
-      font-size 14px
-      color rgba(255,255,255,0.30)
-      padding-left 1.5%
+    tr
+      width 100%
+      text-align left
+    td
+      width 33%
+      font-size 12px
+      padding-right 6%
 </style>

@@ -3,7 +3,7 @@
     <img class="bg" :src="require('@/assets/4.png')">
     <div class="slogan" v-html="slogan"></div>
     <div class="loading" v-if="!projects"><span>Loading...</span></div>
-    <div class="arrow-box" v-if="projects&showHint">Do invest to share bonus</div>
+    <div class="arrow-box" v-if="showHint">Do invest to share bonus</div>
     <div class="ctn-box">
       <div class="inline">
         <h4>Monthly Ranking</h4>
@@ -67,9 +67,9 @@ export default {
       // console.log(res)
       this.projects = res.data
     })
-    setTimeout(() => {
-      this.showHint = false
-    }, 5000)
+    // setTimeout(() => {
+    //   this.showHint = false
+    // }, 5000)
   },
   methods: {
     invest (name) {
@@ -77,6 +77,7 @@ export default {
         alert('Login required.')
         return
       }
+      this.showHint = false
       this.buildIsOpen = true
       this.investedName = name
     },
@@ -139,8 +140,8 @@ export default {
   color white
   .arrow-box
     position: absolute;
-    top: 169px;
-    right: 154px;
+    top 21%
+    right 4%
     background: rgba(255,255,255,0.8);
     border-radius: 8px;
     height: 34px;
@@ -163,8 +164,8 @@ export default {
       margin-left: -30px;
   .hint-invest
     position absolute
-    top 214px
-    right 33px
+    top 20%
+    right 4%
     width 200px
     height 40px
     background-color rgba(255,255,255,0.5)
@@ -187,7 +188,7 @@ export default {
     animation twinkling 1s infinite ease-in-out
   .ctn-box
     position absolute
-    top 130px
+    top 18%
     left 10%
     height 65%
     width 80%

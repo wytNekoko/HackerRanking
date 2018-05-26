@@ -61,7 +61,7 @@ export default {
       git_state: '',
       redirect_uri: 'https://ranking.dorahacks.com/',
       notifications: [],
-      showHint: true,
+      showHint: false,
     }
   },
   created () {
@@ -161,6 +161,7 @@ export default {
         window.cookieStorage.setItem('name', data.user_info.username, {expires: d})
         window.cookieStorage.setItem('id', data.user_info.id, {expires: d})
         this.notify(this.user.id)
+        this.showHint = true
       } else {
         this.$router.push('/')
         this.user = null
@@ -244,9 +245,11 @@ export default {
     box-sizing border-box
     background-image linear-gradient(left, #301B0F, #1E0618)
     background-image -webkit-gradient(left, #301B0F, #1E0618)
+    background rgb(39,17,19)
     &:first-child
       background-image linear-gradient(left, #2E2828, #000000)
       background-image -webkit-gradient(left, #2E2828, #000000)
+      background rgb(27,23,23)
   //    &:last-child
 //      background-color linear-gradient(left, #301B0F, #1E0618)
   .button
@@ -268,6 +271,7 @@ export default {
     border-radius 6px
     background-image linear-gradient(left, #2E2828, #000000)
     background-image -webkit-gradient(left, #2E2828, #000000)
+    background rgb(27,23,23)//#2e2828
     cursor pointer
     span
       width 20px
