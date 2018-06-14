@@ -110,7 +110,7 @@ export default {
     },
     setupPlanet () {
       for (let i = 0; i <= 6; i += 1) {
-        if (status[i] !== 'OK') {
+        if (String(this.status[i]) !== 'OK') {
           alert('Invalid information exits. Please check the form again.')
           return
         }

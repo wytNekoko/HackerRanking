@@ -6,28 +6,13 @@ import { CookieStorage } from 'cookie-storage'
 import App from './App'
 import router from './router'
 import './style.styl'
+import web3 from './web3'
 
 window.cookieStorage = new CookieStorage()
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.use(Vuebar)
-// Vue.use(VueAuthenticate, {
-//   baseUrl: null,
-//   //  tokenType: 'No Auth',
-//   //  tokenHeader: 'X-Auth-Token',
-//   providers: {
-//     github: {
-//       url: 'https://dust.gitchain.org/api/register/github',
-//       clientId: '153a7fb787d1bd541839', // process.env.GH_CLIENT_ID,
-//       // redirect_uri: 'https://localhost:7080/api/auth/github'
-//     }
-//   }
-// })
-//     facebook: {
-//       url: '',
-//       clientId: process.env.FB_CLIENT_ID,
-//       redirect_uri: 'https://dust.giftchain.org/register'
-//     }
+Vue.use(web3)
 
 /* eslint-disable no-new */
 new Vue({

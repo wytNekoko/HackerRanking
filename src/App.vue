@@ -1,9 +1,10 @@
 <template>
   <div id="app">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <transition name="fade">
       <router-view @view="view" @update="update" @notify="notify" @got="got"/>
     </transition>
-    <fringe></fringe>
+    <fringe v-if="this.$route.name !== 'KCash'"></fringe>
     <div class="mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
@@ -28,9 +29,9 @@
     <div class="hint" v-if="showHint">You can get 10 Gift today.
       <img width="10" height="10" :src="require('@/assets/symbols-close.png')" @click="closeHint">
     </div>
-    <user-bar v-if="user" :username="user.name" :id="user.id"></user-bar>
-    <settle-bar v-else @register="openRegister"></settle-bar>
-    <receiving-station :notifications="notifications"></receiving-station>
+    <user-bar v-if="user && this.$route.name !== 'KCash'" :username="user.name" :id="user.id"></user-bar>
+    <settle-bar v-if="!user && this.$route.name !== 'KCash'" @register="openRegister"></settle-bar>
+    <receiving-station v-if="this.$route.name !== 'KCash'" :notifications="notifications" ></receiving-station>
 
   </div>
 </template>

@@ -35,6 +35,10 @@ export default {
     return axios.post(`${url}/register/github`, { code: code },
       { headers: { 'content-type': 'application/json' } })
   },
+  register_kcash (code, addr, invitation) {
+    return axios.post(`${url}/register/kcash`, { code: code, addr: addr, invite: invitation },
+      { headers: { 'content-type': 'application/json' } })
+  },
   setup_planet (option) {
     return axios.post(`${url}/user/planet`, {
       name: option.name,
