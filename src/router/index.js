@@ -19,14 +19,20 @@ import HackerView from '@/components/HackerView'
 import HackerOwnedProjects from '@/components/HackerOwnedProjects'
 import HackerInvested from '@/components/HackerInvested'
 import KCash from '@/components/KCash'
+import Home from '@/components/Home'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    // {
+    //   path: '/',
+    //   name: 'ProjectsRanking',
+    //   component: ProjectsRanking
+    // },
     {
       path: '/',
-      name: 'ProjectsRanking',
-      component: ProjectsRanking
+      name: 'Home',
+      component: Home
     },
     {
       path: '/kcash',

@@ -4,7 +4,28 @@
     <transition name="fade">
       <router-view @view="view" @update="update" @notify="notify" @got="got"/>
     </transition>
-    <fringe v-if="this.$route.name !== 'KCash'"></fringe>
+    <header id="global-nav">
+      <div class="header-content">
+        <router-link class="logo" to="/">
+          <img :src="require('@/assets/logo_white.png')" width="30" height="30">
+          <span>HackerRanking</span>
+        </router-link>
+        <ul class="navigation hide-for-small">
+          <!-- <li><a href="#">黑客马拉松</a></li>
+               <li><a href="#">极客榜</a></li>
+               <li><a href="#">项目榜</a></li>
+               <li><a href="#">登录/注册</a></li>
+               <li><a href="#">EN</a></li> -->
+          <li><a href="#">Hackathon</a></li>
+          <li><a href="#">Hackers</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a @click="openRegister">Login/Register</a></li>
+          <li><a href="#">CN</a></li>
+        </ul>
+      </div>
+      <div class="menu-button hide" @click="openMenu"><span></span><span></span><span></span></div>
+    </header>
+    <!--<fringe v-if="this.$route.name !== 'KCash'"></fringe>-->
     <div class="mask" v-if="registerIsOpen">
       <div class="register-card">
         <span class="close" @click="closeRegister">
@@ -29,9 +50,9 @@
     <div class="hint" v-if="showHint">You can get 10 Gift today.
       <img width="10" height="10" :src="require('@/assets/symbols-close.png')" @click="closeHint">
     </div>
-    <user-bar v-if="user && this.$route.name !== 'KCash'" :username="user.name" :id="user.id"></user-bar>
-    <settle-bar v-if="!user && this.$route.name !== 'KCash'" @register="openRegister"></settle-bar>
-    <receiving-station v-if="this.$route.name !== 'KCash'" :notifications="notifications" ></receiving-station>
+    <!--<user-bar v-if="user && this.$route.name !== 'KCash'" :username="user.name" :id="user.id"></user-bar>-->
+    <!--<settle-bar v-if="!user && this.$route.name !== 'KCash'" @register="openRegister"></settle-bar>-->
+    <!--<receiving-station v-if="this.$route.name !== 'KCash'" :notifications="notifications" ></receiving-station>-->
 
   </div>
 </template>
@@ -79,6 +100,9 @@ export default {
     got () {
       console.log('got')
       this.showHint = false
+    },
+    openMenu () {
+
     },
     closeHint () {
       this.showHint = false
@@ -286,5 +310,68 @@ export default {
         transform translate3d(-50%, -50%, 0) rotate(-45deg)
       &:last-child
         transform translate3d(-50%, -50%, 0) rotate(45deg)
+#global-nav
+  position fixed
+  top 0
+  left 0
+  height 60px
+  width 100%
+  z-index 4
+  border-bottom 0.5px solid rgba(40,40,40,1)
+  .header-content
+    margin 0 auto
+    max-width 1140px
+    width 100%
+    -moz-transition padding 0.3s
+    -o-transition padding 0.3s
+    -webkit-transition padding 0.3s
+    transition padding 0.3s
+  .logo
+    float left
+    font-size 20px
+    font-weight bold
+    color #fff
+    margin 10px 0
+    padding 0 30px
+    text-decoration none
+    display flex
+    >span
+      margin-top: 8px;
+      margin-left: 7px;
+.navigation
+  float right
+  box-sizing border-box
+  margin 20px 0
+  margin-right 30px
+  &.open
+    opacity 0.9
+    visibility visible
+    -moz-transition opacity 0.5s
+    -o-transition opacity 0.5s
+    -webkit-transition opacity 0.5s
+    transition opacity 0.5s
+  li
+    float left
+    margin-left 30px
+    /*display inline-block*/
+  a
+    color #fff
+    font-size 14px
+    font-weight bold
+.navigation a:hover, .navigation a.active
+  color #38c0bf
+  cursor pointer
+.menu-button
+  margin: 15px 10px;
+  height: 30px;
+  width: 40px;
+  cursor: pointer;
+  float: right;
+  >span
+    width: 30px;
+    height: 2px;
+    background-color: #fff;
+    display: block;
+    margin: 6px 5px;
 
 </style>

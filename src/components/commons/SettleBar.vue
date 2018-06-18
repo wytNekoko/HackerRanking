@@ -29,7 +29,6 @@ export default {
   cursor pointer
   .settle
     width 192.5px
-    height 79.1px
     background url(../../assets/symbols-mothership.png) no-repeat left, linear-gradient(-136deg, rgba(46,40,40,0.95) 0%, rgba(0,0,0,0.94) 100%)
     border 0.5px solid rgba(255,255,255,0.35)
     box-shadow 0 2px 16px 0 rgba(0,0,0,0.50)

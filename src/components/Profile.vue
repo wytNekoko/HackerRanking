@@ -76,6 +76,7 @@ export default {
       this.$router.push('/profile/invested')
     },
     withdraw () {
+      // web3 call smart contract
       alert('Under construction...')
     },
     getDust () {
